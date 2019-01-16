@@ -1,0 +1,37 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+
+function RTDStation({stations,onSelect}) {
+	return (
+		<div>
+			<span>Select station to get upcoming departures:</span>
+			<select onChange={ event => {
+				onSelect(event.target.value);
+			}}>
+			{stations.map( (item,index) =>
+				{
+					return <option key={index} value={item.abbr}>{item.name}</option>
+				})}
+			</select>
+		</div>
+	)
+}
+
+RTDStation.propTypes = {
+	stations:PropTypes.arrayOf(
+		PropTypes.shape({
+			name:PropTypes.string.isRequired,
+			abbr:PropTypes.string.isRequired,
+			address:PropTypes.string.isRequired,
+			city:PropTypes.string.isRequired,
+			county:PropTypes.string.isRequired,
+			gtfs_latitude:PropTypes.string.isRequired,
+			gtfs_longitude:PropTypes.string.isRequired,
+			state:PropTypes.string.isRequired,
+			zipcode:PropTypes.string.isRequired,
+		}).isRequired).isRequired,
+	onSelect:PropTypes.func.isRequired
+}
+
+export default RTDStation
+
