@@ -8,27 +8,24 @@ function Result({trips,onSelect})
 	const tripElements = trips.map((item,index) =>
 	{
 		const {tripId,startTime,startTimeReal,endTime,endTimeReal,timeLength,fare} = item;
-		
 		return (
 			<li key={index}>
-				<div onClick={(event) => {event.stopPropagation(); onSelect(tripId)}}>
-					<div><span>{startTime}</span> - <span>{endTime}</span></div>
-					<div><span>{startTimeReal}</span> - <span>{endTimeReal}</span></div>
-					<div><span>total time: {timeLength}</span> <span>{fare}</span></div>
+				<div className='tripplannerresult__item' onClick={(event) => {event.stopPropagation(); onSelect(tripId)}}>
+					<span className='tripplannerresult__starttime'>{startTime}</span> - <span className='tripplannerresult__endtime'>{endTime}</span>
+					< br/>
+					<span className='tripplannerresult__timelength'>Trip time: {timeLength}</span><span className='tripplannerresult__fare'>fare: ${fare}</span>
 				</div>
 			</li>);
 	});
 
 	return (
-		<div>
+		<div className='tripplannerresult'>
 			<ul>
 				{tripElements}
 			</ul>
 		</div>
 	)
 }
-
-// {startTime,startTimeReal,endTime,endTimeReal,timeLength,fare}
 
 Result.propTypes = {
 	trips:PropTypes.arrayOf(

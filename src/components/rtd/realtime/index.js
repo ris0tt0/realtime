@@ -3,11 +3,11 @@ import RealTimeDepartures from './RTD';
 import{showSortSelection} from '../../../actions/';
 
 const mapStateToProps = state => {
-	const {realTimeDepartures} = state;
+	const {rtd} = state;
 
   return {
-		time:realTimeDepartures.time,
-		stationName:realTimeDepartures.name ? realTimeDepartures.name : '',
+		time:rtd.time,
+		stationName:rtd.name ? rtd.name : '',
   }
 }
 

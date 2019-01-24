@@ -1,35 +1,30 @@
 import {connect} from 'react-redux';
 import Details from './Details';
-import Logger from 'js-logger'
+import Logger from 'js-logger';
+import {getTripPlannerTripDetails} from '../../../selectors/';
 
-const mapStateToProps = state =>{
+const mapStateToProps = state =>
+{
+	const data = getTripPlannerTripDetails(state);
+	let leg = data.leg ? data.leg : [];
 
-	let origTimeMin = '';
-	let destTimeMin = '';
-	let tripTime = '';
-	let tripChanges = '';
-	let tripFare = '';
-
-	const {entities,result} = state.tripPlanner;
-
-	if(result.length > 0)
-	{
-		Logger.info(entities);
-		// origTimeMin = 
+	const d = {
+		clipper:data['@clipper'],
+		co2:data['@co2'],
+		destTimeDate:data['@destTimeDate'],
+		destTimeMin:data['@destTimeMin'],
+		destination:data.destination,
+		fare:data['@fare'],
+		origTimeDate:data['@origTimeDate'],
+		origTimeMin:data['@origTimeMin'],
+		origin:data.origin,
+		tripTime:data['@tripTime'],
 	}
-	else
-	{
-		Logger.info('nothing to see here.');
-	}
 
-	
-	return {
-		origTimeMin,
-		destTimeMin,
-		tripTime,
-		tripChanges,
-		tripFare,
-	};
+	Logger.info(data);
+	Logger.info(d);
+
+	return {data:{...d,leg:[...leg]}};
 }
 
 const mapDispatchToProps = dispatch =>{

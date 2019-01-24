@@ -9,7 +9,7 @@ import { Provider } from 'react-redux'
 import Logger from 'js-logger'
 import { createStore,applyMiddleware } from 'redux';
 import rootReducer from './reducers/';
-import {fetchTrainCount, fetchStations,fetchRealTimeEstimates} from './actions/';
+import {fetchTrainCount, fetchStations,fetchRealTimeEstimates, fetchRoutes} from './actions/';
 
 import {getStationArray} from './selectors/';
 
@@ -20,6 +20,7 @@ Logger.useDefaults();
 const remove = store.subscribe( () => Logger.info(store.getState()) );
 
 store.dispatch( fetchStations())
+	.then( () => store.dispatch( fetchRoutes() ))
 	.then( () => store.dispatch( fetchTrainCount() ))
 	.then( () => 
 		{

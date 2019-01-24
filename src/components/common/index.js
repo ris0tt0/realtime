@@ -17,9 +17,9 @@ function StationRTDItem({destination,estimate})
 	});
 
 	return (
-		<div className='rtd-station-item'>
-			<span>{destination}</span>
-			<span className='rtd-float-right'>{times}</span>
+		<div className='stationitem'>
+			<span className='stationitem__destination'>{destination}</span>
+			<span className='stationitem__times'>{times}</span>
 		</div>
 	)
 }

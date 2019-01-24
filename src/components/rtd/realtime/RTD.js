@@ -6,10 +6,10 @@ import Logger from 'js-logger';
 function RTD({time,stationName,onClick})
 {
 	return (
-		<div className='rtd-sort-selector'>
-			<div className='rtd-sort-header'>
+		<div>
+			<div>
 				<span>{stationName}</span>
-				<span className='rtd-float-right'>{time}</span>
+				<span>{time}</span>
 			</div>
 			<div>
 				<span>Sort by: </span><a href="#" onClick={e => {e.stopPropagation(); onClick('name');}}>Name</a> | <a href="#" key='platfrom' onClick={e => {e.stopPropagation();onClick('platform');}}>Platform</a>

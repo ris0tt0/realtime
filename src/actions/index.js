@@ -7,6 +7,7 @@ export const RECIEVE_STATIONS = 'receive stations';
 export const RECIEVE_TRAIN_COUNT = 'recieve train count';
 export const RECIEVE_RTE = 'receieve real time estimate';
 export const RECIEVE_TRIP_PLANNING = 'receieve trip planning';
+export const RECIEVE_ROUTES = 'recieve routes';
 export const SET_STARTING_ABBR = 'set starting abbr';
 export const SET_DESTINATION_ABBR = 'set destination abbr';
 export const SET_TRIP_PLANNER_DETAILS = 'set trip planner details';
@@ -23,7 +24,10 @@ export function getStations()
 {
 	return {type:GET_STATIONS};
 }
-
+export function recieveRoutes(routes)
+{
+	return {type:RECIEVE_ROUTES,routes};
+}
 export function recieveStations(stations = {})
 {
 	return { type:RECIEVE_STATIONS,stations};
@@ -70,6 +74,24 @@ export function setTripPlannerLegIds(legIds)
 
 const DEV_KEY = 'MW9S-E7SL-26DU-VV8V';
 
+export function fetchRoutes()
+{
+	return dispatch =>
+	{
+		Logger.info(`dispatch fetch stations`);
+		return fetch(`http://api.bart.gov/api/route.aspx?cmd=routes&key=${DEV_KEY}&json=y`)
+      .then( response => response.json() )
+			.then( json =>
+			{
+				const routeSchema = new schema.Entity('route',undefined,{idAttribute:item => item.routeID});
+				const routesSchema = new schema.Entity('routes',{route:[routeSchema]},{idAttribute:item => 'id'});
+				const normalized = normalize(json.root.routes,routesSchema);
+
+				dispatch(recieveRoutes(normalized));
+			});
+	}
+}
+
 export function fetchStations()
 {
 	return dispatch =>
@@ -80,11 +102,10 @@ export function fetchStations()
 			.then( json =>
 			{
 				const stationSchema = new schema.Entity('stations');
-				const stationListSchema = new schema.Array(stationSchema);
 				// add id.
 				const idAdded = json.root.stations.station.map(item => { return {...item,id:item.abbr}} );
 				// normalize the station data.
-				const normalized = normalize(idAdded, stationListSchema);
+				const normalized = normalize(idAdded, [stationSchema]);
 
 				dispatch(recieveStations(normalized));
 			});
@@ -153,7 +174,7 @@ export function fetchTripPlanning()
 				const faresSchema = new schema.Entity('fares',{fare:[fareSchema]},{idAttribute: value => `${value['@level']}-${value.fare.length}`});
 				const legSchema = new schema.Entity('leg',undefined,{idAttribute: value => value['@trainId']});
 				const tripSchema = new schema.Entity('trip',{fares:faresSchema,leg:[legSchema]},{idAttribute: value => `${value['@origTimeMin']}-${value['@destTimeMin']}`});
-				const requestSchema = new schema.Entity('request',{trip:[tripSchema]},{idAttribute: value => 'requested'});
+				const requestSchema = new schema.Entity('request',{trip:[tripSchema]},{idAttribute: value => 'requestId'});
 				const scheduleSchema = new schema.Entity('schedule',{request:requestSchema},{idAttribute: value => `${value.time}-${value.date}`});
 				const responseSchema = new schema.Entity('response',{schedule:scheduleSchema},{idAttribute: value => `${value.origin}-${value.destination}`});
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Logger from 'js-logger';
 
-const CreateStationSelection = (stations,doNotIncludeAbbr,onSelect) =>
+const CreateStationSelection = (stations,doNotIncludeAbbr,onSelect,label) =>
 {
 	if(doNotIncludeAbbr && doNotIncludeAbbr.length > 0)
 	{
@@ -13,7 +13,7 @@ const CreateStationSelection = (stations,doNotIncludeAbbr,onSelect) =>
 	const stationElements = stations.map((item,index) =>
 		<option key={index} value={item.abbr}>{item.name}</option> );
 
-	stationElements.unshift(<option key={-1} value={' '}>--Please select--</option>);
+	stationElements.unshift(<option key={-1} value={' '}>  {label}</option>);
 
 	return <select onChange={onSelect}>{stationElements}</select>;
 }
@@ -27,14 +27,14 @@ const StationSelector = ({startingAbbr,destinationAbbr,stations,onSearch,onStart
 				{
 					e.stopPropagation();
 					onStarting(e.target.value);
-				})}
+				},'Enter starting point...')}
 			</div>
 			<div>
 				{CreateStationSelection(stations,startingAbbr,e =>
 					{
 						e.stopPropagation();
 						onDestination(e.target.value);
-					})}
+					},'Enter destination...')}
 			</div>
 			<button onClick={e =>
 				{
@@ -66,18 +66,4 @@ StationSelector.propTypes = {
 	onDestination:PropTypes.func.isRequired,
 }
 
-export default StationSelector
-
-
-
-/*
-		let stations = this.props.stations.map((item,index) =>
-			<option key={index} value={item.abbr}>item.name</option> );
-		
-		if(doNotInclude != null)
-			stations = stations.filter( item => item.abbr !== doNotInclude);
-
-		stations.unshift(<option key={-1} value={' '}>--Please select--</option>);
-
-		return <select onClick={this.onSelect}>{stations}</select>;
-		*/
+export default StationSelector;

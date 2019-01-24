@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import Platform from './RTDPlatform';
-import {getRealTimeByPlatform} from '../../../utils/';
+import {getRealTimeStationPlatformMap} from '../../../selectors/';
 
 const mapStateToProps = state => {
   return {
-		platforms:getRealTimeByPlatform(state.realTimeDepartures),
+		platforms:getRealTimeStationPlatformMap(state),
   }
 }
 

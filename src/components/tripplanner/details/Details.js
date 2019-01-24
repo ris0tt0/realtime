@@ -1,27 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {DetailsLeg} from './DetailsLeg';
+import Logger from 'js-logger';
 
-function Details({origTimeMin,destTimeMin,tripTime,tripChanges,tripFare}) {
+function Details({data}) 
+{
+	if( data.origin.name.length < 1) return <div></div>;
+	
+	const detailsleg = data.leg.map( (item,index) => <li key={index}><DetailsLeg data={item} /></li> );
+	const changes = data.leg.length;
+
 	return (
 		<div>
-			<p>this is deatils dubl antc</p>
+			<h3>{data.origin.name} to {data.destination.name}</h3>
+			<div><span>departure {data.origTimeMin}</span><span>arrival {data.destTimeMin}</span><span>trip time: {data.tripTime} min.</span></div>
+			<div><span>changes:{changes}</span><span>fare: {data.fare}</span></div>
 			<div>
-				<span>{origTimeMin}</span><span>-----(this is route with all legs included)----</span><span>{destTimeMin}</span>
-			</div>
-			<div>
-				<span>{tripTime}</span><span>{tripChanges}</span><span>{tripFare}</span>
+				<ul>
+					{detailsleg}
+				</ul>
 			</div>
 		</div>
 	)
 }
 
 Details.propTypes = {
-	origTimeMin:PropTypes.string.isRequired,
-	destTimeMin:PropTypes.string.isRequired,
-	tripTime:PropTypes.string.isRequired,
-	tripChanges:PropTypes.string.isRequired,
-	tripFare:PropTypes.string.isRequired,
+		/*
+		clipper: "0.75"
+		@co2: "2.54"
+		@destTimeDate: "01/21/2019"
+		@destTimeMin: "4:21 PM"
+		@destination: "BALB"
+		@fare: "2.50"
+		@origTimeDate: "01/21/2019 "
+		@origTimeMin: "4:14 PM"
+		@origin: "16TH"
+		@tripTime: "7"
+		fares: "normal-4"
+		*/
+
+	clipper:PropTypes.string,
+	c02:PropTypes.string,
+	destTimeData:PropTypes.string,
+	destTimeMin:PropTypes.string,
+	destination:PropTypes.string,
+	fare:PropTypes.string,
+	origTimeDate:PropTypes.string,
+	origTimeMin:PropTypes.string,
+	origin:PropTypes.string,
+	tripTime:PropTypes.string,
 }
 
 export default Details

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import Name from './RTDName';
 
-import {getRealTimeByName} from '../../../utils/'
+import {getRealTimeStationArray} from '../../../selectors/';
 
 const mapStateToProps = state => {
   return {
-		names:getRealTimeByName(state.realTimeDepartures)
+		names:getRealTimeStationArray(state)
   }
 }
 

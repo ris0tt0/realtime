@@ -8,10 +8,10 @@ import Plaftorm from './realtime/RTDPlatformContainer';
 const RealTimeDepartures = ({sortSelection}) =>
 {
 	return (
-		<div className='real-time-departures'>
+		<div>
 			<Header />
 			<Station />
-			<div className='rtd-real-time'>
+			<div>
 				<RealTime />
 				{sortSelection === 'platform' ? <Plaftorm /> : <Name />}
 			</div>

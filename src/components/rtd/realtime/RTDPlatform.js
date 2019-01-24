@@ -28,7 +28,7 @@ function RTDPlatform({platforms}) {
 		</div>)
 	});
 
-	return <div className='rtd-station-table'>{d}</div>
+	return <div>{d}</div>
 }
 
 RTDPlatform.propTypes = {

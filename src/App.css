@@ -1,43 +1,67 @@
 .App {
 	/* text-align: left; */
-	background-color:darkgray;
+	background-color:snow;
 	font-family: Arial, Helvetica, sans-serif;
 }
 div
 {
 	border-style: solid;
 	border-width: 1px;
+	border-color:gray;
+	max-width: 700px;
+	margin: 1px;
+	padding: 1px;
 }
 
-.App-link {
-  color: #61dafb;
+ul {
+  list-style-type: none;
+  /* margin: 0;
+  padding: 0; */
 }
 
-.rtd-station-table
-{
-	/* width: 600px; */
+ul li{
+	max-width: 90%;
 }
 
-.rtd-real-time
-{
-	width: 600px;
-	background-color:cornsilk;
-}
-
-.rtd-sort-header
-{
-	background-color:peru;
-	color:white;
-	font-weight: bold;
-}
-.rtd-sort-selector {
+.stationitem{
 	
 }
-.rtd-station-item
+.stationitem__destination{
+	
+}
+.stationitem__times{
+	float: right;
+}
+
+.detailsleg
 {
+	max-width: 250px;
+}
+
+.detailsleg__time{
 
 }
-.rtd-float-right
-{
+.detailsleg__name{
+	float: right;
+}
+.detailsleg__line{
+	font-size: 80%
+}
+.tripplannerresult{
+
+}
+.tripplannerresult__item{
+	max-width: 250px;
+}
+.tripplannerresult__starttime{
+
+}
+.tripplannerresult__endtime{
+
+}
+.tripplannerresult__timelength{
+
+}
+.tripplannerresult__fare{
 	float: right;
 }

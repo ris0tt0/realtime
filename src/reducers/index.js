@@ -9,9 +9,32 @@ import {
 	SET_STARTING_ABBR,
 	SET_DESTINATION_ABBR,
 	SET_TRIP_PLANNER_DETAILS,
+	RECIEVE_ROUTES,
 	} from '../actions/';
 
-function realTimeDepartures(state = {}, action)
+const rtdInitialState = 
+{
+	entities:
+	{
+		station:
+		{
+			sid:
+			{
+				etd:[]
+			}
+		},
+		response:
+		{
+			sid:
+			{
+				station:['sid']
+			}
+		}
+	},
+	result:'sid'
+};
+
+function rtd(state = rtdInitialState, action)
 {
 	switch(action.type)
 	{
@@ -38,7 +61,18 @@ function stations(state = statationsInitialState, action)
 	}
 }
 
-const trainCountInitailState = {result:'',entities:{traincount:{},uri:{}}};
+const trainCountInitailState = {
+	result:'id',
+	entities:{
+		traincount:{
+			id:{
+				traincount:'unknown',
+				uri:'id'
+			}
+		},
+		uri:{id:''}
+	}
+};
 function traincount(state = trainCountInitailState, action)
 {
 	switch(action.type)
@@ -84,8 +118,40 @@ function startingAbbr(state = '', action)
 			return state;
 	}
 }
-const tripPlannerInitialState = {entities:{request:{}},result:''};
-function tripPlanner(state = tripPlannerInitialState, action)
+
+const tripPlannerInitialState = 
+{
+	entities:
+	{
+		request:
+		{
+			requestId:
+			{
+				trip:[]
+			}
+		},
+		fare:{},
+		fares:{},
+		leg:{},
+		response:
+		{
+			id:
+			{
+				schedule:'id'
+			}
+		},
+		schedule:
+		{
+			id:{request:'requestId'}
+		},
+		trip:
+		{
+			id:{leg:[]}
+		}
+	},
+	result:'id'
+};
+function tripplanner(state = tripPlannerInitialState, action)
 {
 	switch(action.type)
 	{
@@ -108,29 +174,39 @@ function tripPlannerDetailsId(state = '', action)
 				return state;
 		}
 }
+const routesInitialState = {
+	entities:
+	{
+		route:{},
+		routes:
+		{
+			id:[],
+		},
+	},
+	result:'id',
+};
 
-// function tripPlannerLegIds(state = [], action)
-// {
-// 	switch(action.type)
-// 	{
-// 		case SET_TRIP_PLANNER_LEG_IDS:
-// 			return [action.legIds];
-// 		default:
-// 			return [...state];
-// 	}
-// }
-
+function routes(state = routesInitialState, action)
+{
+	switch(action.type)
+	{
+		case RECIEVE_ROUTES:
+			return {...action.routes};
+		default:
+			return {...state};
+	}
+}
 const gbart = combineReducers(
 {
-	realTimeDepartures,
+	rtd,
+	routes,
 	stations,
 	traincount,
 	sortSelection,
 	destinationAbbr,
 	startingAbbr,
-	tripPlanner,
+	tripplanner,
 	tripPlannerDetailsId,
-	// tripPlannerLegIds,
 });
 
 export default gbart;

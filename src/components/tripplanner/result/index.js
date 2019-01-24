@@ -1,12 +1,12 @@
 import {connect} from 'react-redux';
 import Result from './Result';
 import {setTripPlannerDetails} from '../../../actions/';
-import {getTripPlannerList} from '../../../utils/'
+import {getTripPlannerTrips} from '../../../selectors/';
 import Logger from 'js-logger';
 
 const mapStateToProps = state =>
 {
-	const trips = getTripPlannerList(state.tripPlanner);
+	const trips = getTripPlannerTrips(state);
 
 	return {trips};
 }
