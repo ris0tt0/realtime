@@ -62,8 +62,6 @@ export function setDestinationAbbr(abbr)
 
 export function setTripPlannerDetails(tripId)
 {
-	// Logger.info(`setTripPlannerDetails ${tripId}`);
-
 	return {type:SET_TRIP_PLANNER_DETAILS,tripId};
 }
 
@@ -78,7 +76,6 @@ export function fetchRoutes()
 {
 	return dispatch =>
 	{
-		Logger.info(`dispatch fetch stations`);
 		return fetch(`http://api.bart.gov/api/route.aspx?cmd=routes&key=${DEV_KEY}&json=y`)
       .then( response => response.json() )
 			.then( json =>
@@ -96,7 +93,6 @@ export function fetchStations()
 {
 	return dispatch =>
 	{
-		Logger.info(`dispatch fetch stations`);
 		return fetch(`http://api.bart.gov/api/stn.aspx?cmd=stns&key=${DEV_KEY}&json=y`)
       .then( response => response.json() )
 			.then( json =>
@@ -136,8 +132,6 @@ export function fetchRealTimeEstimates(station)
 			.then( response => response.json() )
 			.then( json => {
 
-				Logger.info(`fetchRealTimeEstimates(${station})`);
-
 				const estimateSchema = new schema.Entity('estimate',undefined,{idAttribute: estimate => 
 				{
 					const {color,bikeflag,delay,direction,hexcolor,length,minutes,platform} = estimate;
@@ -156,12 +150,9 @@ export function fetchRealTimeEstimates(station)
 
 export function fetchTripPlanning()
 {
-	Logger.info(`fetchTripPlanning`);
 	return (dispatch,getState) =>
 	{
 		const {startingAbbr,destinationAbbr} = getState();
-
-		Logger.info(`dispatch fetchTripPlanning ${startingAbbr} ${destinationAbbr}`);
 
 		if(startingAbbr && startingAbbr.length > 0 && destinationAbbr && destinationAbbr.length > 0)
 		{

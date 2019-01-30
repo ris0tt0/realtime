@@ -13,8 +13,14 @@ function Details({data})
 	return (
 		<div>
 			<h3>{data.origin.name} to {data.destination.name}</h3>
-			<div><span>departure {data.origTimeMin}</span><span>arrival {data.destTimeMin}</span><span>trip time: {data.tripTime} min.</span></div>
-			<div><span>changes:{changes}</span><span>fare: {data.fare}</span></div>
+			<div>
+				<div><span>departure {data.origTimeMin}</span></div>
+				<div><span>arrival {data.destTimeMin}</span></div>
+				<div><span>trip time: {data.tripTime} min.</span></div>
+			</div>
+			<div>
+				<span>changes:{changes}</span><span>fare: {data.fare}</span>
+			</div>
 			<div>
 				<ul>
 					{detailsleg}

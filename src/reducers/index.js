@@ -100,7 +100,6 @@ function destinationAbbr(state = '', action)
 	switch(action.type)
 	{
 		case SET_DESTINATION_ABBR:
-			Logger.info(`destinationAbbr: ${action.abbr}`);
 			return action.abbr;
 		default:
 			return state;
@@ -112,7 +111,6 @@ function startingAbbr(state = '', action)
 	switch(action.type)
 	{
 		case SET_STARTING_ABBR:
-			Logger.info(`startingAbbr: ${action.abbr}`)
 			return action.abbr;
 		default:
 			return state;
@@ -167,8 +165,6 @@ function tripPlannerDetailsId(state = '', action)
 		switch(action.type)
 		{
 			case SET_TRIP_PLANNER_DETAILS:
-				Logger.info(`trip planner details tripId: ${action.tripId}`);
-				Logger.info(action);
 				return action.tripId;
 			default:
 				return state;

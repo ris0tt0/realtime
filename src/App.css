@@ -14,7 +14,8 @@ div
 }
 
 ul {
-  list-style-type: none;
+	list-style-type: none;
+	
   /* margin: 0;
   padding: 0; */
 }
@@ -27,37 +28,40 @@ ul li{
 	
 }
 .stationitem__destination{
-	
+	font-size: 120%;
 }
 .stationitem__times{
 	float: right;
+	font-size: 90%;
 }
 
 .detailsleg
 {
-	max-width: 250px;
+	max-width: 300px;
 }
 
 .detailsleg__time{
-
+	font-size: 120%;
 }
 .detailsleg__name{
 	float: right;
+	font-size: 120%;
 }
 .detailsleg__line{
-	font-size: 80%
+	font-size: 80%;
+	margin: 4px;
 }
 .tripplannerresult{
 
 }
 .tripplannerresult__item{
-	max-width: 250px;
+	max-width: 300px;
 }
 .tripplannerresult__starttime{
-
+	font-size: 120%
 }
 .tripplannerresult__endtime{
-
+	font-size: 120%
 }
 .tripplannerresult__timelength{
 
