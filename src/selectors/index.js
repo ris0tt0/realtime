@@ -42,13 +42,25 @@ const getRealTimeDeparturesETDSelector = state => state.rtd.entities.etd;
 const getRealTimeDeparturesEstimateSelector = state => state.rtd.entities.estimate;
 const getRealTimeDeparturesResultSelector = state => state.rtd.result;
 
-export const getRealTimeDeparturesStationId = createSelector(
+export const getRealTimeDeparturesStationResponse = createSelector(
 	[getRealTimeDeparturesResponseSelector,getRealTimeDeparturesResultSelector],
-	(data,result) => data[result].station[0] );
+	(data,result) => data[result] );
+
+export const getRealTimeDeparturesStationId = createSelector(
+	[getRealTimeDeparturesStationResponse],
+	response => response.station[0] );
 
 export const getRealTimeDeparturesStation = createSelector(
 	[getRealTimeDeparturesStationId,getRealTimeDeparturesStationSelector],
 	(stationId,station) => station[stationId] );
+
+export const getRealTimeDeparturesStationName = createSelector(
+	[getRealTimeDeparturesStation],
+	station => station.name );
+
+export const getRealTimeDeparturesStationTime = createSelector(
+	[getRealTimeDeparturesStationResponse],
+	response => response.time );
 
 export const getRealTimeStationArray = createSelector(
 	[getRealTimeDeparturesStation,getRealTimeDeparturesEstimateSelector,getRealTimeDeparturesETDSelector],

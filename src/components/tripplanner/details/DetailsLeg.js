@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Logger from 'js-logger';
 
-export function DetailsLeg({data})
+const DetailsLeg = ({data}) =>
 {
-	Logger.info(data);
+	Logger.info(`DetailLeg`)
 
 	return (
 		<div className='detailsleg'>
@@ -24,3 +24,5 @@ DetailsLeg.propTypes = {
 	// endStationName:PropTypes.string.isRequired,
 	// routeInformation:PropTypes.object.isRequired,
 }
+
+export {DetailsLeg};

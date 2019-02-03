@@ -20,7 +20,8 @@ const mapStateToProps = state =>
 		origin:data.origin,
 		tripTime:data['@tripTime'],
 	}
-
+	
+	Logger.info('tripplanner details');
 	Logger.info(data);
 	Logger.info(d);
 

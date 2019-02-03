@@ -49,7 +49,7 @@ const statationsInitialState = {entities:{stations:{}},result:[]};
 
 function stations(state = statationsInitialState, action)
 {
-	Logger.info(`reducer::stations`);
+	// Logger.info(`reducer::stations`);
 	
 	switch(action.type)
 	{
@@ -130,25 +130,53 @@ const tripPlannerInitialState =
 		},
 		fare:{},
 		fares:{},
-		leg:{},
+		leg:{
+			legId:
+			{
+				'@bikeflag': '',
+				'@destTimeDate': '',
+				'@destTimeMin': '',
+				'@destination': '',
+				'@line': '',
+				'@load': '',
+				'@order': '',
+				'@origTimeDate': '',
+				'@origTimeMin': '',
+				'@origin': '',
+				'@trainHeadStation': '',
+				'@trainId': '',
+				'@trainIdx': '',
+				'@transfercode': '',
+			},
+		},
 		response:
 		{
-			id:
+			responseId:
 			{
-				schedule:'id'
+				schedule:'scheduleId'
 			}
 		},
 		schedule:
 		{
-			id:{request:'requestId'}
+			scheduleId:{
+				after: '',
+				before: '',
+				date: '',
+				request: 'requestId',
+				time: '',
+			}
 		},
 		trip:
 		{
-			id:{leg:[]}
+			tripId:
+			{
+				leg:[]
+			}
 		}
 	},
-	result:'id'
+	result:'responseId'
 };
+
 function tripplanner(state = tripPlannerInitialState, action)
 {
 	switch(action.type)
@@ -156,6 +184,7 @@ function tripplanner(state = tripPlannerInitialState, action)
 		case RECIEVE_TRIP_PLANNING:
 			return {...action.data}
 		default:
+		Logger.info(state);
 			return {...state};
 	}
 }
@@ -170,6 +199,7 @@ function tripPlannerDetailsId(state = '', action)
 				return state;
 		}
 }
+
 const routesInitialState = {
 	entities:
 	{

@@ -31,30 +31,17 @@ function Details({data})
 }
 
 Details.propTypes = {
-		/*
-		clipper: "0.75"
-		@co2: "2.54"
-		@destTimeDate: "01/21/2019"
-		@destTimeMin: "4:21 PM"
-		@destination: "BALB"
-		@fare: "2.50"
-		@origTimeDate: "01/21/2019 "
-		@origTimeMin: "4:14 PM"
-		@origin: "16TH"
-		@tripTime: "7"
-		fares: "normal-4"
-		*/
-
-	clipper:PropTypes.string,
-	c02:PropTypes.string,
-	destTimeData:PropTypes.string,
-	destTimeMin:PropTypes.string,
-	destination:PropTypes.string,
-	fare:PropTypes.string,
-	origTimeDate:PropTypes.string,
-	origTimeMin:PropTypes.string,
-	origin:PropTypes.string,
-	tripTime:PropTypes.string,
+	data:PropTypes.object.isRequired,
+	// clipper:PropTypes.string,
+	// c02:PropTypes.string,
+	// destTimeData:PropTypes.string,
+	// destTimeMin:PropTypes.string,
+	// destination:PropTypes.string,
+	// fare:PropTypes.string,
+	// origTimeDate:PropTypes.string,
+	// origTimeMin:PropTypes.string,
+	// origin:PropTypes.string,
+	// tripTime:PropTypes.string,
 }
 
 export default Details

@@ -5,6 +5,9 @@ import Logger from 'js-logger';
 
 function RTD({time,stationName,onClick})
 {
+
+	Logger.info('RTD');
+	
 	return (
 		<div>
 			<div>
