@@ -1,23 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function RTDStation({stations,onSelect}) {
+export function StationSelection({stations,onSelect}) {
+	const stationList = stations.map( (item,index) =>
+		<option key={index} value={item.abbr}>{item.name}</option> );
+
 	return (
 		<div>
 			<span>Select station to get upcoming departures:</span>
 			<select onChange={ event => {
 				onSelect(event.target.value);
 			}}>
-			{stations.map( (item,index) =>
-				{
-					return <option key={index} value={item.abbr}>{item.name}</option>
-				})}
+			{stationList}
 			</select>
 		</div>
 	)
 }
 
-RTDStation.propTypes = {
+StationSelection.propTypes = {
 	stations:PropTypes.arrayOf(
 		PropTypes.shape({
 			name:PropTypes.string.isRequired,
@@ -32,6 +32,3 @@ RTDStation.propTypes = {
 		}).isRequired).isRequired,
 	onSelect:PropTypes.func.isRequired
 }
-
-export default RTDStation
-

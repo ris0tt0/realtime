@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Logger from 'js-logger';
 
-function StationRTDItem({destination,estimate})
+export function StationItem({destination,estimate})
 {
 	const times = estimate.map(({minutes, length},index,list) =>
 	{
@@ -24,10 +24,7 @@ function StationRTDItem({destination,estimate})
 	)
 }
 
-StationRTDItem.propTypes = {
+StationItem.propTypes = {
 	destination:PropTypes.string.isRequired,
 	estimate:PropTypes.object.isRequired,
 }
-
-export {StationRTDItem}
-

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import RealTimeDepartures from './RTD';
-import{showSortSelection} from '../../../actions/';
+import {Sort} from './Sort';
+import {showSortSelection} from '../../../actions/';
 import {getRealTimeDeparturesStationName, getRealTimeDeparturesStationTime} from '../../../selectors'
 
 const mapStateToProps = state => {
@@ -19,7 +19,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const RealTimeDeparturesContainer = connect(mapStateToProps,mapDispatchToProps)(RealTimeDepartures);
+const RealTimeDeparturesContainer = connect(mapStateToProps,mapDispatchToProps)(Sort);
 
 
 export default RealTimeDeparturesContainer;

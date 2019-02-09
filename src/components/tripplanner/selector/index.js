@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import StationSelector from './StationSelector';
+import {StationsSelection} from './StationsSelection';
 import {getStationArray} from '../../../selectors/'
 import {setDestinationAbbr,setStartingAbbr,fetchTripPlanning} from '../../../actions/';
 
@@ -23,6 +23,6 @@ const mapDispatchToProps = (dispatch,ownProps) => {
 	};
 }
 
-const StationSelectorContainer = connect(mapStateToProps,mapDispatchToProps)(StationSelector);
+const StationSelectorContainer = connect(mapStateToProps,mapDispatchToProps)(StationsSelection);
 
 export default StationSelectorContainer;

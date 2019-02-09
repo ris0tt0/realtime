@@ -1,4 +1,4 @@
-import Logger from 'js-logger'
+// import Logger from 'js-logger'
 import {combineReducers} from 'redux';
 import {
 	RECIEVE_STATIONS,
@@ -184,7 +184,6 @@ function tripplanner(state = tripPlannerInitialState, action)
 		case RECIEVE_TRIP_PLANNING:
 			return {...action.data}
 		default:
-		Logger.info(state);
 			return {...state};
 	}
 }
@@ -222,6 +221,7 @@ function routes(state = routesInitialState, action)
 			return {...state};
 	}
 }
+
 const gbart = combineReducers(
 {
 	rtd,

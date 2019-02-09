@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import StationSelection from './RTDStation';
+import {StationSelection} from './StationSelection';
 import {fetchRealTimeEstimates} from '../../../actions/index';
 import {getStationArray} from '../../../selectors/';
 

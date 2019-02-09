@@ -1,9 +1,9 @@
 import React from 'react';
 import Header from './header';
 import Station from './select';
-import RealTime from './realtime';
-import Name from './realtime/RTDNameContainer';
-import Plaftorm from './realtime/RTDPlatformContainer';
+import RealTime from './results';
+import Name from './results/NameContainer';
+import Plaftorm from './results/PlatformContainer';
 
 const RealTimeDepartures = ({sortSelection}) =>
 {

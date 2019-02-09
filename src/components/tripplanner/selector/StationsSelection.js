@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Logger from 'js-logger';
 
-const CreateStationSelection = (stations,doNotIncludeAbbr,onSelect,label) =>
+const Stations = (stations,doNotIncludeAbbr,onSelect,label) =>
 {
 	if(doNotIncludeAbbr && doNotIncludeAbbr.length > 0)
 	{
@@ -18,19 +18,19 @@ const CreateStationSelection = (stations,doNotIncludeAbbr,onSelect,label) =>
 	return <select onChange={onSelect}>{stationElements}</select>;
 }
 
-const StationSelector = ({startingAbbr,destinationAbbr,stations,onSearch,onStarting,onDestination}) =>
+export function StationsSelection({startingAbbr,destinationAbbr,stations,onSearch,onStarting,onDestination})
 {
 	return (
 		<div>
 			<div>
-				{CreateStationSelection(stations,destinationAbbr,e =>
+				{Stations(stations,destinationAbbr,e =>
 				{
 					e.stopPropagation();
 					onStarting(e.target.value);
 				},'Enter starting point...')}
 			</div>
 			<div>
-				{CreateStationSelection(stations,startingAbbr,e =>
+				{Stations(stations,startingAbbr,e =>
 					{
 						e.stopPropagation();
 						onDestination(e.target.value);
@@ -45,7 +45,7 @@ const StationSelector = ({startingAbbr,destinationAbbr,stations,onSearch,onStart
 	)
 }
 
-StationSelector.propTypes = {
+StationsSelection.propTypes = {
 	startingAbbr:PropTypes.string.isRequired,
 	destinationAbbr:PropTypes.string.isRequired,
 	// list of station data, used to populate selection lists.
@@ -65,5 +65,3 @@ StationSelector.propTypes = {
 	onStarting:PropTypes.func.isRequired,
 	onDestination:PropTypes.func.isRequired,
 }
-
-export default StationSelector;

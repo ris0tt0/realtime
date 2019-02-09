@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {DetailsLeg} from './DetailsLeg';
 import Logger from 'js-logger';
 
-function Details({data}) 
+export function Details({data}) 
 {
 	if( data.origin.name.length < 1) return <div></div>;
 	
@@ -43,6 +43,4 @@ Details.propTypes = {
 	// origin:PropTypes.string,
 	// tripTime:PropTypes.string,
 }
-
-export default Details
 

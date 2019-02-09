@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import Name from './RTDName';
+import {Name} from './Name';
 
-import {getRealTimeStationArray} from '../../../selectors/';
+import {getRealTimeStationArray} from '../../../selectors';
 
 const mapStateToProps = state => {
   return {
@@ -10,6 +10,5 @@ const mapStateToProps = state => {
 }
 
 const NameContainer = connect(mapStateToProps)(Name);
-
 
 export default NameContainer;

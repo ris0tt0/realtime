@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import RealTimeDepartures from './components/rtd'
+import RealTimeDepartures from './components/realtimedepartures';
 import TripPlanner from './components/tripplanner/TripPlanner';
 
 class App extends Component {

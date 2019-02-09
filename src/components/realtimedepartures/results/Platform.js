@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Logger from 'js-logger';
-import {StationRTDItem} from '../../common/';
+import {StationItem} from '../../common';
 
-function RTDPlatform({platforms}) {
+export function Platform({platforms}) {
 	const d = [];
 	platforms.forEach( (value,platformName) =>
 	{
@@ -16,7 +16,7 @@ function RTDPlatform({platforms}) {
 
 			min.push(
 			<li key={stationAbbr}>
-				<StationRTDItem destination={train.destination} estimate={train.estimate ? train.estimate : {}} />
+				<StationItem destination={train.destination} estimate={train.estimate ? train.estimate : {}} />
 			</li>)
 			}
 		);
@@ -31,9 +31,6 @@ function RTDPlatform({platforms}) {
 	return <div>{d}</div>
 }
 
-RTDPlatform.propTypes = {
+Platform.propTypes = {
 	platforms:PropTypes.object.isRequired,
 }
-
-export default RTDPlatform
-

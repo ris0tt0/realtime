@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function RTDHeader({numberOfTrains}) {
+export function Information({numberOfTrains}) {
 	return (
 		<div>
 			<h1>Real Time Departures</h1>
@@ -10,8 +10,6 @@ function RTDHeader({numberOfTrains}) {
 	)
 }
 
-RTDHeader.propTypes = {
+Information.propTypes = {
 	numberOfTrains:PropTypes.string.isRequired,
 }
-
-export default RTDHeader

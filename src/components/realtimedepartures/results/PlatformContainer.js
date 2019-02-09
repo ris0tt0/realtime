@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import Platform from './RTDPlatform';
-import {getRealTimeStationPlatformMap} from '../../../selectors/';
+import {Platform} from './Platform';
+import {getRealTimeStationPlatformMap} from '../../../selectors';
 
 const mapStateToProps = state => {
   return {

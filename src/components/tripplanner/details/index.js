@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import Details from './Details';
+import {Details} from './Details';
 import Logger from 'js-logger';
 import {getTripPlannerTripDetails} from '../../../selectors/';
 
@@ -21,10 +21,6 @@ const mapStateToProps = state =>
 		tripTime:data['@tripTime'],
 	}
 	
-	Logger.info('tripplanner details');
-	Logger.info(data);
-	Logger.info(d);
-
 	return {data:{...d,leg:[...leg]}};
 }
 

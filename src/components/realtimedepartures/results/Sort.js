@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 
 import Logger from 'js-logger';
 
-function RTD({time,stationName,onClick})
+export function Sort({time,stationName,onClick})
 {
 
-	Logger.info('RTD');
+	Logger.info('Sort');
 	
 	return (
 		<div>
@@ -21,11 +21,8 @@ function RTD({time,stationName,onClick})
 	)
 }
 
-RTD.propTypes = {
+Sort.propTypes = {
 	time:PropTypes.string.isRequired,
 	stationName:PropTypes.string.isRequired,
 	onClick:PropTypes.func.isRequired,
 }
-
-export default RTD
-
