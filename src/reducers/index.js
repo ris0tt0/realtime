@@ -1,4 +1,4 @@
-// import Logger from 'js-logger'
+import Logger from 'js-logger'
 import {combineReducers} from 'redux';
 import {
 	RECIEVE_STATIONS,

@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import Result from './Result';
+import {Result} from './Result';
 import {setTripPlannerDetails} from '../../../actions/';
 import {getTripPlannerTrips} from '../../../selectors/';
 import Logger from 'js-logger';

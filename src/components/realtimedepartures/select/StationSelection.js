@@ -6,7 +6,7 @@ export function StationSelection({stations,onSelect}) {
 		<option key={index} value={item.abbr}>{item.name}</option> );
 
 	return (
-		<div>
+		<div className='stationselection'>
 			<span>Select station to get upcoming departures:</span>
 			<select onChange={ event => {
 				onSelect(event.target.value);

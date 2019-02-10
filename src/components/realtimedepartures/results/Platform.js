@@ -22,13 +22,13 @@ export function Platform({platforms}) {
 		);
 
 		d.push(
-		<div key={platformName}>
+		<div className='platform__item' key={platformName}>
 			<h3>Platform {platformName}</h3>
 			<ul>{min}</ul>
 		</div>)
 	});
 
-	return <div>{d}</div>
+	return <div className='platform'>{d}</div>
 }
 
 Platform.propTypes = {

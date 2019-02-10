@@ -13,7 +13,7 @@ export function Name({names})
 		</li>);
 
 	return (
-		<div>
+		<div className='name'>
 			<ul>
 				{stations}
 			</ul>

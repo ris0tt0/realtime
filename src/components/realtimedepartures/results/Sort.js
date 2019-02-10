@@ -9,13 +9,14 @@ export function Sort({time,stationName,onClick})
 	Logger.info('Sort');
 	
 	return (
-		<div>
-			<div>
-				<span>{stationName}</span>
-				<span>{time}</span>
+		<div className='sort'>
+			<div className='sort__header'>
+				<span className='sort_headerName'>{stationName}</span>
+				<span className='sort__headerTIme'>{time}</span>
 			</div>
-			<div>
-				<span>Sort by: </span><a href="#" onClick={e => {e.stopPropagation(); onClick('name');}}>Name</a> | <a href="#" key='platfrom' onClick={e => {e.stopPropagation();onClick('platform');}}>Platform</a>
+			<div className='sort__control'>
+				<span>Sort by: </span>
+					<a href="#" onClick={e => {e.stopPropagation(); onClick('name');}}>Name</a> | <a href="#" key='platfrom' onClick={e => {e.stopPropagation();onClick('platform');}}>Platform</a>
 			</div>
 		</div>
 	)

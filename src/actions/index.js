@@ -160,8 +160,8 @@ export function fetchTripPlanning()
 			.then( response => response.json() )
 			.then( json => {
 
-				Logger.info('trip planner');
-				Logger.info(json);
+				// Logger.info('trip planner');
+				// Logger.info(json);
 
 				// start to normalize the json response.
 				const fareSchema = new schema.Entity('fare',undefined,{idAttribute: value => value['@name']});
@@ -174,7 +174,7 @@ export function fetchTripPlanning()
 
 				const normalized = normalize(json.root, responseSchema);
 
-				Logger.info(normalized);
+				// Logger.info(normalized);
 
 				dispatch(recieveTripPlanning(normalized));
 			});

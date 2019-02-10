@@ -8,7 +8,7 @@ import Plaftorm from './results/PlatformContainer';
 const RealTimeDepartures = ({sortSelection}) =>
 {
 	return (
-		<div>
+		<div className='realtimedepartures'>
 			<Header />
 			<Station />
 			<div>

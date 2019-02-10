@@ -5,10 +5,10 @@
 }
 div
 {
-	/* border-style: solid;
+	border-style: solid;
 	border-width: 1px;
 	border-color:gray;
-	max-width: 700px; */
+	max-width: 700px;
 	margin: 1px;
 	padding: 1px;
 }
@@ -25,7 +25,7 @@ ul li{
 }
 
 .stationitem{
-	
+	border-color: blue;
 }
 .stationitem__destination{
 	font-size: 120%;
@@ -51,8 +51,47 @@ ul li{
 	font-size: 80%;
 	margin: 4px;
 }
-.tripplannerresult{
+.realtimedepartures
+{
+	border-color: blue;
+}
+.stationselection
+{
+	border-color: blue;
+}
+.platform{
+	border-color: blue;
+}
+.platform__item{
+	border-color: blue;
+}
 
+.name{
+	border-color: blue;
+}
+
+.information{
+	border-color: blue;
+}
+
+.sort{
+	border-color: blue;
+}
+.sort__header{
+	border-color: blue;
+}
+.sort__headerName{
+	/* border-color: blue; */
+}
+.sort__headerTime{
+	/* border-color: blue; */
+	float: right;
+}
+.sort__control{
+	border-color: blue;
+}
+.tripplannerresult{
+	border-color: blue;
 }
 .tripplannerresult__item{
 	max-width: 300px;
@@ -64,7 +103,7 @@ ul li{
 	font-size: 120%
 }
 .tripplannerresult__timelength{
-
+	border-color: blue;
 }
 .tripplannerresult__fare{
 	float: right;

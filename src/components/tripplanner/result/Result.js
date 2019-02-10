@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Logger from 'js-logger';
 
-function Result({trips,onSelect})
+export function Result({trips,onSelect})
 {
 	const tripElements = trips.map((item,index) =>
 	{
@@ -39,6 +39,3 @@ Result.propTypes = {
 	})).isRequired,
 	onSelect:PropTypes.func.isRequired,
 }
-
-export default Result;
-
