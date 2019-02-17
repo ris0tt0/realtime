@@ -166,7 +166,7 @@ export function fetchTripPlanning()
 				// start to normalize the json response.
 				const fareSchema = new schema.Entity('fare',undefined,{idAttribute: value => value['@name']});
 				const faresSchema = new schema.Entity('fares',{fare:[fareSchema]},{idAttribute: value => `${value['@level']}-${value.fare.length}`});
-				const legSchema = new schema.Entity('leg',undefined,{idAttribute: value => value['@trainId']});
+				const legSchema = new schema.Entity('leg',undefined,{idAttribute: value => value['@origTimeMin'] + value['@destTimeMin']});
 				const tripSchema = new schema.Entity('trip',{fares:faresSchema,leg:[legSchema]},{idAttribute: value => `${value['@origTimeMin']}-${value['@destTimeMin']}`});
 				const requestSchema = new schema.Entity('request',{trip:[tripSchema]},{idAttribute: value => 'requestId'});
 				const scheduleSchema = new schema.Entity('schedule',{request:requestSchema},{idAttribute: value => `${value.time}-${value.date}`});
