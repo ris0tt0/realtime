@@ -10,6 +10,9 @@ export function Details({data})
 	const detailsleg = data.leg.map( (item,index) => <li key={index}><DetailsLeg data={item} /></li> );
 	const changes = data.leg.length;
 
+	Logger.info('Details')
+	Logger.info(data)
+	Logger.info('Details')
 	return (
 		<div>
 			<h3>{data.origin.name} to {data.destination.name}</h3>
@@ -43,4 +46,3 @@ Details.propTypes = {
 	// origin:PropTypes.string,
 	// tripTime:PropTypes.string,
 }
-
