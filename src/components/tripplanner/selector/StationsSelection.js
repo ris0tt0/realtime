@@ -21,15 +21,15 @@ const Stations = (stations,doNotIncludeAbbr,onSelect,label) =>
 export function StationsSelection({startingAbbr,destinationAbbr,stations,onSearch,onStarting,onDestination})
 {
 	return (
-		<div>
-			<div>
+		<div className='stationselection'>
+			<div className='stationselection__starting'>
 				{Stations(stations,destinationAbbr,e =>
 				{
 					e.stopPropagation();
 					onStarting(e.target.value);
 				},'Enter starting point...')}
 			</div>
-			<div>
+			<div className='stationselection__destination'>
 				{Stations(stations,startingAbbr,e =>
 					{
 						e.stopPropagation();

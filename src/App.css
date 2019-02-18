@@ -108,3 +108,45 @@ ul li{
 .tripplannerresult__fare{
 	float: right;
 }
+.tripplannerdetails{
+
+}
+.tripplannerdetails__info{
+
+}
+
+.tripplannerdetails__departure{
+
+}
+.tripplannerdetails__arrival{
+
+}
+.tripplannerdetails__time{
+
+}
+.tripplannerdetails__changes{
+
+}
+.tripplannerdetails__fare{
+
+}
+.tripplannerdetails__detailsleg{
+	
+}
+
+
+.tripplanner{
+	border-color: red;
+}.tripplanner__header{
+	border-color: blue;
+}
+.stationselection{
+	border-color: blue;
+}
+.stationselection__starting
+{
+	border-color: red;
+}
+.stationselection__destination{
+	border-color: red;
+}

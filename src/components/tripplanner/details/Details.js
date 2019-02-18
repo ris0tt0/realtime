@@ -10,21 +10,17 @@ export function Details({data})
 	const detailsleg = data.leg.map( (item,index) => <li key={index}><DetailsLeg data={item} /></li> );
 	const changes = data.leg.length;
 
-	Logger.info('Details')
-	Logger.info(data)
-	Logger.info('Details')
 	return (
-		<div>
+		<div className='tripplannerdetails'>
 			<h3>{data.origin.name} to {data.destination.name}</h3>
-			<div>
-				<div><span>departure {data.origTimeMin}</span></div>
-				<div><span>arrival {data.destTimeMin}</span></div>
-				<div><span>trip time: {data.tripTime} min.</span></div>
+			<div className='tripplannerdetails__info'>
+				<div className='tripplannerdetails__departure'><span>departure {data.origTimeMin}</span></div>
+				<div className='tripplannerdetails__arrival'><span>arrival {data.destTimeMin}</span></div>
+				<div className='tripplannerdetails__time'><span>trip time: {data.tripTime} min.</span></div>
+				<div className='tripplannerdetails__changes'><span>changes:{changes}</span></div>
+				<div className='tripplannerdetails__fare'><span>fare: {data.fare}</span></div>
 			</div>
-			<div>
-				<span>changes:{changes}</span><span>fare: {data.fare}</span>
-			</div>
-			<div>
+			<div className='tripplannerdetails__detailsleg'>
 				<ul>
 					{detailsleg}
 				</ul>
