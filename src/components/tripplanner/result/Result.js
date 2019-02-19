@@ -8,6 +8,9 @@ export function Result({trips,onSelect})
 	const tripElements = trips.map((item,index) =>
 	{
 		const {tripId,startTime,startTimeReal,endTime,endTimeReal,timeLength,fare} = item;
+
+		if( startTime === endTime) return <div></div>
+
 		return (
 			<li key={index}>
 				<div className='tripplannerresult__item' onClick={(event) => {event.stopPropagation(); onSelect(tripId)}}>

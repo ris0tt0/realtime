@@ -14,24 +14,49 @@ import {
 
 const rtdInitialState = 
 {
-	entities:
-	{
-		station:
-		{
-			sid:
-			{
-				etd:[]
+	entities:{
+		estimate:{
+			id:{
+				bikeflag:'',
+				color:'',
+				delay:'',
+				direction:'',
+				hexcolor:'',
+				length:'',
+				minutes:'',
+				platform:'',
+			},
+		},
+		etd:{
+			id:{
+				abbreviation:'',
+				destination:'',
+				estimate:['id'],
+				limited:'',
 			}
 		},
-		response:
-		{
-			sid:
-			{
-				station:['sid']
+		response:{
+			id:{
+				'@id':'',
+				date:'',
+				message:'',
+				station:'id',
+				time:'',
+				uri:'id'
 			}
+		},
+		station:{
+			id:{
+				abbr:'',
+				name:'',
+				etd:['id'],
+			}
+		},
+		uri:{
+			id:{'#data-selection':''}
 		}
 	},
-	result:'sid'
+	result:'id'
 };
 
 function rtd(state = rtdInitialState, action)
@@ -39,13 +64,31 @@ function rtd(state = rtdInitialState, action)
 	switch(action.type)
 	{
 		case RECIEVE_RTE:
-			return {...action.eta};
+			return {...action.data};
 		default:
 			return {...state};
 	}
 }
 
-const statationsInitialState = {entities:{stations:{}},result:[]};
+const statationsInitialState = {
+	entities:{
+		stations:{
+			'12TH':{
+				abbr: '',
+				address: '',
+				city: '',
+				county: '',
+				gtfs_latitude:'',
+				gtfs_longitude:'',
+				id: '',
+				name: '',
+				state: '',
+				zipcode: '',
+			}
+		}
+	},
+	result:['12TH'],
+};
 
 function stations(state = statationsInitialState, action)
 {
@@ -66,11 +109,16 @@ const trainCountInitailState = {
 	entities:{
 		traincount:{
 			id:{
+				date:'',
+				message:'',
+				time:'',
 				traincount:'unknown',
 				uri:'id'
 			}
 		},
-		uri:{id:''}
+		uri:{
+			id:{'#data-selection':''}
+		}
 	}
 };
 function traincount(state = trainCountInitailState, action)
@@ -119,45 +167,38 @@ function startingAbbr(state = '', action)
 
 const tripPlannerInitialState = 
 {
-	entities:
-	{
-		request:
-		{
-			requestId:
-			{
-				trip:[]
+	entities:{
+		request:{
+			requestId:{
+				trip:['tripId']
 			}
 		},
 		fare:{},
 		fares:{},
 		leg:{
-			legId:
-			{
+			legId:{
 				'@bikeflag': '',
 				'@destTimeDate': '',
 				'@destTimeMin': '',
-				'@destination': '',
+				'@destination': '12TH',
 				'@line': '',
 				'@load': '',
 				'@order': '',
 				'@origTimeDate': '',
 				'@origTimeMin': '',
-				'@origin': '',
+				'@origin': '12TH',
 				'@trainHeadStation': '',
 				'@trainId': '',
 				'@trainIdx': '',
 				'@transfercode': '',
 			},
 		},
-		response:
-		{
-			responseId:
-			{
+		response:{
+			responseId:{
 				schedule:'scheduleId'
 			}
 		},
-		schedule:
-		{
+		schedule:{
 			scheduleId:{
 				after: '',
 				before: '',
@@ -166,11 +207,22 @@ const tripPlannerInitialState =
 				time: '',
 			}
 		},
-		trip:
-		{
-			tripId:
-			{
-				leg:[]
+		trip:{
+			tripId:{
+				"@origin":"12TH",
+				"@destination":"12TH",
+				"@fare":"",
+				"@origTimeMin":"",
+				"@origTimeDate":"",
+				"@destTimeMin":"",
+				"@destTimeDate":"",
+				"@clipper":"",
+				"@tripTime":"",
+				"@co2":"",
+				fares:{
+					
+				},
+				leg:['legId']
 			}
 		}
 	},
@@ -188,7 +240,7 @@ function tripplanner(state = tripPlannerInitialState, action)
 	}
 }
 
-function tripPlannerDetailsId(state = '', action)
+function tripPlannerDetailsId(state = 'tripId', action)
 {
 		switch(action.type)
 		{
@@ -202,10 +254,17 @@ function tripPlannerDetailsId(state = '', action)
 const routesInitialState = {
 	entities:
 	{
-		route:{},
+		route:{
+			abbr:'',
+			color:'',
+			hexcolor:'',
+			name:'',
+			number:'',
+			routeID:'',
+		},
 		routes:
 		{
-			id:[],
+			id:['id'],
 		},
 	},
 	result:'id',

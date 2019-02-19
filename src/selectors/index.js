@@ -1,6 +1,9 @@
 import {createSelector} from 'reselect';
 import Logger from 'js-logger';
 
+/**
+ * train routes.
+ */
 const getRoutesSelector = state => state.routes.entities.route;
 /**
  * traincount selectors
@@ -31,7 +34,7 @@ const getStationsResultSelector = state => state.stations.result;
  */
 export const getStationArray = createSelector(
 	[getStationsSelector,getStationsResultSelector],
-	(data,stationIds) => stationIds.map(name => data[name]) );
+	(data,stationIds) => stationIds.map(name => data[name]));
 
 /**
  * real time departures selectors
@@ -48,7 +51,7 @@ export const getRealTimeDeparturesStationResponse = createSelector(
 
 export const getRealTimeDeparturesStationId = createSelector(
 	[getRealTimeDeparturesStationResponse],
-	response => response.station[0] );
+	response => response.station );
 
 export const getRealTimeDeparturesStation = createSelector(
 	[getRealTimeDeparturesStationId,getRealTimeDeparturesStationSelector],
@@ -97,10 +100,13 @@ export const getRealTimeStationPlatformMap = createSelector(
 			map.get(estimate.platform).get(etd.abbreviation).estimate.push({...estimate});
 		});
 	});
-	// sort
+	// sort by platform number
 	return new Map([...map.entries()].sort());
 });
 
+/**
+ * Trip Planner selectors.
+ */
 const getTripPlannerResponseSelector = state => state.tripplanner.entities.response;
 const getTripPlannerScheduleSelector = state => state.tripplanner.entities.schedule;
 const getTripPlannerRequestSelector = state => state.tripplanner.entities.request;
@@ -112,7 +118,13 @@ const getTripPlannerDetailsIdSelector = state => state.tripPlannerDetailsId;
 
 export const getTripPlannerDetails = createSelector(
 	[getTripPlannerDetailsIdSelector,getTripPlannerTripSelector],
-	(id,trip) => {return {...trip[id]}});
+	(id,trip) => {
+		Logger.info('gettripplannerdetails')
+		Logger.info(id)
+		Logger.info(trip)
+		Logger.info('gettripplannerdetails')
+		return {...trip[id]}
+	});
 
 export const getTripPlanner = createSelector(
 	[getTripPlannerResponseSelector,getTripPlannerResultSelector],
@@ -151,14 +163,17 @@ export const getTripPlannerTripDetails = createSelector(
 	[getTripPlannerDetails,getTripPlannerLegSelector,getStationsSelector,getRoutesSelector],
 	(tripData,leg,stations,routes) =>
 {
-	if( !tripData.leg) return {origin:{name:''},destination:{name:''}};
-	
+
+	Logger.info('SELCTORS');
+	Logger.info(tripData);
+	Logger.info('SELCTORS');
 	const legList = tripData.leg.map( key =>
 	{
 		const data = {...leg[key]};
 		data.origin = {...stations[data['@origin']]};
 		data.destination = {...stations[data['@destination']]};
 		data.line = {...routes[data['@line']]};
+
 		return data;
 	});
 

@@ -61,7 +61,6 @@ StationsSelection.propTypes = {
 			state:PropTypes.string.isRequired,
 			zipcode:PropTypes.string.isRequired,
 		}).isRequired).isRequired,
-	onSelect:PropTypes.func.isRequired,
 	onStarting:PropTypes.func.isRequired,
 	onDestination:PropTypes.func.isRequired,
 }

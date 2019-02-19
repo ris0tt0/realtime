@@ -26,5 +26,14 @@ export function StationItem({destination,estimate})
 
 StationItem.propTypes = {
 	destination:PropTypes.string.isRequired,
-	estimate:PropTypes.object.isRequired,
+	estimate:PropTypes.arrayOf(PropTypes.shape({
+		bikeflag:PropTypes.string.isRequired,
+		color:PropTypes.string.isRequired,
+		delay:PropTypes.string.isRequired,
+		direction:PropTypes.string.isRequired,
+		hexcolor:PropTypes.string.isRequired,
+		length:PropTypes.string.isRequired,
+		minutes:PropTypes.string.isRequired,
+		platform:PropTypes.string.isRequired,
+	}).isRequired).isRequired,
 }

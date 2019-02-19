@@ -8,9 +8,7 @@ export function StationSelection({stations,onSelect}) {
 	return (
 		<div className='stationselection'>
 			<span>Select station to get upcoming departures:</span>
-			<select onChange={ event => {
-				onSelect(event.target.value);
-			}}>
+			<select onChange={ event => { onSelect(event.target.value) }}>
 			{stationList}
 			</select>
 		</div>
@@ -30,5 +28,5 @@ StationSelection.propTypes = {
 			state:PropTypes.string.isRequired,
 			zipcode:PropTypes.string.isRequired,
 		}).isRequired).isRequired,
-	onSelect:PropTypes.func.isRequired
+	onSelect:PropTypes.func.isRequired,
 }

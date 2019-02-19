@@ -4,8 +4,9 @@ import Logger from 'js-logger';
 
 const DetailsLeg = ({data}) =>
 {
-	Logger.info(`DetailLeg`)
-
+	Logger.info('333333333333333')
+	Logger.info(data);
+	Logger.info('333333333333333')
 	return (
 		<div className='detailsleg'>
 				<span className='detailsleg__time'>{data['@origTimeMin']}</span><span className='detailsleg__name'>{data.origin.name}</span>
@@ -18,11 +19,49 @@ const DetailsLeg = ({data}) =>
 }
 
 DetailsLeg.propTypes = {
-	// startTime:PropTypes.string.isRequired,
-	// startStationName:PropTypes.string.isRequired,
-	// endTime:PropTypes.string.isRequired,
-	// endStationName:PropTypes.string.isRequired,
-	// routeInformation:PropTypes.object.isRequired,
+	data:PropTypes.shape({
+		'@bikeflag':PropTypes.string.isRequired,
+		'@destTimeDate':PropTypes.string.isRequired,
+		'@destTimeMin':PropTypes.string.isRequired,
+		'@destination':PropTypes.string.isRequired,
+		'@line':PropTypes.string.isRequired,
+		'@load':PropTypes.string.isRequired,
+		'@order':PropTypes.string.isRequired,
+		'@origTimeDate':PropTypes.string.isRequired,
+		'@origTimeMin':PropTypes.string.isRequired,
+		'@origin':PropTypes.string.isRequired,
+		'@trainHeadStation':PropTypes.string.isRequired,
+		'@trainId':PropTypes.string.isRequired,
+		'@trainIdx':PropTypes.string.isRequired,
+		'@transfercode':PropTypes.string.isRequired,
+		destination:PropTypes.shape({
+			abbr:PropTypes.string.isRequired,
+			address:PropTypes.string.isRequired,
+			city:PropTypes.string.isRequired,
+			county:PropTypes.string.isRequired,
+			gtfs_latitude:PropTypes.string.isRequired,
+			gtfs_longitude:PropTypes.string.isRequired,
+			id:PropTypes.string.isRequired,
+			name:PropTypes.string.isRequired,
+			state:PropTypes.string.isRequired,
+			zipcode:PropTypes.string.isRequired,
+		}).isRequired,
+		origin:PropTypes.shape({
+			abbr:PropTypes.string.isRequired,
+			address:PropTypes.string.isRequired,
+			city:PropTypes.string.isRequired,
+			county:PropTypes.string.isRequired,
+			gtfs_latitude:PropTypes.string.isRequired,
+			gtfs_longitude:PropTypes.string.isRequired,
+			id:PropTypes.string.isRequired,
+			name:PropTypes.string.isRequired,
+			state:PropTypes.string.isRequired,
+			zipcode:PropTypes.string.isRequired,
+		}).isRequired,
+		line:PropTypes.shape({
+			name:PropTypes.string.isRequired,
+		}).isRequired,
+	}).isRequired,
 }
 
 export {DetailsLeg};

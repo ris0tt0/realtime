@@ -5,9 +5,6 @@ import Logger from 'js-logger';
 
 export function Sort({time,stationName,onClick})
 {
-
-	Logger.info('Sort');
-	
 	return (
 		<div className='sort'>
 			<div className='sort__header'>

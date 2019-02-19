@@ -15,11 +15,10 @@ export const SET_TRIP_PLANNER_LEG_IDS = 'set trip planner leg ids;';
 
 export const SHOW_SORT_SELECTION = 'show sort selection';
 
-export function getETA(station = {})
+export function getETA(station)
 {
 	return {type:GET_ETA, station};
 }
-
 export function getStations()
 {
 	return {type:GET_STATIONS};
@@ -28,7 +27,7 @@ export function recieveRoutes(routes)
 {
 	return {type:RECIEVE_ROUTES,routes};
 }
-export function recieveStations(stations = {})
+export function recieveStations(stations)
 {
 	return { type:RECIEVE_STATIONS,stations};
 }
@@ -36,35 +35,30 @@ export function recieveTrainCount(data)
 {
 	return { type:RECIEVE_TRAIN_COUNT,data};
 }
-export function recieveRTE(eta = {})
+export function recieveRTE(data)
 {
-	return { type: RECIEVE_RTE, eta};
+	return { type: RECIEVE_RTE, data};
 }
-export function recieveTripPlanning(data = {})
+export function recieveTripPlanning(data)
 {
 	return {type:RECIEVE_TRIP_PLANNING, data};
 }
-
-export function showSortSelection(selection = '')
+export function showSortSelection(selection)
 {
 	return {type: SHOW_SORT_SELECTION,selection};
 }
-
 export function setStartingAbbr(abbr)
 {
 	return {type: SET_STARTING_ABBR, abbr}
 }
-
 export function setDestinationAbbr(abbr)
 {
 	return {type:SET_DESTINATION_ABBR, abbr}
 }
-
 export function setTripPlannerDetails(tripId)
 {
 	return {type:SET_TRIP_PLANNER_DETAILS,tripId};
 }
-
 export function setTripPlannerLegIds(legIds)
 {
 	return {type:SET_TRIP_PLANNER_LEG_IDS,legIds};
@@ -138,12 +132,13 @@ export function fetchRealTimeEstimates(station)
 
 					return `${color}-${bikeflag}-${delay}-${direction}-${hexcolor}-${length}-${minutes}-${platform}`;
 				} });
+				const uriSchema = new schema.Entity('uri',undefined,{idAttribute: uri => 'uriId'});
 				const etdSchema = new schema.Entity('etd',{estimate:[estimateSchema]},{idAttribute: etd => etd.abbreviation})
 				const stationSchema = new schema.Entity('station',{etd:[etdSchema]},{idAttribute: station => station.abbr });
-				const responseSchema = new schema.Entity('response',{station:[stationSchema]},{idAttribute:response => response.time});
+				const responseSchema = new schema.Entity('response',{uri:uriSchema,station:[stationSchema]},{idAttribute:response => response.time});
 				const normalized = normalize(json.root, responseSchema);
 
-				dispatch(recieveRTE(normalized))
+				dispatch(recieveRTE(normalized));
 			} );
 	}
 }
@@ -160,9 +155,6 @@ export function fetchTripPlanning()
 			.then( response => response.json() )
 			.then( json => {
 
-				// Logger.info('trip planner');
-				// Logger.info(json);
-
 				// start to normalize the json response.
 				const fareSchema = new schema.Entity('fare',undefined,{idAttribute: value => value['@name']});
 				const faresSchema = new schema.Entity('fares',{fare:[fareSchema]},{idAttribute: value => `${value['@level']}-${value.fare.length}`});
@@ -174,9 +166,12 @@ export function fetchTripPlanning()
 
 				const normalized = normalize(json.root, responseSchema);
 
+				// Logger.info('fetchTripPlanning');
 				// Logger.info(normalized);
+				// Logger.info('fetchTripPlanning');
 
 				dispatch(recieveTripPlanning(normalized));
+				// dispatch(setTripPlannerDetails(normalized.entities.request.requstId.trip[0]));
 			});
 		}
 	}

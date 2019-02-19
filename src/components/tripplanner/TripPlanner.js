@@ -16,4 +16,3 @@ function TripPlanner(props) {
 }
 
 export {TripPlanner}
-

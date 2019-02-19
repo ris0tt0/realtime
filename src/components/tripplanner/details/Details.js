@@ -5,8 +5,8 @@ import Logger from 'js-logger';
 
 export function Details({data}) 
 {
-	if( data.origin.name.length < 1) return <div></div>;
-	
+	if(data.origin.name === data.destination.name) return <div></div>
+
 	const detailsleg = data.leg.map( (item,index) => <li key={index}><DetailsLeg data={item} /></li> );
 	const changes = data.leg.length;
 
@@ -30,15 +30,36 @@ export function Details({data})
 }
 
 Details.propTypes = {
-	data:PropTypes.object.isRequired,
-	// clipper:PropTypes.string,
-	// c02:PropTypes.string,
-	// destTimeData:PropTypes.string,
-	// destTimeMin:PropTypes.string,
-	// destination:PropTypes.string,
-	// fare:PropTypes.string,
-	// origTimeDate:PropTypes.string,
-	// origTimeMin:PropTypes.string,
-	// origin:PropTypes.string,
-	// tripTime:PropTypes.string,
+	data:PropTypes.shape({
+		clipper:PropTypes.string.isRequired,
+		destTimeMin:PropTypes.string.isRequired,
+		destTimeDate:PropTypes.string.isRequired,
+		fare:PropTypes.string.isRequired,
+		origTimeDate:PropTypes.string.isRequired,
+		origTimeMin:PropTypes.string.isRequired,
+		destination:PropTypes.shape({
+			abbr:PropTypes.string.isRequired,
+			address:PropTypes.string.isRequired,
+			city:PropTypes.string.isRequired,
+			county:PropTypes.string.isRequired,
+			gtfs_latitude:PropTypes.string.isRequired,
+			gtfs_longitude:PropTypes.string.isRequired,
+			id:PropTypes.string.isRequired,
+			name:PropTypes.string.isRequired,
+			state:PropTypes.string.isRequired,
+			zipcode:PropTypes.string.isRequired,
+		}).isRequired,
+		origin:PropTypes.shape({
+			abbr:PropTypes.string.isRequired,
+			address:PropTypes.string.isRequired,
+			city:PropTypes.string.isRequired,
+			county:PropTypes.string.isRequired,
+			gtfs_latitude:PropTypes.string.isRequired,
+			gtfs_longitude:PropTypes.string.isRequired,
+			id:PropTypes.string.isRequired,
+			name:PropTypes.string.isRequired,
+			state:PropTypes.string.isRequired,
+			zipcode:PropTypes.string.isRequired,
+		}).isRequired,
+	}).isRequired,
 }

@@ -6,11 +6,9 @@ import {getTripPlannerTripDetails} from '../../../selectors/';
 const mapStateToProps = state =>
 {
 	const data = getTripPlannerTripDetails(state);
-	let leg = data.leg ? data.leg : [];
 
 	const d = {
 		clipper:data['@clipper'],
-		co2:data['@co2'],
 		destTimeDate:data['@destTimeDate'],
 		destTimeMin:data['@destTimeMin'],
 		destination:data.destination,
@@ -21,7 +19,7 @@ const mapStateToProps = state =>
 		tripTime:data['@tripTime'],
 	}
 	
-	return {data:{...d,leg:[...leg]}};
+	return {data:{...d,leg:[...data.leg]}};
 }
 
 const mapDispatchToProps = dispatch =>{
