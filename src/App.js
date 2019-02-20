@@ -5,14 +5,14 @@ import RealTimeDepartures from './components/realtimedepartures';
 import {TripPlanner} from './components/tripplanner/TripPlanner';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
+	render() {
+		return (
+			<div className="App">
 				<RealTimeDepartures />
 				<TripPlanner />
-      </div>
-    );
-  }
+			</div>
+		);
+	}
 }
 
 export default App;

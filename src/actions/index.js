@@ -71,7 +71,7 @@ export function fetchRoutes()
 	return dispatch =>
 	{
 		return fetch(`http://api.bart.gov/api/route.aspx?cmd=routes&key=${DEV_KEY}&json=y`)
-      .then( response => response.json() )
+			.then( response => response.json() )
 			.then( json =>
 			{
 				const routeSchema = new schema.Entity('route',undefined,{idAttribute:item => item.routeID});
@@ -88,7 +88,7 @@ export function fetchStations()
 	return dispatch =>
 	{
 		return fetch(`http://api.bart.gov/api/stn.aspx?cmd=stns&key=${DEV_KEY}&json=y`)
-      .then( response => response.json() )
+			.then( response => response.json() )
 			.then( json =>
 			{
 				const stationSchema = new schema.Entity('stations');
@@ -107,8 +107,8 @@ export function fetchTrainCount()
 	return dispatch =>
 	{
 		return fetch(`http://api.bart.gov/api/bsa.aspx?cmd=count&key=${DEV_KEY}&json=y`)
-      .then( response => response.json() )
-      .then( json => {
+			.then( response => response.json() )
+			.then( json => {
 				const uriSchema = new schema.Entity('uri',undefined,{idAttribute: uri => 'uriId'});
 				const trainCountSchema = new schema.Entity('traincount',{uri:uriSchema},{idAttribute:train => train.time});
 				const data = normalize(json.root,trainCountSchema);
