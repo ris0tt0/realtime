@@ -5,11 +5,17 @@ import Logger from 'js-logger';
 
 export function Result({trips,onSelect})
 {
+	if( trips.length < 1) return <div></div>;
+
 	const tripElements = trips.map((item,index) =>
 	{
 		const {tripId,startTime,startTimeReal,endTime,endTimeReal,timeLength,fare} = item;
 
-		if( startTime === endTime) return <div></div>
+		/** 
+		 * TODO: figure out better way to set default data so we dont have to render
+		 * initial default data.
+		 */
+		if( startTime === endTime) return <li key={index}></li>
 
 		return (
 			<li key={index}>

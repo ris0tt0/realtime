@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 	};
 }
 
-const mapDispatchToProps = (dispatch,ownProps) => {
+const mapDispatchToProps = dispatch => {
 	return {
 		onSearch: () => dispatch(fetchTripPlanning()),
 		onStarting: abbr => dispatch(setStartingAbbr(abbr)),

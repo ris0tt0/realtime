@@ -7,13 +7,18 @@ import * as serviceWorker from './serviceWorker';
 import thunkMiddleware from 'redux-thunk';
 import { Provider } from 'react-redux'
 import Logger from 'js-logger'
-import { createStore,applyMiddleware } from 'redux';
+import { createStore,applyMiddleware,compose } from 'redux';
 import rootReducer from './reducers/';
 import {fetchTrainCount, fetchStations,fetchRealTimeEstimates, fetchRoutes} from './actions/';
 
 import {getStationArray} from './selectors/';
 
-const store = createStore(rootReducer,applyMiddleware(thunkMiddleware));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+	rootReducer,
+	composeEnhancers(applyMiddleware(thunkMiddleware))
+	);
 
 Logger.useDefaults();
 

@@ -165,6 +165,21 @@ function startingAbbr(state = '', action)
 	}
 }
 
+export const defaultTripPlannerTripObject = 
+{
+	'@origin':'12TH',
+	'@destination':'12TH',
+	'@fare':'',
+	'@origTimeMin':'',
+	'@origTimeDate':'',
+	'@destTimeMin':'',
+	'@destTimeDate':'',
+	'@clipper':'',
+	'@tripTime':'',
+	'@co2':'',
+	fares:{},
+	leg:['legId'],
+}
 const tripPlannerInitialState = 
 {
 	entities:{
@@ -208,22 +223,7 @@ const tripPlannerInitialState =
 			}
 		},
 		trip:{
-			tripId:{
-				"@origin":"12TH",
-				"@destination":"12TH",
-				"@fare":"",
-				"@origTimeMin":"",
-				"@origTimeDate":"",
-				"@destTimeMin":"",
-				"@destTimeDate":"",
-				"@clipper":"",
-				"@tripTime":"",
-				"@co2":"",
-				fares:{
-					
-				},
-				leg:['legId']
-			}
+			tripId:{...defaultTripPlannerTripObject},
 		}
 	},
 	result:'responseId'
@@ -234,7 +234,7 @@ function tripplanner(state = tripPlannerInitialState, action)
 	switch(action.type)
 	{
 		case RECIEVE_TRIP_PLANNING:
-			return {...action.data}
+			return {...action.data};
 		default:
 			return {...state};
 	}

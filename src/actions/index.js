@@ -166,12 +166,7 @@ export function fetchTripPlanning()
 
 				const normalized = normalize(json.root, responseSchema);
 
-				// Logger.info('fetchTripPlanning');
-				// Logger.info(normalized);
-				// Logger.info('fetchTripPlanning');
-
 				dispatch(recieveTripPlanning(normalized));
-				// dispatch(setTripPlannerDetails(normalized.entities.request.requstId.trip[0]));
 			});
 		}
 	}

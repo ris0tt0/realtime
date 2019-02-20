@@ -37,7 +37,7 @@ ul li{
 
 .detailsleg
 {
-	max-width: 300px;
+	max-width: 400px;
 }
 
 .detailsleg__time{
@@ -94,7 +94,7 @@ ul li{
 	border-color: blue;
 }
 .tripplannerresult__item{
-	max-width: 300px;
+	max-width: 400px;
 }
 .tripplannerresult__starttime{
 	font-size: 120%
@@ -131,7 +131,7 @@ ul li{
 
 }
 .tripplannerdetails__detailsleg{
-	
+
 }
 
 

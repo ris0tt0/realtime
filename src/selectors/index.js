@@ -116,13 +116,20 @@ const getTripPlannerTripSelector = state => state.tripplanner.entities.trip;
 const getTripPlannerResultSelector = state => state.tripplanner.result;
 const getTripPlannerDetailsIdSelector = state => state.tripPlannerDetailsId;
 
+const getTripPlannerDestinationAbbrSelector = state => state.destinationAbbr;
+const getTripPlannerStartingAbbrSelector = state => state.startingAbbr;
+
+export const getHasDestinationStartingAbbr = createSelector(
+	[getTripPlannerStartingAbbrSelector,getTripPlannerDestinationAbbrSelector],
+	(staringAhbr,destinationAbbr) => staringAhbr.length > 0 && destinationAbbr.length > 0
+)
+
+export const getHasTripPlannerDetailsDetailsId = createSelector(
+	[getTripPlannerDetailsIdSelector],id => id !== 'tripId'
+)
 export const getTripPlannerDetails = createSelector(
 	[getTripPlannerDetailsIdSelector,getTripPlannerTripSelector],
 	(id,trip) => {
-		Logger.info('gettripplannerdetails')
-		Logger.info(id)
-		Logger.info(trip)
-		Logger.info('gettripplannerdetails')
 		return {...trip[id]}
 	});
 
@@ -164,9 +171,8 @@ export const getTripPlannerTripDetails = createSelector(
 	(tripData,leg,stations,routes) =>
 {
 
-	Logger.info('SELCTORS');
-	Logger.info(tripData);
-	Logger.info('SELCTORS');
+	if(!tripData.hasOwnProperty('leg')) return {};
+	
 	const legList = tripData.leg.map( key =>
 	{
 		const data = {...leg[key]};

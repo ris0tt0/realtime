@@ -4,9 +4,6 @@ import Logger from 'js-logger';
 
 const DetailsLeg = ({data}) =>
 {
-	Logger.info('333333333333333')
-	Logger.info(data);
-	Logger.info('333333333333333')
 	return (
 		<div className='detailsleg'>
 				<span className='detailsleg__time'>{data['@origTimeMin']}</span><span className='detailsleg__name'>{data.origin.name}</span>
@@ -31,9 +28,6 @@ DetailsLeg.propTypes = {
 		'@origTimeMin':PropTypes.string.isRequired,
 		'@origin':PropTypes.string.isRequired,
 		'@trainHeadStation':PropTypes.string.isRequired,
-		'@trainId':PropTypes.string.isRequired,
-		'@trainIdx':PropTypes.string.isRequired,
-		'@transfercode':PropTypes.string.isRequired,
 		destination:PropTypes.shape({
 			abbr:PropTypes.string.isRequired,
 			address:PropTypes.string.isRequired,
