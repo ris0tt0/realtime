@@ -16,13 +16,14 @@ export function Result({trips,onSelect})
 		 * initial default data.
 		 */
 		if( startTime === endTime) return <li key={index}></li>
+		const formattedFare = new Intl.NumberFormat('en-us',{style:'currency',currency:'usd'}).format(parseInt(fare));
 
 		return (
 			<li key={index}>
 				<div className='tripplannerresult__item' onClick={(event) => {event.stopPropagation(); onSelect(tripId)}}>
 					<span className='tripplannerresult__starttime'>{startTime}</span> - <span className='tripplannerresult__endtime'>{endTime}</span>
 					< br/>
-					<span className='tripplannerresult__timelength'>Trip time: {timeLength}</span><span className='tripplannerresult__fare'>fare: ${fare}</span>
+					<span className='tripplannerresult__timelength'>Trip time: {timeLength}</span><span className='tripplannerresult__fare'>fare: {formattedFare}</span>
 				</div>
 			</li>);
 	});

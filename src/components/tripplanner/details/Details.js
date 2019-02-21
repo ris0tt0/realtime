@@ -9,6 +9,7 @@ export function Details({data})
 
 	const detailsleg = data.leg.map( (item,index) => <li key={index}><DetailsLeg data={item} /></li> );
 	const changes = data.leg.length;
+	const formattedFare = new Intl.NumberFormat('en-us',{style:'currency',currency:'usd'}).format(parseInt(data.fare));
 
 	return (
 		<div className='tripplannerdetails'>
@@ -18,7 +19,7 @@ export function Details({data})
 				<div className='tripplannerdetails__arrival'><span>arrival: {data.destTimeMin}</span></div>
 				<div className='tripplannerdetails__time'><span>trip time: {data.tripTime} min.</span></div>
 				<div className='tripplannerdetails__changes'><span>changes:{changes}</span></div>
-				<div className='tripplannerdetails__fare'><span>fare: ${data.fare}</span></div>
+				<div className='tripplannerdetails__fare'><span>fare: {formattedFare}</span></div>
 			</div>
 			<div className='tripplannerdetails__detailsleg'>
 				<ul>
