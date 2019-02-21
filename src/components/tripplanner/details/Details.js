@@ -14,11 +14,11 @@ export function Details({data})
 		<div className='tripplannerdetails'>
 			<h3>{data.origin.name} to {data.destination.name}</h3>
 			<div className='tripplannerdetails__info'>
-				<div className='tripplannerdetails__departure'><span>departure {data.origTimeMin}</span></div>
-				<div className='tripplannerdetails__arrival'><span>arrival {data.destTimeMin}</span></div>
+				<div className='tripplannerdetails__departure'><span>departure: {data.origTimeMin}</span></div>
+				<div className='tripplannerdetails__arrival'><span>arrival: {data.destTimeMin}</span></div>
 				<div className='tripplannerdetails__time'><span>trip time: {data.tripTime} min.</span></div>
 				<div className='tripplannerdetails__changes'><span>changes:{changes}</span></div>
-				<div className='tripplannerdetails__fare'><span>fare: {data.fare}</span></div>
+				<div className='tripplannerdetails__fare'><span>fare: ${data.fare}</span></div>
 			</div>
 			<div className='tripplannerdetails__detailsleg'>
 				<ul>

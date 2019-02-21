@@ -18,6 +18,7 @@ export function StationItem({destination,estimate})
 
 	return (
 		<div className='stationitem'>
+			<div className='stationitem__color'></div>
 			<span className='stationitem__destination'>{destination}</span>
 			<span className='stationitem__times'>{times}</span>
 		</div>

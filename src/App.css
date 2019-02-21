@@ -1,16 +1,16 @@
 .App {
 	/* text-align: left; */
-	background-color:snow;
+	/* background-color:gray; */
 	font-family: Arial, Helvetica, sans-serif;
 }
 div
 {
-	border-style: solid;
+	/* border-style: solid;
 	border-width: 1px;
-	border-color:gray;
+	border-color:gray; */
 	max-width: 700px;
-	margin: 1px;
-	padding: 1px;
+	/* margin: 1px;
+	padding: 1px; */
 }
 
 ul {
@@ -24,8 +24,18 @@ ul li{
 	max-width: 90%;
 }
 
+/**
+the station items located in real time departures.
+**/
 .stationitem{
-	border-color: blue;
+	background-color: whitesmoke;
+	margin: 3px;
+	padding: 2px;
+}
+.stationitem__color{
+	/* background-color: red;
+	width: 5%;
+	height: 5px; */
 }
 .stationitem__destination{
 	font-size: 120%;
@@ -35,9 +45,13 @@ ul li{
 	font-size: 90%;
 }
 
+
 .detailsleg
 {
 	max-width: 400px;
+	background-color: whitesmoke;
+	margin: 3px;
+	padding: 2px;
 }
 
 .detailsleg__time{
@@ -53,12 +67,70 @@ ul li{
 }
 .realtimedepartures
 {
-	border-color: blue;
+	background-color:lavender; 
+	/* border-style: solid;
+	border-width: 1px;
+	border-color: blue; */
+	padding: 5px;
+	/* margin: 10px; */
 }
-.stationselection
+/* 
+	the Real Time Departures header and train count 
+*/
+.realtimedepartures__information{
+	/* border-style: solid;
+	border-width: 1px;
+	border-color:blueviolet; */
+}
+.realtimedepartures__stationselection{
+	/* border-style: solid;
+	border-width: 1px;
+	border-color: blue; */
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.realtimedepartures__sort{
+	/* border-style: solid;
+	border-width: 1px;
+	border-color: palegoldenrod; */
+	padding: 5px;
+}
+.realtimedepartures__sort__header{
+	/* border-style: solid;
+	border-width: 1px;
+	border-color: teal; */
+}
+.realtimedepartures__sort__headerName{
+	/* border-style: solid;
+	border-width: 1px;
+	border-color: pink; */
+	font-size: 140%;
+}
+.realtimedepartures__sort__headerTime{
+	/* border-style: solid;
+	border-width: 1px;
+	border-color: brown; */
+	font-size: 80%;
+	float: right;
+}
+.realtimedepartures__sort__control{
+	/* border-style: solid;
+	border-width: 1px;
+	border-color: black; */
+	/* float: right; */
+}
+
+
+
+.stationselection__starting
 {
-	border-color: blue;
+	border-color: red;
 }
+.stationselection__destination{
+	border-color: red;
+}
+
 .platform{
 	border-color: blue;
 }
@@ -70,31 +142,17 @@ ul li{
 	border-color: blue;
 }
 
-.information{
-	border-color: blue;
-}
 
-.sort{
-	border-color: blue;
-}
-.sort__header{
-	border-color: blue;
-}
-.sort__headerName{
-	/* border-color: blue; */
-}
-.sort__headerTime{
-	/* border-color: blue; */
-	float: right;
-}
-.sort__control{
-	border-color: blue;
-}
+
+
 .tripplannerresult{
 	border-color: blue;
 }
 .tripplannerresult__item{
 	max-width: 400px;
+	background-color: whitesmoke;
+	margin: 3px;
+	padding: 2px;
 }
 .tripplannerresult__starttime{
 	font-size: 120%
@@ -136,17 +194,12 @@ ul li{
 
 
 .tripplanner{
-	border-color: red;
-}.tripplanner__header{
+	/* border-style: solid;
+	border-width: 1px;
+	border-color: red; */
+	background-color:lavender; 
+	padding: 5px;
+}
+.tripplanner__header{
 	border-color: blue;
-}
-.stationselection{
-	border-color: blue;
-}
-.stationselection__starting
-{
-	border-color: red;
-}
-.stationselection__destination{
-	border-color: red;
 }

@@ -6,12 +6,12 @@ import Logger from 'js-logger';
 export function Sort({time,stationName,onClick})
 {
 	return (
-		<div className='sort'>
-			<div className='sort__header'>
-				<span className='sort_headerName'>{stationName}</span>
-				<span className='sort__headerTIme'>{time}</span>
+		<div className='realtimedepartures__sort'>
+			<div className='realtimedepartures__sort__header'>
+				<div className='realtimedepartures__sort__headerName'><b>{stationName}</b></div>
+				<div className='realtimedepartures__sort__headerTime'>Updated: {time}</div>
 			</div>
-			<div className='sort__control'>
+			<div className='realtimedepartures__sort__control'>
 				<span>Sort by: </span>
 					<a href="#" onClick={e => {e.stopPropagation(); onClick('name');}}>Name</a> | <a href="#" key='platfrom' onClick={e => {e.stopPropagation();onClick('platform');}}>Platform</a>
 			</div>
