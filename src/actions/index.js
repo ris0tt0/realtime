@@ -1,11 +1,15 @@
 import { normalize, schema } from 'normalizr';
-import { normalizeStations } from '../normalize';
+import { normalizeAdvisories, normalizeStations } from '../normalize';
 
 export const GET_ETA = 'get eta';
 
 export const REQUESTING_STATIONS = 'requesting stations';
 export const REQUESTING_STATIONS_ERROR = 'requesting stations error';
 export const RECEIVE_STATIONS = 'receive stations';
+
+export const REQUESTING_ADVISORIES = 'requesting advisors';
+export const REQUESTING_ADVISORIES_ERROR = 'requesting advisories error';
+export const RECEIVE_ADVISORIES = 'receive advisories';
 
 export const RECEIVE_TRAIN_COUNT = 'receive train count';
 export const RECEIVE_RTE = 'receive real time estimate';
@@ -34,6 +38,19 @@ export const requestingStationsError = (payload) => ({
 });
 export const receiveStations = (payload) => ({
   type: RECEIVE_STATIONS,
+  payload,
+});
+
+export const requestingAdvisories = (payload) => ({
+  type: REQUESTING_ADVISORIES,
+  payload,
+});
+export const requestingAdvisoriesError = (payload) => ({
+  type: REQUESTING_ADVISORIES_ERROR,
+  payload,
+});
+export const receiveAdvisories = (payload) => ({
+  type: RECEIVE_ADVISORIES,
   payload,
 });
 
@@ -86,7 +103,7 @@ export function fetchRoutes() {
 
 export function requestStations() {
   return (dispatch, _, { API_KEY }) => {
-    requestingStations(true);
+    dispatch(requestingStations(true));
     return fetch(
       `http://api.bart.gov/api/stn.aspx?cmd=stns&key=${API_KEY}&json=y`
     )
@@ -94,7 +111,21 @@ export function requestStations() {
       .then((json) => normalizeStations(json))
       .then((normalized) => dispatch(receiveStations(normalized)))
       .catch((error) => dispatch(requestingStationsError(error)))
-      .finally(() => requestingStations(false));
+      .finally(() => dispatch(requestingStations(false)));
+  };
+}
+
+export function requestAdvisories() {
+  return (dispatch, _, { API_KEY }) => {
+    dispatch(requestingAdvisories(true));
+    return fetch(
+      `https://api.bart.gov/api/bsa.aspx?cmd=bsa&key=${API_KEY}&json=y`
+    )
+      .then((response) => response.json())
+      .then((json) => normalizeAdvisories(json))
+      .then((normalized) => dispatch(receiveAdvisories(normalized)))
+      .catch((error) => dispatch(requestingAdvisoriesError(error)))
+      .finally(() => dispatch(requestingAdvisories(false)));
   };
 }
 

@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
 import {
+  RECEIVE_ADVISORIES,
   RECEIVE_ROUTES,
   RECEIVE_RTE,
   RECEIVE_STATIONS,
   RECEIVE_TRAIN_COUNT,
   RECEIVE_TRIP_PLANNING,
+  REQUESTING_ADVISORIES,
+  REQUESTING_ADVISORIES_ERROR,
   REQUESTING_STATIONS_ERROR,
   SET_DESTINATION_ABBR,
   SET_STARTING_ABBR,
@@ -245,7 +248,31 @@ function routes(state = routesInitialState, action) {
   }
 }
 
+const advisories = produce(
+  (
+    draft = { isRequesting: false, entities: {}, result: [], error: null },
+    action
+  ) => {
+    switch (action.type) {
+      case REQUESTING_ADVISORIES:
+        draft.isRequesting = action.payload;
+        break;
+      case REQUESTING_ADVISORIES_ERROR:
+        draft.error = action.payload;
+        break;
+      case RECEIVE_ADVISORIES:
+        Object.keys(action.payload).forEach(
+          (key) => (draft[key] = action.payload[key])
+        );
+        break;
+      default:
+        return draft;
+    }
+  }
+);
+
 const rootReducer = combineReducers({
+  advisories,
   rtd,
   routes,
   stations,
