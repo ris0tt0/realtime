@@ -5,11 +5,14 @@ import {
   RECEIVE_STATIONS,
   RECEIVE_TRAIN_COUNT,
   RECEIVE_TRIP_PLANNING,
+  REQUESTING_STATIONS_ERROR,
   SET_DESTINATION_ABBR,
   SET_STARTING_ABBR,
   SET_TRIP_PLANNER_DETAILS,
   SHOW_SORT_SELECTION,
 } from '../actions/';
+
+import produce from 'immer';
 
 const rtdInitialState = {
   entities: {
@@ -66,37 +69,22 @@ function rtd(state = rtdInitialState, action) {
   }
 }
 
-const statationsInitialState = {
-  entities: {
-    stations: {
-      '12TH': {
-        abbr: '',
-        address: '',
-        city: '',
-        county: '',
-        gtfs_latitude: '',
-        gtfs_longitude: '',
-        id: '',
-        name: '',
-        state: '',
-        zipcode: '',
-      },
-    },
-  },
-  result: ['12TH'],
-};
-
-function stations(state = statationsInitialState, action) {
-  // Logger.info(`reducer::stations`);
-
-  switch (action.type) {
-    case RECEIVE_STATIONS:
-      const stations = action.stations;
-      return { ...stations };
-    default:
-      return { ...state };
+const stations = produce(
+  (draft = { isRequesting: false, entities: {}, result: [] }, action) => {
+    switch (action.type) {
+      case REQUESTING_STATIONS_ERROR:
+        draft.isRequesting = action.payload;
+        return;
+      case RECEIVE_STATIONS:
+        Object.keys(action.payload).map(
+          (key) => (draft[key] = action.payload[key])
+        );
+        return;
+      default:
+        return draft;
+    }
   }
-}
+);
 
 const trainCountInitailState = {
   result: 'id',

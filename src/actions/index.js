@@ -1,8 +1,12 @@
 import { normalize, schema } from 'normalizr';
+import { normalizeStations } from '../normalize';
 
 export const GET_ETA = 'get eta';
-export const GET_STATIONS = 'get stations';
+
+export const REQUESTING_STATIONS = 'requesting stations';
+export const REQUESTING_STATIONS_ERROR = 'requesting stations error';
 export const RECEIVE_STATIONS = 'receive stations';
+
 export const RECEIVE_TRAIN_COUNT = 'receive train count';
 export const RECEIVE_RTE = 'receive real time estimate';
 export const RECEIVE_TRIP_PLANNING = 'receive trip planning';
@@ -16,15 +20,23 @@ export const SHOW_SORT_SELECTION = 'show sort selection';
 export function getETA(station) {
   return { type: GET_ETA, station };
 }
-export function getStations() {
-  return { type: GET_STATIONS };
-}
 export function receiveRoutes(routes) {
   return { type: RECEIVE_ROUTES, routes };
 }
-export function receiveStations(stations) {
-  return { type: RECEIVE_STATIONS, stations };
-}
+
+export const requestingStations = (payload) => ({
+  type: REQUESTING_STATIONS,
+  payload,
+});
+export const requestingStationsError = (payload) => ({
+  type: REQUESTING_STATIONS_ERROR,
+  payload,
+});
+export const receiveStations = (payload) => ({
+  type: RECEIVE_STATIONS,
+  payload,
+});
+
 export function receiveTrainCount(data) {
   return { type: RECEIVE_TRAIN_COUNT, data };
 }
@@ -72,23 +84,17 @@ export function fetchRoutes() {
   };
 }
 
-export function fetchStations() {
-  return (dispatch, getState, { API_KEY }) => {
+export function requestStations() {
+  return (dispatch, _, { API_KEY }) => {
+    requestingStations(true);
     return fetch(
       `http://api.bart.gov/api/stn.aspx?cmd=stns&key=${API_KEY}&json=y`
     )
       .then((response) => response.json())
-      .then((json) => {
-        const stationSchema = new schema.Entity('stations');
-        // add id.
-        const idAdded = json.root.stations.station.map((item) => {
-          return { ...item, id: item.abbr };
-        });
-        // normalize the station data.
-        const normalized = normalize(idAdded, [stationSchema]);
-
-        dispatch(receiveStations(normalized));
-      });
+      .then((json) => normalizeStations(json))
+      .then((normalized) => dispatch(receiveStations(normalized)))
+      .catch((error) => dispatch(requestingStationsError(error)))
+      .finally(() => requestingStations(false));
   };
 }
 
