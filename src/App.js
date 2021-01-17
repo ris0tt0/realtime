@@ -2,7 +2,7 @@ import { Button, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { requestAdvisories } from './actions';
+import { requestTrainCount } from './actions';
 
 const useStyles = makeStyles({
   root: {
@@ -10,6 +10,7 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '100vh',
+    margin: 0,
   },
 });
 
@@ -22,9 +23,9 @@ const App = () => {
       <Button
         variant="contained"
         size="small"
-        onClick={() => dispatch(requestAdvisories())}
+        onClick={() => dispatch(requestTrainCount())}
       >
-        load
+        start
       </Button>
     </Paper>
   );

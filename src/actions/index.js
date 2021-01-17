@@ -1,17 +1,12 @@
 import { normalize, schema } from 'normalizr';
-import { normalizeAdvisories, normalizeStations } from '../normalize';
+import {
+  normalizeAdvisories,
+  normalizeStations,
+  normalizeTrainCount,
+} from '../normalize';
 
 export const GET_ETA = 'get eta';
 
-export const REQUESTING_STATIONS = 'requesting stations';
-export const REQUESTING_STATIONS_ERROR = 'requesting stations error';
-export const RECEIVE_STATIONS = 'receive stations';
-
-export const REQUESTING_ADVISORIES = 'requesting advisors';
-export const REQUESTING_ADVISORIES_ERROR = 'requesting advisories error';
-export const RECEIVE_ADVISORIES = 'receive advisories';
-
-export const RECEIVE_TRAIN_COUNT = 'receive train count';
 export const RECEIVE_RTE = 'receive real time estimate';
 export const RECEIVE_TRIP_PLANNING = 'receive trip planning';
 export const RECEIVE_ROUTES = 'receive routes';
@@ -28,35 +23,6 @@ export function receiveRoutes(routes) {
   return { type: RECEIVE_ROUTES, routes };
 }
 
-export const requestingStations = (payload) => ({
-  type: REQUESTING_STATIONS,
-  payload,
-});
-export const requestingStationsError = (payload) => ({
-  type: REQUESTING_STATIONS_ERROR,
-  payload,
-});
-export const receiveStations = (payload) => ({
-  type: RECEIVE_STATIONS,
-  payload,
-});
-
-export const requestingAdvisories = (payload) => ({
-  type: REQUESTING_ADVISORIES,
-  payload,
-});
-export const requestingAdvisoriesError = (payload) => ({
-  type: REQUESTING_ADVISORIES_ERROR,
-  payload,
-});
-export const receiveAdvisories = (payload) => ({
-  type: RECEIVE_ADVISORIES,
-  payload,
-});
-
-export function receiveTrainCount(data) {
-  return { type: RECEIVE_TRAIN_COUNT, data };
-}
 export function receiveRTE(data) {
   return { type: RECEIVE_RTE, data };
 }
@@ -101,6 +67,21 @@ export function fetchRoutes() {
   };
 }
 
+export const REQUESTING_STATIONS = 'requesting stations';
+export const REQUESTING_STATIONS_ERROR = 'requesting stations error';
+export const RECEIVE_STATIONS = 'receive stations';
+export const requestingStations = (payload) => ({
+  type: REQUESTING_STATIONS,
+  payload,
+});
+export const requestingStationsError = (payload) => ({
+  type: REQUESTING_STATIONS_ERROR,
+  payload,
+});
+export const receiveStations = (payload) => ({
+  type: RECEIVE_STATIONS,
+  payload,
+});
 export function requestStations() {
   return (dispatch, _, { API_KEY }) => {
     dispatch(requestingStations(true));
@@ -114,7 +95,21 @@ export function requestStations() {
       .finally(() => dispatch(requestingStations(false)));
   };
 }
-
+export const REQUESTING_ADVISORIES = 'requesting advisors';
+export const REQUESTING_ADVISORIES_ERROR = 'requesting advisories error';
+export const RECEIVE_ADVISORIES = 'receive advisories';
+export const requestingAdvisories = (payload) => ({
+  type: REQUESTING_ADVISORIES,
+  payload,
+});
+export const requestingAdvisoriesError = (payload) => ({
+  type: REQUESTING_ADVISORIES_ERROR,
+  payload,
+});
+export const receiveAdvisories = (payload) => ({
+  type: RECEIVE_ADVISORIES,
+  payload,
+});
 export function requestAdvisories() {
   return (dispatch, _, { API_KEY }) => {
     dispatch(requestingAdvisories(true));
@@ -128,26 +123,32 @@ export function requestAdvisories() {
       .finally(() => dispatch(requestingAdvisories(false)));
   };
 }
-
-export function fetchTrainCount() {
+export const REQUESTING_TRAIN_COUNT = 'requesting train cout';
+export const REQUESTING_TRAIN_COUNT_ERROR = 'requesting train count error';
+export const RECEIVE_TRAIN_COUNT = 'receive train count';
+export const requestingTrainCount = (payload) => ({
+  type: REQUESTING_TRAIN_COUNT,
+  payload,
+});
+export const requestinTrainCountError = (payload) => ({
+  type: REQUESTING_TRAIN_COUNT_ERROR,
+  payload,
+});
+export const receiveTrainCount = (payload) => ({
+  type: RECEIVE_TRAIN_COUNT,
+  payload,
+});
+export function requestTrainCount() {
   return (dispatch, getState, { API_KEY }) => {
+    dispatch(requestingTrainCount(true));
     return fetch(
       `http://api.bart.gov/api/bsa.aspx?cmd=count&key=${API_KEY}&json=y`
     )
       .then((response) => response.json())
-      .then((json) => {
-        const uriSchema = new schema.Entity('uri', undefined, {
-          idAttribute: (uri) => 'uriId',
-        });
-        const trainCountSchema = new schema.Entity(
-          'traincount',
-          { uri: uriSchema },
-          { idAttribute: (train) => train.time }
-        );
-        const data = normalize(json.root, trainCountSchema);
-
-        dispatch(receiveTrainCount(data));
-      });
+      .then((json) => normalizeTrainCount(json))
+      .then((normalized) => dispatch(receiveTrainCount(normalized)))
+      .catch((error) => dispatch(requestinTrainCountError(error)))
+      .finally(() => dispatch(requestingTrainCount(false)));
   };
 }
 

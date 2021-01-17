@@ -16,3 +16,16 @@ export const normalizeAdvisories = (json) => {
   const normalized = normalize(json.root, { bsa: [bsaSchema] });
   return normalized;
 };
+
+export const normalizeTrainCount = (json) => {
+  const uriSchema = new schema.Entity('uri', undefined, {
+    idAttribute: (uri) => 'uriId',
+  });
+  const trainCountSchema = new schema.Entity(
+    'traincount',
+    { uri: uriSchema },
+    { idAttribute: (train) => train.time }
+  );
+  const normalized = normalize(json.root, trainCountSchema);
+  return normalized;
+};

@@ -9,6 +9,8 @@ import {
   REQUESTING_ADVISORIES,
   REQUESTING_ADVISORIES_ERROR,
   REQUESTING_STATIONS_ERROR,
+  REQUESTING_TRAIN_COUNT,
+  REQUESTING_TRAIN_COUNT_ERROR,
   SET_DESTINATION_ABBR,
   SET_STARTING_ABBR,
   SET_TRIP_PLANNER_DETAILS,
@@ -89,31 +91,27 @@ const stations = produce(
   }
 );
 
-const trainCountInitailState = {
-  result: 'id',
-  entities: {
-    traincount: {
-      id: {
-        date: '',
-        message: '',
-        time: '',
-        traincount: 'unknown',
-        uri: 'id',
-      },
-    },
-    uri: {
-      id: { '#data-selection': '' },
-    },
-  },
-};
-function traincount(state = trainCountInitailState, action) {
-  switch (action.type) {
-    case RECEIVE_TRAIN_COUNT:
-      return { ...action.data };
-    default:
-      return { ...state };
+const traincount = produce(
+  (
+    draft = { isRequesting: false, entities: {}, result: [], error: null },
+    action
+  ) => {
+    switch (action.type) {
+      case REQUESTING_TRAIN_COUNT_ERROR:
+        draft.error = action.payload;
+        return;
+      case REQUESTING_TRAIN_COUNT:
+        draft.isRequesting = action.paylod;
+        return;
+      case RECEIVE_TRAIN_COUNT:
+        draft.entities = action.payload.entities;
+        draft.result = action.payload.result;
+        return;
+      default:
+        return draft;
+    }
   }
-}
+);
 
 function sortSelection(state = '', action) {
   switch (action.type) {
