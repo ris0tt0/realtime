@@ -8,6 +8,8 @@ import {
   RECEIVE_TRIP_PLANNING,
   REQUESTING_ADVISORIES,
   REQUESTING_ADVISORIES_ERROR,
+  REQUESTING_INITIAL_DATA,
+  REQUESTING_INITIAL_DATA_ERROR,
   REQUESTING_STATIONS_ERROR,
   REQUESTING_TRAIN_COUNT,
   REQUESTING_TRAIN_COUNT_ERROR,
@@ -19,53 +21,7 @@ import {
 
 import produce from 'immer';
 
-const rtdInitialState = {
-  entities: {
-    estimate: {
-      id: {
-        bikeflag: '',
-        color: '',
-        delay: '',
-        direction: '',
-        hexcolor: '',
-        length: '',
-        minutes: '',
-        platform: '',
-      },
-    },
-    etd: {
-      id: {
-        abbreviation: '',
-        destination: '',
-        estimate: ['id'],
-        limited: '',
-      },
-    },
-    response: {
-      id: {
-        '@id': '',
-        date: '',
-        message: '',
-        station: 'id',
-        time: '',
-        uri: 'id',
-      },
-    },
-    station: {
-      id: {
-        abbr: '',
-        name: '',
-        etd: ['id'],
-      },
-    },
-    uri: {
-      id: { '#data-selection': '' },
-    },
-  },
-  result: 'id',
-};
-
-function rtd(state = rtdInitialState, action) {
+function rtd(state = {}, action) {
   switch (action.type) {
     case RECEIVE_RTE:
       return { ...action.data };
@@ -73,45 +29,6 @@ function rtd(state = rtdInitialState, action) {
       return { ...state };
   }
 }
-
-const stations = produce(
-  (draft = { isRequesting: false, entities: {}, result: [] }, action) => {
-    switch (action.type) {
-      case REQUESTING_STATIONS_ERROR:
-        draft.isRequesting = action.payload;
-        return;
-      case RECEIVE_STATIONS:
-        Object.keys(action.payload).map(
-          (key) => (draft[key] = action.payload[key])
-        );
-        return;
-      default:
-        return draft;
-    }
-  }
-);
-
-const traincount = produce(
-  (
-    draft = { isRequesting: false, entities: {}, result: [], error: null },
-    action
-  ) => {
-    switch (action.type) {
-      case REQUESTING_TRAIN_COUNT_ERROR:
-        draft.error = action.payload;
-        return;
-      case REQUESTING_TRAIN_COUNT:
-        draft.isRequesting = action.paylod;
-        return;
-      case RECEIVE_TRAIN_COUNT:
-        draft.entities = action.payload.entities;
-        draft.result = action.payload.result;
-        return;
-      default:
-        return draft;
-    }
-  }
-);
 
 function sortSelection(state = '', action) {
   switch (action.type) {
@@ -140,69 +57,7 @@ function startingAbbr(state = '', action) {
   }
 }
 
-export const defaultTripPlannerTripObject = {
-  '@origin': '12TH',
-  '@destination': '12TH',
-  '@fare': '',
-  '@origTimeMin': '',
-  '@origTimeDate': '',
-  '@destTimeMin': '',
-  '@destTimeDate': '',
-  '@clipper': '',
-  '@tripTime': '',
-  '@co2': '',
-  fares: {},
-  leg: ['legId'],
-};
-const tripPlannerInitialState = {
-  entities: {
-    request: {
-      requestId: {
-        trip: ['tripId'],
-      },
-    },
-    fare: {},
-    fares: {},
-    leg: {
-      legId: {
-        '@bikeflag': '',
-        '@destTimeDate': '',
-        '@destTimeMin': '',
-        '@destination': '12TH',
-        '@line': '',
-        '@load': '',
-        '@order': '',
-        '@origTimeDate': '',
-        '@origTimeMin': '',
-        '@origin': '12TH',
-        '@trainHeadStation': '',
-        '@trainId': '',
-        '@trainIdx': '',
-        '@transfercode': '',
-      },
-    },
-    response: {
-      responseId: {
-        schedule: 'scheduleId',
-      },
-    },
-    schedule: {
-      scheduleId: {
-        after: '',
-        before: '',
-        date: '',
-        request: 'requestId',
-        time: '',
-      },
-    },
-    trip: {
-      tripId: { ...defaultTripPlannerTripObject },
-    },
-  },
-  result: 'responseId',
-};
-
-function tripplanner(state = tripPlannerInitialState, action) {
+function tripplanner(state = {}, action) {
   switch (action.type) {
     case RECEIVE_TRIP_PLANNING:
       return { ...action.data };
@@ -220,24 +75,7 @@ function tripPlannerDetailsId(state = 'tripId', action) {
   }
 }
 
-const routesInitialState = {
-  entities: {
-    route: {
-      abbr: '',
-      color: '',
-      hexcolor: '',
-      name: '',
-      number: '',
-      routeID: '',
-    },
-    routes: {
-      id: ['id'],
-    },
-  },
-  result: 'id',
-};
-
-function routes(state = routesInitialState, action) {
+function routes(state = {}, action) {
   switch (action.type) {
     case RECEIVE_ROUTES:
       return { ...action.routes };
@@ -246,7 +84,21 @@ function routes(state = routesInitialState, action) {
   }
 }
 
-const advisories = produce(
+const AppData = produce(
+  (draft = { isRequesting: false, error: null }, action) => {
+    switch (action.type) {
+      case REQUESTING_INITIAL_DATA:
+        draft.isRequesting = action.payload;
+        return;
+      case REQUESTING_INITIAL_DATA_ERROR:
+        draft.error = action.payload;
+        return;
+      default:
+        return draft;
+    }
+  }
+);
+const Advisories = produce(
   (
     draft = { isRequesting: false, entities: {}, result: [], error: null },
     action
@@ -268,13 +120,51 @@ const advisories = produce(
     }
   }
 );
+const Stations = produce(
+  (draft = { isRequesting: false, entities: {}, result: [] }, action) => {
+    switch (action.type) {
+      case REQUESTING_STATIONS_ERROR:
+        draft.isRequesting = action.payload;
+        return;
+      case RECEIVE_STATIONS:
+        draft.entities = action.payload.entities;
+        draft.result = action.payload.result;
+        return;
+      default:
+        return draft;
+    }
+  }
+);
+
+const TrainCount = produce(
+  (
+    draft = { isRequesting: false, entities: {}, result: [], error: null },
+    action
+  ) => {
+    switch (action.type) {
+      case REQUESTING_TRAIN_COUNT_ERROR:
+        draft.error = action.payload;
+        return;
+      case REQUESTING_TRAIN_COUNT:
+        draft.isRequesting = action.paylod;
+        return;
+      case RECEIVE_TRAIN_COUNT:
+        draft.entities = action.payload.entities;
+        draft.result = action.payload.result;
+        return;
+      default:
+        return draft;
+    }
+  }
+);
 
 const rootReducer = combineReducers({
-  advisories,
+  AppData,
+  Advisories,
+  Stations,
+  TrainCount,
   rtd,
   routes,
-  stations,
-  traincount,
   sortSelection,
   destinationAbbr,
   startingAbbr,

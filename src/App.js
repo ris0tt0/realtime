@@ -2,7 +2,7 @@ import { Button, Paper } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { requestTrainCount } from './actions';
+import { requestInitialData } from './actions';
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +23,7 @@ const App = () => {
       <Button
         variant="contained"
         size="small"
-        onClick={() => dispatch(requestTrainCount())}
+        onClick={() => dispatch(requestInitialData())}
       >
         start
       </Button>

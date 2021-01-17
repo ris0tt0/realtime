@@ -66,6 +66,28 @@ export function fetchRoutes() {
       });
   };
 }
+export const REQUESTING_INITIAL_DATA = 'requesting initial data';
+export const REQUESTING_INITIAL_DATA_ERROR = 'requesting initiali data error';
+export const requestingInitialData = (payload) => ({
+  type: REQUESTING_INITIAL_DATA,
+  payload,
+});
+export const requestingInitialDataError = (payload) => ({
+  type: REQUESTING_INITIAL_DATA_ERROR,
+  payload,
+});
+export const requestInitialData = () => async (dispatch) => {
+  try {
+    dispatch(requestingInitialData(true));
+    await dispatch(requestAdvisories());
+    await dispatch(requestStations());
+    await dispatch(requestTrainCount());
+  } catch (error) {
+    dispatch(requestingInitialDataError(error));
+  } finally {
+    dispatch(requestingInitialData(false));
+  }
+};
 
 export const REQUESTING_STATIONS = 'requesting stations';
 export const REQUESTING_STATIONS_ERROR = 'requesting stations error';
