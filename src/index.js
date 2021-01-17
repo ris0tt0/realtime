@@ -2,10 +2,9 @@ import Logger from 'js-logger';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import App from './App';
+import { App } from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './store';
-
 // eslint-disable-next-line react-hooks/rules-of-hooks
 Logger.useDefaults();
 
