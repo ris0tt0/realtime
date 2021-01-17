@@ -2,16 +2,15 @@ import { normalize, schema } from 'normalizr';
 
 export const GET_ETA = 'get eta';
 export const GET_STATIONS = 'get stations';
-export const RECIEVE_STATIONS = 'receive stations';
-export const RECIEVE_TRAIN_COUNT = 'recieve train count';
-export const RECIEVE_RTE = 'receieve real time estimate';
-export const RECIEVE_TRIP_PLANNING = 'receieve trip planning';
-export const RECIEVE_ROUTES = 'recieve routes';
+export const RECEIVE_STATIONS = 'receive stations';
+export const RECEIVE_TRAIN_COUNT = 'receive train count';
+export const RECEIVE_RTE = 'receive real time estimate';
+export const RECEIVE_TRIP_PLANNING = 'receive trip planning';
+export const RECEIVE_ROUTES = 'receive routes';
 export const SET_STARTING_ABBR = 'set starting abbr';
 export const SET_DESTINATION_ABBR = 'set destination abbr';
 export const SET_TRIP_PLANNER_DETAILS = 'set trip planner details';
 export const SET_TRIP_PLANNER_LEG_IDS = 'set trip planner leg ids;';
-
 export const SHOW_SORT_SELECTION = 'show sort selection';
 
 export function getETA(station) {
@@ -20,20 +19,20 @@ export function getETA(station) {
 export function getStations() {
   return { type: GET_STATIONS };
 }
-export function recieveRoutes(routes) {
-  return { type: RECIEVE_ROUTES, routes };
+export function receiveRoutes(routes) {
+  return { type: RECEIVE_ROUTES, routes };
 }
-export function recieveStations(stations) {
-  return { type: RECIEVE_STATIONS, stations };
+export function receiveStations(stations) {
+  return { type: RECEIVE_STATIONS, stations };
 }
-export function recieveTrainCount(data) {
-  return { type: RECIEVE_TRAIN_COUNT, data };
+export function receiveTrainCount(data) {
+  return { type: RECEIVE_TRAIN_COUNT, data };
 }
-export function recieveRTE(data) {
-  return { type: RECIEVE_RTE, data };
+export function receiveRTE(data) {
+  return { type: RECEIVE_RTE, data };
 }
-export function recieveTripPlanning(data) {
-  return { type: RECIEVE_TRIP_PLANNING, data };
+export function receiveTripPlanning(data) {
+  return { type: RECEIVE_TRIP_PLANNING, data };
 }
 export function showSortSelection(selection) {
   return { type: SHOW_SORT_SELECTION, selection };
@@ -51,12 +50,10 @@ export function setTripPlannerLegIds(legIds) {
   return { type: SET_TRIP_PLANNER_LEG_IDS, legIds };
 }
 
-const DEV_KEY = 'MW9S-E7SL-26DU-VV8V';
-
 export function fetchRoutes() {
-  return (dispatch) => {
+  return (dispatch, getState, { API_KEY }) => {
     return fetch(
-      `http://api.bart.gov/api/route.aspx?cmd=routes&key=${DEV_KEY}&json=y`
+      `http://api.bart.gov/api/route.aspx?cmd=routes&key=${API_KEY}&json=y`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -70,15 +67,15 @@ export function fetchRoutes() {
         );
         const normalized = normalize(json.root.routes, routesSchema);
 
-        dispatch(recieveRoutes(normalized));
+        dispatch(receiveRoutes(normalized));
       });
   };
 }
 
 export function fetchStations() {
-  return (dispatch) => {
+  return (dispatch, getState, { API_KEY }) => {
     return fetch(
-      `http://api.bart.gov/api/stn.aspx?cmd=stns&key=${DEV_KEY}&json=y`
+      `http://api.bart.gov/api/stn.aspx?cmd=stns&key=${API_KEY}&json=y`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -90,15 +87,15 @@ export function fetchStations() {
         // normalize the station data.
         const normalized = normalize(idAdded, [stationSchema]);
 
-        dispatch(recieveStations(normalized));
+        dispatch(receiveStations(normalized));
       });
   };
 }
 
 export function fetchTrainCount() {
-  return (dispatch) => {
+  return (dispatch, getState, { API_KEY }) => {
     return fetch(
-      `http://api.bart.gov/api/bsa.aspx?cmd=count&key=${DEV_KEY}&json=y`
+      `http://api.bart.gov/api/bsa.aspx?cmd=count&key=${API_KEY}&json=y`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -112,15 +109,15 @@ export function fetchTrainCount() {
         );
         const data = normalize(json.root, trainCountSchema);
 
-        dispatch(recieveTrainCount(data));
+        dispatch(receiveTrainCount(data));
       });
   };
 }
 
 export function fetchRealTimeEstimates(station) {
-  return (dispatch) => {
+  return (dispatch, getState, { API_KEY }) => {
     return fetch(
-      `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${station}&key=${DEV_KEY}&json=y`
+      `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${station}&key=${API_KEY}&json=y`
     )
       .then((response) => response.json())
       .then((json) => {
@@ -160,13 +157,13 @@ export function fetchRealTimeEstimates(station) {
         );
         const normalized = normalize(json.root, responseSchema);
 
-        dispatch(recieveRTE(normalized));
+        dispatch(receiveRTE(normalized));
       });
   };
 }
 
 export function fetchTripPlanning() {
-  return (dispatch, getState) => {
+  return (dispatch, getState, { API_KEY }) => {
     const { startingAbbr, destinationAbbr } = getState();
 
     if (
@@ -176,7 +173,7 @@ export function fetchTripPlanning() {
       destinationAbbr.length > 0
     ) {
       return fetch(
-        `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${startingAbbr}&dest=${destinationAbbr}&date=today&time=now&key=${DEV_KEY}&b=1&a=4&json=y`
+        `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${startingAbbr}&dest=${destinationAbbr}&date=today&time=now&key=${API_KEY}&b=1&a=4&json=y`
       )
         .then((response) => response.json())
         .then((json) => {
@@ -221,7 +218,7 @@ export function fetchTripPlanning() {
 
           const normalized = normalize(json.root, responseSchema);
 
-          dispatch(recieveTripPlanning(normalized));
+          dispatch(receiveTripPlanning(normalized));
         });
     }
   };
