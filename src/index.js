@@ -1,48 +1,22 @@
+import Logger from 'js-logger';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { Provider } from 'react-redux';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import reportWebVitals from './reportWebVitals';
+import { store } from './store';
 
-import thunkMiddleware from 'redux-thunk';
-import { Provider } from 'react-redux'
-import Logger from 'js-logger'
-import { createStore,applyMiddleware,compose } from 'redux';
-import rootReducer from './reducers/';
-import {fetchTrainCount, fetchStations,fetchRealTimeEstimates, fetchRoutes} from './actions/';
-
-import {getStationArray} from './selectors/';
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
-	rootReducer,
-	composeEnhancers(applyMiddleware(thunkMiddleware))
-	);
-
+// eslint-disable-next-line react-hooks/rules-of-hooks
 Logger.useDefaults();
 
-const remove = store.subscribe( () => Logger.info(store.getState()) );
-
-store.dispatch( fetchStations())
-	.then( () => store.dispatch( fetchRoutes() ))
-	.then( () => store.dispatch( fetchTrainCount() ))
-	.then( () => 
-		{
-			const stations = getStationArray(store.getState());
-			if( stations[0] && stations[0].abbr)
-			{
-				store.dispatch( fetchRealTimeEstimates( stations[0].abbr ));
-				return;
-			}
-			
-			Logger.warn('Unable to find stations abbreviation');
-		});
-
 ReactDOM.render(
-	<Provider store={store}><App /></Provider>, document.getElementById('root'));
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    document.getElementById('root')
+);
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

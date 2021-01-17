@@ -1,18 +1,7 @@
-import React, { Component } from 'react';
-import './App.scss';
+import React from 'react';
 
-import RealTimeDepartures from './components/realtimedepartures';
-import {TripPlanner} from './components/tripplanner/TripPlanner';
-
-class App extends Component {
-	render() {
-		return (
-			<div className="App">
-				<RealTimeDepartures />
-				<TripPlanner />
-			</div>
-		);
-	}
+function App() {
+    return <div>we has new version right now</div>;
 }
 
 export default App;
