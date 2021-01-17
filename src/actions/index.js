@@ -1,6 +1,7 @@
 import { normalize, schema } from 'normalizr';
 import {
   normalizeAdvisories,
+  normalizeElevators,
   normalizeStations,
   normalizeTrainCount,
 } from '../normalize';
@@ -82,6 +83,7 @@ export const requestInitialData = () => async (dispatch) => {
     await dispatch(requestAdvisories());
     await dispatch(requestStations());
     await dispatch(requestTrainCount());
+    await dispatch(requestElevatorStatus());
   } catch (error) {
     dispatch(requestingInitialDataError(error));
   } finally {
@@ -171,6 +173,36 @@ export function requestTrainCount() {
       .then((normalized) => dispatch(receiveTrainCount(normalized)))
       .catch((error) => dispatch(requestinTrainCountError(error)))
       .finally(() => dispatch(requestingTrainCount(false)));
+  };
+}
+
+export const REQUESTING_ELEVATOR_STATUS = 'requesting elevator status';
+export const REQUESTING_ELEVATOR_STATUS_ERROR =
+  'requesting elevator status error';
+export const RECEIVE_ELEVATOR_STATUS = 'receive elevator status';
+export const requestingElevatorStatus = (payload) => ({
+  type: REQUESTING_ELEVATOR_STATUS,
+  payload,
+});
+export const requestingElevatorStatusError = (payload) => ({
+  type: REQUESTING_ELEVATOR_STATUS_ERROR,
+  payload,
+});
+export const receiveElevatorStatus = (payload) => ({
+  type: RECEIVE_ELEVATOR_STATUS,
+  payload,
+});
+export function requestElevatorStatus() {
+  return (dispatch, _, { API_KEY }) => {
+    dispatch(requestingElevatorStatus(true));
+    return fetch(
+      `http://api.bart.gov/api/bsa.aspx?cmd=elev&key=${API_KEY}&json=y`
+    )
+      .then((response) => response.json())
+      .then((json) => normalizeElevators(json))
+      .then((normalized) => dispatch(receiveElevatorStatus(normalized)))
+      .catch((error) => dispatch(requestingElevatorStatusError(error)))
+      .finally(() => dispatch(requestingElevatorStatus(false)));
   };
 }
 

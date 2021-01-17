@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {
   RECEIVE_ADVISORIES,
+  RECEIVE_ELEVATOR_STATUS,
   RECEIVE_ROUTES,
   RECEIVE_RTE,
   RECEIVE_STATIONS,
@@ -8,6 +9,8 @@ import {
   RECEIVE_TRIP_PLANNING,
   REQUESTING_ADVISORIES,
   REQUESTING_ADVISORIES_ERROR,
+  REQUESTING_ELEVATOR_STATUS,
+  REQUESTING_ELEVATOR_STATUS_ERROR,
   REQUESTING_INITIAL_DATA,
   REQUESTING_INITIAL_DATA_ERROR,
   REQUESTING_STATIONS_ERROR,
@@ -158,11 +161,34 @@ const TrainCount = produce(
   }
 );
 
+const ElevatorStatus = produce(
+  (
+    draft = { isRequesting: false, entities: {}, result: [], error: null },
+    action
+  ) => {
+    switch (action.type) {
+      case REQUESTING_ELEVATOR_STATUS:
+        draft.isRequesting = action.payload;
+        return;
+      case REQUESTING_ELEVATOR_STATUS_ERROR:
+        draft.error = action.payload;
+        return;
+      case RECEIVE_ELEVATOR_STATUS:
+        draft.entities = action.payload.entities;
+        draft.result = action.payload.result;
+        return;
+      default:
+        return draft;
+    }
+  }
+);
+
 const rootReducer = combineReducers({
   AppData,
   Advisories,
   Stations,
   TrainCount,
+  ElevatorStatus,
   rtd,
   routes,
   sortSelection,

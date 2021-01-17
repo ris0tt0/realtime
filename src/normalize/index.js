@@ -29,3 +29,16 @@ export const normalizeTrainCount = (json) => {
   const normalized = normalize(json.root, trainCountSchema);
   return normalized;
 };
+
+export const normalizeElevators = (json) => {
+  const uriSchema = new schema.Entity('uri', undefined, {
+    idAttribute: (uri) => 'uriId',
+  });
+  const trainCountSchema = new schema.Entity(
+    'elevators',
+    { uri: uriSchema },
+    { idAttribute: (train) => train.time }
+  );
+  const normalized = normalize(json.root, trainCountSchema);
+  return normalized;
+};
