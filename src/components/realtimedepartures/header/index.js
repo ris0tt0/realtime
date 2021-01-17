@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import { Information } from './Information';
 import { getTrainCountNumber } from '../../../selectors/';
+import { Information } from './Information';
 
 const mapStateToProps = (state) => {
   return {

@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import Logger from 'js-logger';
 
 /**
  * train routes.

@@ -1,10 +1,9 @@
 import { connect } from 'react-redux';
-import { Details } from './Details';
-import Logger from 'js-logger';
 import {
-  getTripPlannerTripDetails,
   getHasDestinationStartingAbbr,
+  getTripPlannerTripDetails,
 } from '../../../selectors/';
+import { Details } from './Details';
 
 const mapStateToProps = (state) => {
   const data = getTripPlannerTripDetails(state);

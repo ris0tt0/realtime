@@ -1,7 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { DetailsLeg } from './DetailsLeg';
-import Logger from 'js-logger';
 
 export function Details({ data }) {
   if (data.origin.name === data.destination.name) return <div></div>;

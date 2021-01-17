@@ -1,6 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Logger from 'js-logger';
+import React from 'react';
 
 const DetailsLeg = ({ data }) => {
   return (

@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
-import { StationSelection } from './StationSelection';
 import { fetchRealTimeEstimates } from '../../../actions/index';
 import { getStationArray } from '../../../selectors/';
-import Logger from 'js-logger';
+import { StationSelection } from './StationSelection';
 
 const mapStateToProps = (state) => {
   const stations = getStationArray(state);

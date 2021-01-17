@@ -1,13 +1,11 @@
 import { connect } from 'react-redux';
-import { StationsSelection } from './StationsSelection';
-import { getStationArray } from '../../../selectors/';
 import {
+  fetchTripPlanning,
   setDestinationAbbr,
   setStartingAbbr,
-  fetchTripPlanning,
 } from '../../../actions/';
-
-import Logger from 'js-logger';
+import { getStationArray } from '../../../selectors/';
+import { StationsSelection } from './StationsSelection';
 
 const mapStateToProps = (state) => {
   let list = getStationArray(state);

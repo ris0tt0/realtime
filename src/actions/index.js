@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import { normalize, schema } from 'normalizr';
 
 export const GET_ETA = 'get eta';

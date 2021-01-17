@@ -1,7 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-
-import Logger from 'js-logger';
+import React from 'react';
 
 export function Result({ trips, onSelect }) {
   if (trips.length < 1) return <div></div>;

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import { Sort } from './Sort';
 import { showSortSelection } from '../../../actions/';
 import {
   getRealTimeDeparturesStationName,
   getRealTimeDeparturesStationTime,
 } from '../../../selectors';
+import { Sort } from './Sort';
 
 const mapStateToProps = (state) => {
   const time = getRealTimeDeparturesStationTime(state);

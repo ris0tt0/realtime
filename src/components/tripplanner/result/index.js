@@ -1,12 +1,10 @@
 import { connect } from 'react-redux';
-import { Result } from './Result';
 import { setTripPlannerDetails } from '../../../actions/';
 import {
-  getTripPlannerTrips,
-  getHasTripPlannerDetailsDetailsId,
   getHasDestinationStartingAbbr,
+  getTripPlannerTrips,
 } from '../../../selectors/';
-import Logger from 'js-logger';
+import { Result } from './Result';
 
 const mapStateToProps = (state) => {
   const hasAllAbbr = getHasDestinationStartingAbbr(state);
