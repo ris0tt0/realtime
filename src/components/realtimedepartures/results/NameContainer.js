@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
-import {Name} from './Name';
+import { Name } from './Name';
 
-import {getRealTimeStationArray} from '../../../selectors';
+import { getRealTimeStationArray } from '../../../selectors';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-		names:getRealTimeStationArray(state)
-  }
-}
+    names: getRealTimeStationArray(state),
+  };
+};
 
 const NameContainer = connect(mapStateToProps)(Name);
 

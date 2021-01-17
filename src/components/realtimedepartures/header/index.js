@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import {Information} from './Information'
-import {getTrainCountNumber} from '../../../selectors/';
+import { Information } from './Information';
+import { getTrainCountNumber } from '../../../selectors/';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-		numberOfTrains:getTrainCountNumber(state)
-  }
-}
+    numberOfTrains: getTrainCountNumber(state),
+  };
+};
 
 const HeaderContainer = connect(mapStateToProps)(Information);
 
