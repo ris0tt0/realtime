@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Button,
   Container,
@@ -6,15 +5,22 @@ import {
   MenuItem,
   Typography,
 } from '@material-ui/core';
-
+import Logger from 'js-logger';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestRealTimeEstimates } from '../actions';
-import { getStations } from '../selectors';
+import {
+  getRealTimeEstimatesResultMapSelector,
+  getStations,
+} from '../selectors';
 
 function RealTimeDepartures(props) {
   const dispatch = useDispatch();
   const stations = useSelector(getStations);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const platformMap = useSelector(getRealTimeEstimatesResultMapSelector);
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  Logger.info(platformMap);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -24,6 +30,28 @@ function RealTimeDepartures(props) {
     dispatch(requestRealTimeEstimates(stationId));
     setAnchorEl(null);
   };
+
+  const data = Array.from(platformMap).map(([platformName, destinationMap]) => {
+    return (
+      <div>
+        <Typography variant="body1">{platformName}</Typography>
+        <div>
+          {Array.from(destinationMap).map(([_, { destination, estimate }]) => {
+            return (
+              <div>
+                <Typography variant="body2">{destination.name}</Typography>
+                <div>
+                  {estimate.map((item) => (
+                    <div>{item.minutes}</div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  });
 
   return (
     <Container>
@@ -51,6 +79,7 @@ function RealTimeDepartures(props) {
           </MenuItem>
         ))}
       </Menu>
+      {data}
     </Container>
   );
 }
