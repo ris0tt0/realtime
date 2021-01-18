@@ -2,13 +2,13 @@ import { normalize, schema } from 'normalizr';
 import {
   normalizeAdvisories,
   normalizeElevators,
+  normalizeRealTimeEstimates,
   normalizeStations,
   normalizeTrainCount,
 } from '../normalize';
 
 export const GET_ETA = 'get eta';
 
-export const RECEIVE_RTE = 'receive real time estimate';
 export const RECEIVE_TRIP_PLANNING = 'receive trip planning';
 export const RECEIVE_ROUTES = 'receive routes';
 export const SET_STARTING_ABBR = 'set starting abbr';
@@ -24,9 +24,6 @@ export function receiveRoutes(routes) {
   return { type: RECEIVE_ROUTES, routes };
 }
 
-export function receiveRTE(data) {
-  return { type: RECEIVE_RTE, data };
-}
 export function receiveTripPlanning(data) {
   return { type: RECEIVE_TRIP_PLANNING, data };
 }
@@ -69,12 +66,17 @@ export function fetchRoutes() {
 }
 export const REQUESTING_INITIAL_DATA = 'requesting initial data';
 export const REQUESTING_INITIAL_DATA_ERROR = 'requesting initiali data error';
+export const RECIEVE_INITIAL_DATA = 'recieve initial data';
 export const requestingInitialData = (payload) => ({
   type: REQUESTING_INITIAL_DATA,
   payload,
 });
 export const requestingInitialDataError = (payload) => ({
   type: REQUESTING_INITIAL_DATA_ERROR,
+  payload,
+});
+export const receiveInitialData = (payload) => ({
+  type: RECIEVE_INITIAL_DATA,
   payload,
 });
 export const requestInitialData = () => async (dispatch) => {
@@ -84,6 +86,7 @@ export const requestInitialData = () => async (dispatch) => {
     await dispatch(requestStations());
     await dispatch(requestTrainCount());
     await dispatch(requestElevatorStatus());
+    dispatch(receiveInitialData(true));
   } catch (error) {
     dispatch(requestingInitialDataError(error));
   } finally {
@@ -205,52 +208,33 @@ export function requestElevatorStatus() {
       .finally(() => dispatch(requestingElevatorStatus(false)));
   };
 }
-
-export function fetchRealTimeEstimates(station) {
-  return (dispatch, getState, { API_KEY }) => {
+export const REQUESTING_REAL_TIME_ESTIMATES = 'requesting real time estimates';
+export const REQUESTING_REAL_TIME_ESTIMATES_ERROR =
+  'requesting real time estimates error';
+export const RECEIVE_REAL_TIME_ESTIMATES = 'receive real time estimates';
+export const requestingRealTimeEstimates = (payload) => ({
+  type: REQUESTING_REAL_TIME_ESTIMATES,
+  payload,
+});
+export const requestingRealTimeEstimatesError = (payload) => ({
+  type: REQUESTING_REAL_TIME_ESTIMATES_ERROR,
+  payload,
+});
+export const recieveRealTimeEstimates = (payload) => ({
+  type: RECEIVE_REAL_TIME_ESTIMATES,
+  payload,
+});
+export function requestRealTimeEstimates(station) {
+  return (dispatch, _, { API_KEY }) => {
+    requestingRealTimeEstimates(true);
     return fetch(
       `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${station}&key=${API_KEY}&json=y`
     )
       .then((response) => response.json())
-      .then((json) => {
-        const estimateSchema = new schema.Entity('estimate', undefined, {
-          idAttribute: (estimate) => {
-            const {
-              color,
-              bikeflag,
-              delay,
-              direction,
-              hexcolor,
-              length,
-              minutes,
-              platform,
-            } = estimate;
-
-            return `${color}-${bikeflag}-${delay}-${direction}-${hexcolor}-${length}-${minutes}-${platform}`;
-          },
-        });
-        const uriSchema = new schema.Entity('uri', undefined, {
-          idAttribute: (uri) => 'uriId',
-        });
-        const etdSchema = new schema.Entity(
-          'etd',
-          { estimate: [estimateSchema] },
-          { idAttribute: (etd) => etd.abbreviation }
-        );
-        const stationSchema = new schema.Entity(
-          'station',
-          { etd: [etdSchema] },
-          { idAttribute: (station) => station.abbr }
-        );
-        const responseSchema = new schema.Entity(
-          'response',
-          { uri: uriSchema, station: [stationSchema] },
-          { idAttribute: (response) => response.time }
-        );
-        const normalized = normalize(json.root, responseSchema);
-
-        dispatch(receiveRTE(normalized));
-      });
+      .then((json) => normalizeRealTimeEstimates(json))
+      .then((normalized) => dispatch(recieveRealTimeEstimates(normalized)))
+      .catch((error) => dispatch(requestingRealTimeEstimatesError(error)))
+      .finally(() => dispatch(requestingRealTimeEstimates(false)));
   };
 }
 

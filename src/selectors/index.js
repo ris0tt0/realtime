@@ -1,46 +1,29 @@
 import { createSelector } from 'reselect';
 
-/**
- * train routes.
- */
+export const getAppDataIsRequesting = (state) => state.AppData.isRequesting;
+export const getAppDataIsInitLoaded = (state) => state.AppData.isInitLoaded;
+export const getAppDataIsInitLoadError = (state) => state.AppData.error;
+
 const getRoutesSelector = (state) => state.routes.entities.route;
-/**
- * traincount selectors
- */
 const getTrainCountSelector = (state) => state.traincount.entities.traincount;
 const getTrainCountResultSelector = (state) => state.traincount.result;
 
-/**
- * returns the traincount data obj.
- */
 export const getTrainCountData = createSelector(
   [getTrainCountSelector, getTrainCountResultSelector],
   (traincount, result) => traincount[result]
 );
-/**
- * returns the total train count.
- */
 export const getTrainCountNumber = createSelector(
   [getTrainCountData],
   (data) => data.traincount
 );
 
-/**
- * stations selectors
- */
-const getStationsSelector = (state) => state.stations.entities.stations;
-const getStationsResultSelector = (state) => state.stations.result;
-/**
- * Returns the stations in an array.
- */
-export const getStationArray = createSelector(
+const getStationsSelector = (state) => state.Stations.entities.stations;
+const getStationsResultSelector = (state) => state.Stations.result;
+export const getStations = createSelector(
   [getStationsSelector, getStationsResultSelector],
   (data, stationIds) => stationIds.map((name) => data[name])
 );
 
-/**
- * real time departures selectors
- */
 const getRealTimeDeparturesResponseSelector = (state) =>
   state.rtd.entities.response;
 const getRealTimeDeparturesStationSelector = (state) =>
@@ -130,9 +113,6 @@ export const getRealTimeStationPlatformMap = createSelector(
   }
 );
 
-/**
- * Trip Planner selectors.
- */
 const getTripPlannerResponseSelector = (state) =>
   state.tripplanner.entities.response;
 const getTripPlannerScheduleSelector = (state) =>

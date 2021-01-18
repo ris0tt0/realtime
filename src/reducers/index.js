@@ -2,17 +2,20 @@ import { combineReducers } from 'redux';
 import {
   RECEIVE_ADVISORIES,
   RECEIVE_ELEVATOR_STATUS,
+  RECEIVE_REAL_TIME_ESTIMATES,
   RECEIVE_ROUTES,
-  RECEIVE_RTE,
   RECEIVE_STATIONS,
   RECEIVE_TRAIN_COUNT,
   RECEIVE_TRIP_PLANNING,
+  RECIEVE_INITIAL_DATA,
   REQUESTING_ADVISORIES,
   REQUESTING_ADVISORIES_ERROR,
   REQUESTING_ELEVATOR_STATUS,
   REQUESTING_ELEVATOR_STATUS_ERROR,
   REQUESTING_INITIAL_DATA,
   REQUESTING_INITIAL_DATA_ERROR,
+  REQUESTING_REAL_TIME_ESTIMATES,
+  REQUESTING_REAL_TIME_ESTIMATES_ERROR,
   REQUESTING_STATIONS_ERROR,
   REQUESTING_TRAIN_COUNT,
   REQUESTING_TRAIN_COUNT_ERROR,
@@ -23,15 +26,6 @@ import {
 } from '../actions/';
 
 import produce from 'immer';
-
-function rtd(state = {}, action) {
-  switch (action.type) {
-    case RECEIVE_RTE:
-      return { ...action.data };
-    default:
-      return { ...state };
-  }
-}
 
 function sortSelection(state = '', action) {
   switch (action.type) {
@@ -88,8 +82,14 @@ function routes(state = {}, action) {
 }
 
 const AppData = produce(
-  (draft = { isRequesting: false, error: null }, action) => {
+  (
+    draft = { isRequesting: false, error: null, isInitLoaded: false },
+    action
+  ) => {
     switch (action.type) {
+      case RECIEVE_INITIAL_DATA:
+        draft.isInitLoaded = action.payload;
+        return;
       case REQUESTING_INITIAL_DATA:
         draft.isRequesting = action.payload;
         return;
@@ -182,6 +182,27 @@ const ElevatorStatus = produce(
     }
   }
 );
+const RealTimeEstimates = produce(
+  (
+    draft = { isRequesting: false, entities: {}, result: [], error: null },
+    action
+  ) => {
+    switch (action.type) {
+      case REQUESTING_REAL_TIME_ESTIMATES:
+        draft.isRequesting = action.payload;
+        return;
+      case REQUESTING_REAL_TIME_ESTIMATES_ERROR:
+        draft.error = action.payload;
+        return;
+      case RECEIVE_REAL_TIME_ESTIMATES:
+        draft.entities = action.payload.entities;
+        draft.result = action.payload.result;
+        return;
+      default:
+        return draft;
+    }
+  }
+);
 
 const rootReducer = combineReducers({
   AppData,
@@ -189,7 +210,7 @@ const rootReducer = combineReducers({
   Stations,
   TrainCount,
   ElevatorStatus,
-  rtd,
+  RealTimeEstimates,
   routes,
   sortSelection,
   destinationAbbr,
