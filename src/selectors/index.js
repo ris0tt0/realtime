@@ -41,7 +41,23 @@ export const getRealTimeEstimatesIsRequesting = (state) =>
   state.RealTimeEstimates.isRequesting;
 export const getRealTimeEstimatesErrorSelector = (state) =>
   state.RealTimeEstimates.error;
+/**
+ * TODO: finish data
+ */
+export const getRealTimeEstimatesResultDateSelector = createSelector(
+  [
+    getRealTimeDeparturesResultSelector,
+    getRealTimeDeparturesEntitiesResponseSelector,
+  ],
+  (results = '', response = {}) => {
+    if (response[results] && response[results].date && response[results].time) {
+      const date = new Date(response[results].date);
 
+      return date;
+    }
+    return '';
+  }
+);
 export const getRealTimeEstimatesResultMapSelector = createSelector(
   [
     getRealTimeDeparturesEntitiesEstimateSelector,
