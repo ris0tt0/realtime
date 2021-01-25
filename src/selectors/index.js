@@ -1,5 +1,6 @@
 import Logger from 'js-logger';
 import { createSelector } from 'reselect';
+import { getTimeFromBartResponse } from '../utils/date';
 
 export const getAppDataIsRequesting = (state) => state.AppData.isRequesting;
 export const getAppDataIsInitLoaded = (state) => state.AppData.isInitLoaded;
@@ -51,9 +52,12 @@ export const getRealTimeEstimatesResultDateSelector = createSelector(
   ],
   (results = '', response = {}) => {
     if (response[results] && response[results].date && response[results].time) {
-      const date = new Date(response[results].date);
+      const { time, date } = response[results];
+      const retVal = new Date(date);
 
-      return date;
+      const timestring = getTimeFromBartResponse(time);
+
+      return retVal;
     }
     return '';
   }

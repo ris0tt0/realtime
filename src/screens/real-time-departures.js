@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestRealTimeEstimates } from '../actions';
 import {
+  getRealTimeEstimatesResultDateSelector,
   getRealTimeEstimatesResultMapSelector,
   getStations,
 } from '../selectors';
@@ -83,6 +84,7 @@ function RealTimeDepartures(props) {
   const dispatch = useDispatch();
   const stations = useSelector(getStations);
   const platformMap = useSelector(getRealTimeEstimatesResultMapSelector);
+  const date = useSelector(getRealTimeEstimatesResultDateSelector);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
