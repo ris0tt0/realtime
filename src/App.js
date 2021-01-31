@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { requestInitialData } from './actions';
 import { RealTimeDepartures } from './screens/real-time-departures';
 import { Start } from './screens/start-page';
+import { TripPlanner } from './screens/trip-planner';
 import {
   getAppDataIsInitLoaded,
   getAppDataIsInitLoadError,
