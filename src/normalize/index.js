@@ -105,3 +105,119 @@ export const normalizeRealTimeEstimates = (json) => {
 
   return normalized;
 };
+
+function legProcessStrategy(value) {
+  return {
+    bikeflag: value['@bikeflag'],
+    destTimeDate: value['@destTimeDate'],
+    destTimeMin: value['@destTimeMin'],
+    destination: value['@destination'],
+    line: value['@line'],
+    load: value['@load'],
+    order: value['@order'],
+    origTimeDate: value['@origTimeDate'],
+    origTimeMin: value['@origTimeMin'],
+    origin: value['@origin'],
+    trainHeadStation: value['@trainHeadStation'],
+  };
+}
+
+function legIdAttribute(value) {
+  return `${value['@origin']} ${value['@destination']} ${value['@origTimeDate']} ${value['@origTimeMin']} ${value['@destTimeDate']} ${value['@destTimeMin']}`;
+}
+
+function fareProcessStrategy(value) {
+  return {
+    amount: value['@amount'],
+    type: value['@class'],
+    name: value['@name'],
+  };
+}
+function fareIdAttribute(value) {
+  return `${value['@amount']} ${value['@class']} ${value['@name']}`;
+}
+
+function faresProcessStrategy(value) {
+  return {
+    level: value['@level'],
+    fare: value.fare,
+  };
+}
+
+function faresIdAttribute(value) {
+  return `${value['@level']}`;
+}
+
+function tripProcessStrategy(value) {
+  return {
+    clipper: value['@clipper'],
+    destTimeDate: value['@destTimeDate'],
+    destTimeMin: value['@destTimeMin'],
+    destination: value['@destination'],
+    fare: value['@fare'],
+    origTimeDate: value['@origTimeDate'],
+    origTimeMin: value['@origTimeMin'],
+    origin: value['@origin'],
+    tripTime: value['@tripTime'],
+    fares: value['fares'],
+    leg: value['leg'],
+  };
+}
+
+function tripIdAttribute(value) {
+  return `${value['@origin']} ${value['@destination']} ${value['@origTimeDate']} ${value['@origTimeMin']} ${value['@destTimeDate']} ${value['@destTimeMin']}`;
+}
+
+export const normalizeTripPlanning = (json) => {
+  const fareSchema = new schema.Entity(
+    'fare',
+    {},
+    {
+      idAttribute: fareIdAttribute,
+      processStrategy: fareProcessStrategy,
+    }
+  );
+  const faresSchema = new schema.Entity(
+    'fares',
+    { fare: [fareSchema] },
+    {
+      idAttribute: faresIdAttribute,
+      processStrategy: faresProcessStrategy,
+    }
+  );
+  const legSchema = new schema.Entity(
+    'leg',
+    {},
+    {
+      idAttribute: legIdAttribute,
+      processStrategy: legProcessStrategy,
+    }
+  );
+  const tripSchema = new schema.Entity(
+    'trip',
+    { fares: faresSchema, leg: [legSchema] },
+    {
+      idAttribute: tripIdAttribute,
+      processStrategy: tripProcessStrategy,
+    }
+  );
+  const requestSchema = new schema.Entity(
+    'request',
+    { trip: [tripSchema] },
+    { idAttribute: (value, parent) => `${parent.date} ${parent.time}` }
+  );
+  const scheduleSchema = new schema.Entity(
+    'schedule',
+    { request: requestSchema },
+    { idAttribute: (value) => `${value.date} ${value.time}` }
+  );
+  const responseSchema = new schema.Entity(
+    'response',
+    { schedule: scheduleSchema },
+    { idAttribute: (value) => `${value.origin} ${value.destination}` }
+  );
+
+  const normalized = normalize(json.root, responseSchema);
+
+  return normalized;
+};

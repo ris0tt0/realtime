@@ -5,11 +5,11 @@ import {
   normalizeRealTimeEstimates,
   normalizeStations,
   normalizeTrainCount,
+  normalizeTripPlanning,
 } from '../normalize';
 
 export const GET_ETA = 'get eta';
 
-export const RECEIVE_TRIP_PLANNING = 'receive trip planning';
 export const RECEIVE_ROUTES = 'receive routes';
 export const SET_STARTING_ABBR = 'set starting abbr';
 export const SET_DESTINATION_ABBR = 'set destination abbr';
@@ -22,10 +22,6 @@ export function getETA(station) {
 }
 export function receiveRoutes(routes) {
   return { type: RECEIVE_ROUTES, routes };
-}
-
-export function receiveTripPlanning(data) {
-  return { type: RECEIVE_TRIP_PLANNING, data };
 }
 export function showSortSelection(selection) {
   return { type: SHOW_SORT_SELECTION, selection };
@@ -238,64 +234,32 @@ export function requestRealTimeEstimates(station) {
   };
 }
 
-export function fetchTripPlanning() {
+export const REQUESTING_TRIP_PLANNING = 'requesting trip planning';
+export const REQUESTING_TRIP_PLANNING_ERROR = ' requesting trip planning error';
+export const RECEIVE_TRIP_PLANNING = 'receive trip planning';
+export const requestingTripPlanning = (payload) => ({
+  type: REQUESTING_TRIP_PLANNING,
+  payload,
+});
+export const requestingTripPlanningError = (payload) => ({
+  type: REQUESTING_TRIP_PLANNING_ERROR,
+  payload,
+});
+export const receiveTripPlanning = (payload) => ({
+  type: RECEIVE_TRIP_PLANNING,
+  payload,
+});
+
+export function requestTripPlanning(originAbbr, destAbbr, date) {
   return (dispatch, getState, { API_KEY }) => {
-    const { startingAbbr, destinationAbbr } = getState();
-
-    if (
-      startingAbbr &&
-      startingAbbr.length > 0 &&
-      destinationAbbr &&
-      destinationAbbr.length > 0
-    ) {
-      return fetch(
-        `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${startingAbbr}&dest=${destinationAbbr}&date=today&time=now&key=${API_KEY}&b=1&a=4&json=y`
-      )
-        .then((response) => response.json())
-        .then((json) => {
-          // start to normalize the json response.
-          const fareSchema = new schema.Entity('fare', undefined, {
-            idAttribute: (value) => value['@name'],
-          });
-          const faresSchema = new schema.Entity(
-            'fares',
-            { fare: [fareSchema] },
-            {
-              idAttribute: (value) => `${value['@level']}-${value.fare.length}`,
-            }
-          );
-          const legSchema = new schema.Entity('leg', undefined, {
-            idAttribute: (value) =>
-              value['@origTimeMin'] + value['@destTimeMin'],
-          });
-          const tripSchema = new schema.Entity(
-            'trip',
-            { fares: faresSchema, leg: [legSchema] },
-            {
-              idAttribute: (value) =>
-                `${value['@origTimeMin']}-${value['@destTimeMin']}`,
-            }
-          );
-          const requestSchema = new schema.Entity(
-            'request',
-            { trip: [tripSchema] },
-            { idAttribute: (value) => 'requestId' }
-          );
-          const scheduleSchema = new schema.Entity(
-            'schedule',
-            { request: requestSchema },
-            { idAttribute: (value) => `${value.time}-${value.date}` }
-          );
-          const responseSchema = new schema.Entity(
-            'response',
-            { schedule: scheduleSchema },
-            { idAttribute: (value) => `${value.origin}-${value.destination}` }
-          );
-
-          const normalized = normalize(json.root, responseSchema);
-
-          dispatch(receiveTripPlanning(normalized));
-        });
-    }
+    dispatch(requestingTripPlanning(true));
+    return fetch(
+      `http://api.bart.gov/api/sched.aspx?cmd=depart&orig=${originAbbr}&dest=${destAbbr}&date=today&time=now&key=${API_KEY}&b=1&a=4&json=y`
+    )
+      .then((response) => response.json())
+      .then((json) => normalizeTripPlanning(json))
+      .then((normalized) => dispatch(receiveTripPlanning(normalized)))
+      .catch((error) => dispatch(requestingTripPlanningError(error)))
+      .finally(() => dispatch(requestingTripPlanning(false)));
   };
 }

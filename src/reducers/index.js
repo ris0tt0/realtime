@@ -19,6 +19,8 @@ import {
   REQUESTING_STATIONS_ERROR,
   REQUESTING_TRAIN_COUNT,
   REQUESTING_TRAIN_COUNT_ERROR,
+  REQUESTING_TRIP_PLANNING,
+  REQUESTING_TRIP_PLANNING_ERROR,
   SET_DESTINATION_ABBR,
   SET_STARTING_ABBR,
   SET_TRIP_PLANNER_DETAILS,
@@ -51,15 +53,6 @@ function startingAbbr(state = '', action) {
       return action.abbr;
     default:
       return state;
-  }
-}
-
-function tripplanner(state = {}, action) {
-  switch (action.type) {
-    case RECEIVE_TRIP_PLANNING:
-      return { ...action.data };
-    default:
-      return { ...state };
   }
 }
 
@@ -204,6 +197,27 @@ const RealTimeEstimates = produce(
   }
 );
 
+const TripPlanning = produce(
+  (
+    draft = { isRequesting: false, entities: {}, result: [], error: null },
+    action
+  ) => {
+    switch (action.type) {
+      case REQUESTING_TRIP_PLANNING:
+        draft.isRequesting = action.payload;
+        return;
+      case REQUESTING_TRIP_PLANNING_ERROR:
+        draft.error = action.payload;
+        return;
+      case RECEIVE_TRIP_PLANNING:
+        draft.entities = action.payload.entities;
+        draft.result = action.payload.result;
+        return;
+      default:
+        return draft;
+    }
+  }
+);
 const rootReducer = combineReducers({
   AppData,
   Advisories,
@@ -211,11 +225,11 @@ const rootReducer = combineReducers({
   TrainCount,
   ElevatorStatus,
   RealTimeEstimates,
+  TripPlanning,
   routes,
   sortSelection,
   destinationAbbr,
   startingAbbr,
-  tripplanner,
   tripPlannerDetailsId,
 });
 

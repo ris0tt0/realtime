@@ -15,6 +15,7 @@ import {
 const useStyles = makeStyles({
   root: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '100vh',
@@ -41,6 +42,7 @@ const App = () => {
     return (
       <Paper className={classes.root} elevation={0}>
         <RealTimeDepartures />
+        <TripPlanner />
       </Paper>
     );
   }
