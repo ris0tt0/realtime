@@ -4,7 +4,7 @@ export const getTimeFromBartResponse = (timestring = '', date = null) => {
   }
   try {
     const isPM = timestring.toLowerCase().includes('pm');
-    const result = timestring.match(/\d\d/g);
+    const result = timestring.match(/\d?\d/g);
 
     const hours = isPM
       ? result[0] === '12'
@@ -14,7 +14,10 @@ export const getTimeFromBartResponse = (timestring = '', date = null) => {
       ? '0'
       : result[0];
 
-    date.setHours(hours, result[1], result[2]);
+    date.setHours(hours, result[1]);
+    if (result[2]) {
+      date.setSeconds(result[2]);
+    }
   } catch (e) {}
   return date;
 };

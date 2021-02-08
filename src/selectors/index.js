@@ -6,7 +6,6 @@ export const getAppDataIsRequesting = (state) => state.AppData.isRequesting;
 export const getAppDataIsInitLoaded = (state) => state.AppData.isInitLoaded;
 export const getAppDataIsInitLoadError = (state) => state.AppData.error;
 
-const getRoutesSelector = (state) => state.routes.entities.route;
 const getTrainCountSelector = (state) => state.traincount.entities.traincount;
 const getTrainCountResultSelector = (state) => state.traincount.result;
 
@@ -26,14 +25,10 @@ export const getStations = createSelector(
   (data, stationIds) => stationIds.map((name) => data[name])
 );
 
-const getRealTimeDeparturesEntitiesSelector = (state) =>
-  state.RealTimeEstimates.entities;
 const getRealTimeDeparturesEntitiesEstimateSelector = (state) =>
   state.RealTimeEstimates.entities.estimate;
 const getRealTimeDeparturesEntitiesEtdSelector = (state) =>
   state.RealTimeEstimates.entities.etd;
-const getRealTimeDeparturesEntitiesStationSelector = (state) =>
-  state.RealTimeEstimates.entities.station;
 const getRealTimeDeparturesEntitiesResponseSelector = (state) =>
   state.RealTimeEstimates.entities.response;
 const getRealTimeDeparturesResultSelector = (state) =>
@@ -99,110 +94,80 @@ export const getRealTimeEstimatesResultMapSelector = createSelector(
   }
 );
 
-const getTripPlannerResponseSelector = (state) =>
-  state.tripplanner.entities.response;
-const getTripPlannerScheduleSelector = (state) =>
-  state.tripplanner.entities.schedule;
-const getTripPlannerRequestSelector = (state) =>
-  state.tripplanner.entities.request;
-const getTripPlannerLegSelector = (state) => state.tripplanner.entities.leg;
-const getTripPlannerFaresSelector = (state) => state.tripplanner.entities.fares;
-const getTripPlannerTripSelector = (state) => state.tripplanner.entities.trip;
-const getTripPlannerResultSelector = (state) => state.tripplanner.result;
-const getTripPlannerDetailsIdSelector = (state) => state.tripPlannerDetailsId;
+export const getTripPlanningIsRequestingSelector = (state) =>
+  state.TripPlanning.isRequesting;
 
-const getTripPlannerDestinationAbbrSelector = (state) => state.destinationAbbr;
-const getTripPlannerStartingAbbrSelector = (state) => state.startingAbbr;
+export const getTripPlanningErrorSelector = (state) => state.TripPlanning.error;
+const getTripPlanningResultSelector = (state) => state.TripPlanning.result;
+const getTripPlanningEntitiesSelector = (state) => state.TripPlanning.entities;
 
-export const getHasDestinationStartingAbbr = createSelector(
-  [getTripPlannerStartingAbbrSelector, getTripPlannerDestinationAbbrSelector],
-  (staringAhbr, destinationAbbr) =>
-    staringAhbr.length > 0 && destinationAbbr.length > 0
-);
-
-export const getHasTripPlannerDetailsDetailsId = createSelector(
-  [getTripPlannerDetailsIdSelector],
-  (id) => id !== 'tripId'
-);
-export const getTripPlannerDetails = createSelector(
-  [getTripPlannerDetailsIdSelector, getTripPlannerTripSelector],
-  (id, trip) => {
-    return { ...trip[id] };
-  }
-);
-
-export const getTripPlanner = createSelector(
-  [getTripPlannerResponseSelector, getTripPlannerResultSelector],
-  (response, result) => response[result]
-);
-
-export const getTripPlannerSchedule = createSelector(
-  [getTripPlanner, getTripPlannerScheduleSelector],
-  (tripPlanner, schedule) => schedule[tripPlanner.schedule]
-);
-
-export const getTripPlannerRequest = createSelector(
-  [getTripPlannerRequestSelector, getTripPlannerSchedule],
-  (request, schedule) => request[schedule.request]
-);
-
-export const getTripPlannerTrips = createSelector(
+export const getTripPlanningCurrentResultSelector = createSelector(
   [
-    getTripPlannerRequest,
-    getTripPlannerTripSelector,
-    getTripPlannerLegSelector,
-    getTripPlannerFaresSelector,
+    getStationsSelector,
+    getTripPlanningResultSelector,
+    getTripPlanningEntitiesSelector,
   ],
-  (tripData, trip, legEntity, faresEntity) => {
-    return tripData.trip.map((id) => {
-      const item = trip[id];
-      const leg = item.leg.map((key) => legEntity[key]);
-      const fares = faresEntity[item.fares];
-      const startTime = item['@origTimeMin'];
-      const startTimeReal = '';
-      const endTime = item['@destTimeMin'];
-      const endTimeReal = '';
-      const timeLength = item['@tripTime'];
-      const fare = item['@fare'];
-      const tripId = id;
+  (stations, result, entities) => {
+    if (entities.response) {
+      const response = entities.response[result];
+      const schedule = entities.schedule[response.schedule];
+      const request = entities.request[schedule.request];
+      const date = getTimeFromBartResponse(
+        schedule.time,
+        new Date(schedule.date)
+      );
+      const destination = stations[response.destination];
+      const origin = stations[response.origin];
+      const trip = request.trip.map((id) => {
+        const retVal = entities.trip[id];
+        const fares = entities.fares[retVal.fares].fare.map(
+          (id) => entities.fare[id]
+        );
+        const destDate = getTimeFromBartResponse(
+          retVal.destTimeMin,
+          new Date(retVal.destTimeDate)
+        );
+        const origDate = getTimeFromBartResponse(
+          retVal.origTimeMin,
+          new Date(retVal.origTimeDate)
+        );
+        const destination = stations[retVal.destination];
+        const origin = stations[retVal.origin];
+        const leg = retVal.leg.map((id) => {
+          const retVal = entities.leg[id];
+
+          const destDate = getTimeFromBartResponse(
+            retVal.destTimeMin,
+            new Date(retVal.destTimeDate)
+          );
+          const origDate = getTimeFromBartResponse(
+            retVal.origTimeMin,
+            new Date(retVal.origTimeDate)
+          );
+          const destination = stations[retVal.destination];
+          const origin = stations[retVal.origin];
+
+          return { ...retVal, destDate, origDate, destination, origin };
+        });
+        return {
+          ...retVal,
+          fares,
+          leg,
+          origin,
+          destination,
+          origDate,
+          destDate,
+        };
+      });
 
       return {
-        tripId,
-        startTime,
-        startTimeReal,
-        endTime,
-        endTimeReal,
-        timeLength,
-        fares,
-        fare,
-        leg,
+        ...response,
+        destination,
+        origin,
+        schedule: { ...schedule, date, request: { ...request, trip } },
       };
-    });
-  }
-);
+    }
 
-export const getTripPlannerTripDetails = createSelector(
-  [
-    getTripPlannerDetails,
-    getTripPlannerLegSelector,
-    getStationsSelector,
-    getRoutesSelector,
-  ],
-  (tripData, leg, stations, routes) => {
-    if (!tripData.hasOwnProperty('leg')) return {};
-
-    const legList = tripData.leg.map((key) => {
-      const data = { ...leg[key] };
-      data.origin = { ...stations[data['@origin']] };
-      data.destination = { ...stations[data['@destination']] };
-      data.line = { ...routes[data['@line']] };
-
-      return data;
-    });
-
-    tripData.origin = { ...stations[tripData['@origin']] };
-    tripData.destination = { ...stations[tripData['@destination']] };
-    tripData.line = { ...routes[tripData['@line']] };
-    return { ...tripData, leg: legList };
+    return null;
   }
 );

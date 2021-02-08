@@ -1,14 +1,21 @@
 import {
   Button,
+  CircularProgress,
   Container,
   Menu,
   MenuItem,
   Typography,
 } from '@material-ui/core';
+import Logger from 'js-logger';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestTripPlanning } from '../actions';
-import { getStations } from '../selectors';
+import {
+  getStations,
+  getTripPlanningIsRequestingSelector,
+  getTripPlanningErrorSelector,
+  getTripPlanningCurrentResultSelector,
+} from '../selectors';
 
 const getStationNameCreator = (stations) => (id) =>
   stations.find((station) => station.abbr === id).name;
@@ -16,17 +23,22 @@ const getStationNameCreator = (stations) => (id) =>
 const TripPlanner = () => {
   const dispatch = useDispatch();
   const stations = useSelector(getStations);
-  const getName = getStationNameCreator(stations);
+  const isRequesting = useSelector(getTripPlanningIsRequestingSelector);
+  const error = useSelector(getTripPlanningErrorSelector);
+  const data = useSelector(getTripPlanningCurrentResultSelector);
+
+  Logger.info(data);
+
   const [searchDisabled, setSearchDisabled] = useState(true);
   const [isOrigin, setIsOrigin] = useState(false);
-  const [originButtonName, setOriginButtonName] = useState('origin');
-  const [destinationButtonName, setDestinationButtonName] = useState(
-    'destination'
-  );
+  const [originId, setOriginId] = useState('origin');
+  const [destinationId, setDestinationId] = useState('destination');
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const getName = getStationNameCreator(stations);
+
   const handleMenuClick = (id) => {
-    isOrigin ? setOriginButtonName(id) : setDestinationButtonName(id);
+    isOrigin ? setOriginId(id) : setDestinationId(id);
     setAnchorEl(null);
   };
 
@@ -40,19 +52,32 @@ const TripPlanner = () => {
   };
   const handleMenuClose = () => setAnchorEl(null);
   const handleOnSearch = () =>
-    dispatch(
-      requestTripPlanning(originButtonName, destinationButtonName, 'now')
-    );
+    dispatch(requestTripPlanning(originId, destinationId, 'now'));
 
   useEffect(() => {
     setSearchDisabled(
       !(
-        originButtonName !== 'origin' &&
-        destinationButtonName !== 'destination' &&
-        originButtonName !== destinationButtonName
+        originId !== 'origin' &&
+        destinationId !== 'destination' &&
+        originId !== destinationId
       )
     );
-  }, [originButtonName, destinationButtonName]);
+  }, [originId, destinationId]);
+
+  if (isRequesting) {
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
+  }
+  if (error) {
+    return (
+      <div>
+        <Typography>error</Typography>
+      </div>
+    );
+  }
 
   return (
     <Container>
@@ -65,7 +90,7 @@ const TripPlanner = () => {
           variant="outlined"
           onClick={handleOriginClick}
         >
-          {originButtonName === 'origin' ? 'origin' : getName(originButtonName)}
+          {originId === 'origin' ? 'origin' : getName(originId)}
         </Button>
       </div>
       <div>
@@ -76,9 +101,9 @@ const TripPlanner = () => {
           variant="outlined"
           onClick={handleDestinationClick}
         >
-          {destinationButtonName === 'destination'
-            ? 'destintation'
-            : getName(destinationButtonName)}
+          {destinationId === 'destination'
+            ? 'destination'
+            : getName(destinationId)}
         </Button>
       </div>
       <Button
