@@ -56,21 +56,22 @@ const TripPlanner = () => {
 
   useEffect(() => {
     setSearchDisabled(
-      !(
-        originId !== 'origin' &&
-        destinationId !== 'destination' &&
-        originId !== destinationId
-      )
+      isRequesting ||
+        !(
+          originId !== 'origin' &&
+          destinationId !== 'destination' &&
+          originId !== destinationId
+        )
     );
-  }, [originId, destinationId]);
+  }, [originId, destinationId, isRequesting]);
 
-  if (isRequesting) {
-    return (
-      <div>
-        <CircularProgress />
-      </div>
-    );
-  }
+  // if (isRequesting) {
+  //   return (
+  //     <div>
+  //       <CircularProgress />
+  //     </div>
+  //   );
+  // }
   if (error) {
     return (
       <div>
@@ -85,6 +86,7 @@ const TripPlanner = () => {
       <div>
         <Typography variant="h5">A</Typography>
         <Button
+          disabled={isRequesting}
           aria-controls="origin-menu"
           aria-haspopup="true"
           variant="outlined"
@@ -96,6 +98,7 @@ const TripPlanner = () => {
       <div>
         <Typography variant="h5">B</Typography>
         <Button
+          disabled={isRequesting}
           aria-controls="destination-menu"
           aria-haspopup="true"
           variant="outlined"

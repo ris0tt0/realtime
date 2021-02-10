@@ -1,14 +1,13 @@
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Container,
   makeStyles,
   Menu,
   MenuItem,
-  Paper,
   Typography,
 } from '@material-ui/core';
 import Logger from 'js-logger';
-import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestRealTimeEstimates } from '../actions';
 import {
@@ -17,64 +16,14 @@ import {
   getRealTimeEstimatesResultMapSelector,
   getStations,
 } from '../selectors';
+import { Platforms } from '../components/realTimeDepartures/platforms';
 
 const useStyles = makeStyles({
   stationInfo: {
     display: 'flex',
     justifyContent: 'space-between',
   },
-  platform: {
-    margin: '10px 0',
-  },
-  destinations: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-  },
-  destination: {
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
-    display: 'flex',
-    padding: '0 10px',
-  },
-  estimates: {
-    display: 'flex',
-  },
-  minutes: {
-    padding: '0 5px',
-  },
 });
-
-const Platforms = ({ platformMap }) => {
-  const classes = useStyles();
-  return Array.from(platformMap).map(
-    ([platformName, destinationMap], index) => (
-      <Paper key={`-p${index}`} className={classes.platform}>
-        <Typography variant="h6">Platform {platformName}</Typography>
-        <div className={classes.destinations}>
-          {Array.from(destinationMap).map(
-            ([_, { destination, estimate }], index) => {
-              return (
-                <div key={`-${index}`} className={classes.destination}>
-                  <div>
-                    <Typography variant="h5">{destination.name}</Typography>
-                  </div>
-                  <div className={classes.estimates}>
-                    {estimate.map((item) => (
-                      <Typography className={classes.minutes} variant="h4">
-                        {item.minutes}
-                      </Typography>
-                    ))}
-                  </div>
-                </div>
-              );
-            }
-          )}
-        </div>
-      </Paper>
-    )
-  );
-};
 function RealTimeDepartures(props) {
   const classes = useStyles();
 
