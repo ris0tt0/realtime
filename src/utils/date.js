@@ -29,3 +29,10 @@ export const getDateEightWeeksHence = (date = new Date()) => {
   const eightWeeksMS = 8 * 7 * 24 * 60 * 60 * 1000;
   return new Date(date.getTime() + eightWeeksMS);
 };
+
+export const getFormattedTime = (date = null) => {
+  if (date instanceof Date) {
+    return date.toLocaleTimeString('en-US').toLowerCase();
+  }
+  return null;
+};

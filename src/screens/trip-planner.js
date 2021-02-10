@@ -1,6 +1,5 @@
 import {
   Button,
-  CircularProgress,
   Container,
   Menu,
   MenuItem,
@@ -10,6 +9,7 @@ import Logger from 'js-logger';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestTripPlanning } from '../actions';
+import { Itinerary } from '../components/tripPlanner/itinerary';
 import {
   getStations,
   getTripPlanningIsRequestingSelector,
@@ -65,13 +65,6 @@ const TripPlanner = () => {
     );
   }, [originId, destinationId, isRequesting]);
 
-  // if (isRequesting) {
-  //   return (
-  //     <div>
-  //       <CircularProgress />
-  //     </div>
-  //   );
-  // }
   if (error) {
     return (
       <div>
@@ -132,6 +125,12 @@ const TripPlanner = () => {
           </MenuItem>
         ))}
       </Menu>
+      <Itinerary
+        origin={data?.origin}
+        destination={data?.destination}
+        date={data?.schedule?.date}
+        trips={data?.schedule?.request?.trip}
+      />
     </Container>
   );
 };

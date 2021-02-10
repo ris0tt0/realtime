@@ -17,6 +17,7 @@ import {
   getStations,
 } from '../selectors';
 import { Platforms } from '../components/realTimeDepartures/platforms';
+import { getFormattedTime } from '../utils/date';
 
 const useStyles = makeStyles({
   stationInfo: {
@@ -68,9 +69,7 @@ function RealTimeDepartures(props) {
         </Button>
         <div className={classes.stationInfo}>
           <Typography variant="caption">{stationAddress}</Typography>
-          <Typography variant="caption">
-            {date ? date.toLocaleTimeString('en-US').toLowerCase() : null}
-          </Typography>
+          <Typography variant="caption">{getFormattedTime(date)}</Typography>
         </div>
       </div>
       <Menu

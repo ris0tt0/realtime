@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
 
-const API_KEY = 'MW9S-E7SL-26DU-VV8V';
+const API_KEY = process.env.REACT_APP_BART_API ?? 'MW9S-E7SL-26DU-VV8V';
 
 const store = createStore(
   rootReducer,
