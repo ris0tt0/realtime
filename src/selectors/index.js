@@ -25,6 +25,14 @@ export const getStations = createSelector(
   (data, stationIds) => stationIds.map((name) => data[name])
 );
 
+const getRoutesSelector = (state) => state.Routes.entities.route;
+export const getRoutesMap = createSelector(getRoutesSelector, (routes) => {
+  return Object.entries(routes).reduce(
+    (map, [id, route]) => map.set(id, route),
+    new Map()
+  );
+});
+
 const getRealTimeDeparturesEntitiesEstimateSelector = (state) =>
   state.RealTimeEstimates.entities.estimate;
 const getRealTimeDeparturesEntitiesEtdSelector = (state) =>
@@ -103,11 +111,12 @@ const getTripPlanningEntitiesSelector = (state) => state.TripPlanning.entities;
 
 export const getTripPlanningCurrentResultSelector = createSelector(
   [
+    getRoutesMap,
     getStationsSelector,
     getTripPlanningResultSelector,
     getTripPlanningEntitiesSelector,
   ],
-  (stations, result, entities) => {
+  (routes, stations, result, entities) => {
     if (entities.response) {
       const response = entities.response[result];
       const schedule = entities.schedule[response.schedule];
@@ -135,7 +144,7 @@ export const getTripPlanningCurrentResultSelector = createSelector(
         const origin = stations[retVal.origin];
         const leg = retVal.leg.map((id) => {
           const retVal = entities.leg[id];
-
+          const line = routes.get(retVal.line);
           const destDate = getTimeFromBartResponse(
             retVal.destTimeMin,
             new Date(retVal.destTimeDate)
@@ -147,7 +156,7 @@ export const getTripPlanningCurrentResultSelector = createSelector(
           const destination = stations[retVal.destination];
           const origin = stations[retVal.origin];
 
-          return { ...retVal, destDate, origDate, destination, origin };
+          return { ...retVal, destDate, origDate, destination, origin, line };
         });
         return {
           ...retVal,
