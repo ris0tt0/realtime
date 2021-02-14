@@ -3,6 +3,7 @@ import {
   normalizeAdvisories,
   normalizeElevators,
   normalizeRealTimeEstimates,
+  normalizeRoutes,
   normalizeStations,
   normalizeTrainCount,
   normalizeTripPlanning,
@@ -10,7 +11,6 @@ import {
 
 export const GET_ETA = 'get eta';
 
-export const RECEIVE_ROUTES = 'receive routes';
 export const SET_STARTING_ABBR = 'set starting abbr';
 export const SET_DESTINATION_ABBR = 'set destination abbr';
 export const SET_TRIP_PLANNER_DETAILS = 'set trip planner details';
@@ -19,9 +19,6 @@ export const SHOW_SORT_SELECTION = 'show sort selection';
 
 export function getETA(station) {
   return { type: GET_ETA, station };
-}
-export function receiveRoutes(routes) {
-  return { type: RECEIVE_ROUTES, routes };
 }
 export function showSortSelection(selection) {
   return { type: SHOW_SORT_SELECTION, selection };
@@ -39,25 +36,30 @@ export function setTripPlannerLegIds(legIds) {
   return { type: SET_TRIP_PLANNER_LEG_IDS, legIds };
 }
 
-export function fetchRoutes() {
-  return (dispatch, getState, { API_KEY }) => {
+export const REQUESTING_ROUTES = 'requesting routes';
+export const REQUESTING_ROUTES_ERROR = 'requesting routes error';
+export const RECEIVE_ROUTES = 'receive routes';
+export const requestingRoutes = (payload) => ({
+  type: REQUESTING_ROUTES,
+  payload,
+});
+export const requestingRoutesError = (payload) => ({
+  type: REQUESTING_ROUTES_ERROR,
+  payload,
+});
+export const receiveRoutes = (payload) => ({ type: RECEIVE_ROUTES, payload });
+
+export function requestRoutes() {
+  return (dispatch, _, { API_KEY }) => {
+    dispatch(requestingRoutes(true));
     return fetch(
       `http://api.bart.gov/api/route.aspx?cmd=routes&key=${API_KEY}&json=y`
     )
       .then((response) => response.json())
-      .then((json) => {
-        const routeSchema = new schema.Entity('route', undefined, {
-          idAttribute: (item) => item.routeID,
-        });
-        const routesSchema = new schema.Entity(
-          'routes',
-          { route: [routeSchema] },
-          { idAttribute: (item) => 'id' }
-        );
-        const normalized = normalize(json.root.routes, routesSchema);
-
-        dispatch(receiveRoutes(normalized));
-      });
+      .then((json) => normalizeRoutes(json))
+      .then((normalized) => dispatch(receiveRoutes(normalized)))
+      .catch((error) => dispatch(requestingRoutesError(error)))
+      .finally(() => dispatch(requestingRoutes(false)));
   };
 }
 export const REQUESTING_INITIAL_DATA = 'requesting initial data';
@@ -80,6 +82,7 @@ export const requestInitialData = () => async (dispatch) => {
     dispatch(requestingInitialData(true));
     await dispatch(requestAdvisories());
     await dispatch(requestStations());
+    await dispatch(requestRoutes());
     await dispatch(requestTrainCount());
     await dispatch(requestElevatorStatus());
     dispatch(receiveInitialData(true));

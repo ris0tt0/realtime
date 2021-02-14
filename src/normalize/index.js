@@ -11,13 +11,6 @@ export const normalizeStations = (json) => {
   return normalized;
 };
 
-export const normalizeAdvisories = (json) => {
-  const bsaSchema = new schema.Entity('bsa');
-
-  const normalized = normalize(json.root, { bsa: [bsaSchema] });
-  return normalized;
-};
-
 export const normalizeTrainCount = (json) => {
   const trainCountSchema = new schema.Entity(
     'traincount',
@@ -37,27 +30,45 @@ const uriSchema = new schema.Entity(
 );
 
 const dateTimeIdAttribute = (data) => `${data.date}-${data.time}`;
-const dateTimeParentIdAttribute = (value, parent, key) =>
+const dateTimeParentIdAttribute = (_, parent, __) =>
   `${parent.date}-${parent.time}`;
-const atIdAttribue = (value, parent) => parent['@id'];
+const parentAtIdAttribute = (_, parent) => parent['@id'];
+const atIdAttribute = (value) => value['@id'];
 const cdataProcessStrategy = (value) => value['#cdata-section'];
+const descriptionSchema = new schema.Entity(
+  'description',
+  {},
+  {
+    processStrategy: cdataProcessStrategy,
+    idAttribute: parentAtIdAttribute,
+  }
+);
+const smsTextSchema = new schema.Entity(
+  'smstext',
+  {},
+  {
+    processStrategy: cdataProcessStrategy,
+    idAttribute: parentAtIdAttribute,
+  }
+);
+
+export const normalizeAdvisories = (json) => {
+  const bsaSchema = new schema.Entity(
+    'bsa',
+    {
+      description: descriptionSchema,
+      sms_text: smsTextSchema,
+    },
+    {
+      idAttribute: atIdAttribute,
+    }
+  );
+
+  const normalized = normalize(json.root, { bsa: [bsaSchema] });
+  return normalized;
+};
+
 export const normalizeElevators = (json) => {
-  const descriptionSchema = new schema.Entity(
-    'description',
-    {},
-    {
-      processStrategy: cdataProcessStrategy,
-      idAttribute: atIdAttribue,
-    }
-  );
-  const smsTextSchema = new schema.Entity(
-    'smstext',
-    {},
-    {
-      processStrategy: cdataProcessStrategy,
-      idAttribute: atIdAttribue,
-    }
-  );
   const bsaSchema = new schema.Entity(
     'bsa',
     {
@@ -219,5 +230,18 @@ export const normalizeTripPlanning = (json) => {
 
   const normalized = normalize(json.root, responseSchema);
 
+  return normalized;
+};
+
+export const normalizeRoutes = (json) => {
+  const routeSchema = new schema.Entity('route', undefined, {
+    idAttribute: (item) => item.routeID,
+  });
+  const routesSchema = new schema.Entity(
+    'routes',
+    { route: [routeSchema] },
+    { idAttribute: (item) => 'id' }
+  );
+  const normalized = normalize(json.root.routes, routesSchema);
   return normalized;
 };

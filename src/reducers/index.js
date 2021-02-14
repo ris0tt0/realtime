@@ -16,6 +16,8 @@ import {
   REQUESTING_INITIAL_DATA_ERROR,
   REQUESTING_REAL_TIME_ESTIMATES,
   REQUESTING_REAL_TIME_ESTIMATES_ERROR,
+  REQUESTING_ROUTES,
+  REQUESTING_ROUTES_ERROR,
   REQUESTING_STATIONS_ERROR,
   REQUESTING_TRAIN_COUNT,
   REQUESTING_TRAIN_COUNT_ERROR,
@@ -65,14 +67,27 @@ function tripPlannerDetailsId(state = 'tripId', action) {
   }
 }
 
-function routes(state = {}, action) {
-  switch (action.type) {
-    case RECEIVE_ROUTES:
-      return { ...action.routes };
-    default:
-      return { ...state };
+const Routes = produce(
+  (
+    draft = { isRequesting: false, error: null, isInitLoaded: false },
+    action
+  ) => {
+    switch (action.type) {
+      case RECEIVE_ROUTES:
+        draft.entities = action.payload.entities;
+        draft.result = action.payload.result;
+        return;
+      case REQUESTING_ROUTES:
+        draft.isRequesting = action.payload;
+        return;
+      case REQUESTING_ROUTES_ERROR:
+        draft.error = action.payload;
+        return;
+      default:
+        return draft;
+    }
   }
-}
+);
 
 const AppData = produce(
   (
@@ -226,7 +241,7 @@ const rootReducer = combineReducers({
   ElevatorStatus,
   RealTimeEstimates,
   TripPlanning,
-  routes,
+  Routes,
   sortSelection,
   destinationAbbr,
   startingAbbr,
