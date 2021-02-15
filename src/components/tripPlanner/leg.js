@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Typography } from '@material-ui/core';
-import { getFormattedTime, getFormattedTimeDifference } from '../../utils/date';
+import {
+  getFormattedTime,
+  getFormattedTimeDifference,
+  getTimeMeridian,
+} from '../../utils/date';
 import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import TrendingFlatIcon from '@material-ui/icons/TrendingFlat';
 import ScheduleIcon from '@material-ui/icons/Schedule';
@@ -18,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
   },
   details: {
     display: 'flex',
+    margin: '0 0 0 15px',
+  },
+  icon: {
+    width: '30px',
   },
 }));
 
@@ -29,26 +37,42 @@ const Leg = ({ origin, destination, destDate, origDate, bikeflag, line }) => {
       <div className={classes.color} />
       <div>
         <Typography variant="body1">
-          {getFormattedTime(origDate)} {origin?.name}
+          <Typography variant="h6" component="span">
+            {getFormattedTime(origDate)}
+          </Typography>{' '}
+          {getTimeMeridian(origDate)}
+          {' - '}
+          {origin?.name}
         </Typography>
         <div className={classes.details}>
-          <DirectionsBikeIcon fontSize="small" />
+          <div className={classes.icon}>
+            <DirectionsBikeIcon fontSize="small" />
+          </div>
           <Typography variant="body2">
             Bicycle {bikeflag === '1' ? '' : 'not '} allowed
           </Typography>
         </div>
         <div className={classes.details}>
-          <TrendingFlatIcon fontSize="small" />
+          <div className={classes.icon}>
+            <TrendingFlatIcon fontSize="small" />
+          </div>
           <Typography variant="body2">{line?.name}</Typography>
         </div>
         <div className={classes.details}>
-          <ScheduleIcon fontSize="small" />
+          <div className={classes.icon}>
+            <ScheduleIcon fontSize="small" />
+          </div>
           <Typography variant="body2">
             {getFormattedTimeDifference(origDate, destDate)} min
           </Typography>
         </div>
         <Typography variant="body1">
-          {getFormattedTime(destDate)} {destination?.name}
+          <Typography variant="h6" component="span">
+            {getFormattedTime(destDate)}
+          </Typography>{' '}
+          {getTimeMeridian(destDate)}
+          {' - '}
+          {destination?.name}
         </Typography>
       </div>
     </div>

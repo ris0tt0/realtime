@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Paper } from '@material-ui/core';
 import Logger from 'js-logger';
 import { getFormattedTimeDifference } from '../../utils/date';
 
@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     minWidth: '200px',
+    margin: '0 20px',
     flex: 1,
   },
 }));
@@ -29,7 +30,7 @@ const ItineraryBar = ({ leg }) => {
   }, [leg]);
 
   return (
-    <div className={classes.root}>
+    <Paper className={classes.root}>
       {data.map(({ flexNum, hexcolor }, index) => {
         return (
           <div
@@ -43,7 +44,7 @@ const ItineraryBar = ({ leg }) => {
           />
         );
       })}
-    </div>
+    </Paper>
   );
 };
 

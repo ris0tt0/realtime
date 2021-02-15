@@ -32,7 +32,13 @@ export const getDateEightWeeksHence = (date = new Date()) => {
 
 export const getFormattedTime = (date = null) => {
   if (date instanceof Date) {
-    return date.toLocaleTimeString('en-US').toLowerCase();
+    const h = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+    const m =
+      date.getMinutes() > 9 ? date.getMinutes() : `0${date.getMinutes()}`;
+    const s =
+      date.getSeconds() > 9 ? date.getSeconds() : `0${date.getSeconds()}`;
+
+    return `${h === 0 ? '12' : h}:${m}${s !== '00' ? `:${s}` : ''}`;
   }
   return null;
 };
@@ -40,7 +46,18 @@ export const getFormattedTimeDifference = (date1, date2) => {
   if (date1 && date2) {
     const ms = date2.getTime() - date1.getTime();
 
-    return ms / 1000 / 60;
+    return Math.abs(ms / 1000 / 60);
   }
+  return null;
+};
+
+export const getTimeMeridian = (date = null) => {
+  if (date instanceof Date) {
+    if (date.getHours() > 12) {
+      return 'pm';
+    }
+    return 'am';
+  }
+
   return null;
 };

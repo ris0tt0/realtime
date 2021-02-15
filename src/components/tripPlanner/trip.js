@@ -7,7 +7,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import { getFormattedTime } from '../../utils/date';
+import { getFormattedTime, getTimeMeridian } from '../../utils/date';
 import AttachMoneyTwoToneIcon from '@material-ui/icons/AttachMoneyTwoTone';
 import AccessTimeTwoToneIcon from '@material-ui/icons/AccessTimeTwoTone';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -22,6 +22,9 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     flex: 1,
+  },
+  time: {
+    minWidth: '180px',
   },
   details: {
     display: 'flex',
@@ -50,9 +53,18 @@ const Trip = ({
         id="additional-actions1-header"
       >
         <div className={classes.header}>
-          <Typography variant="h5">
-            {getFormattedTime(origDate)} - {getFormattedTime(destDate)}
-          </Typography>
+          <div className={classes.time}>
+            <Typography variant="h5">
+              {getFormattedTime(origDate)}{' '}
+              <Typography variant="subtitle2" component="span">
+                {getTimeMeridian(origDate)}
+              </Typography>{' '}
+              - {getFormattedTime(destDate)}{' '}
+              <Typography variant="subtitle2" component="span">
+                {getTimeMeridian(destDate)}
+              </Typography>
+            </Typography>
+          </div>
           <ItineraryBar leg={leg} />
           <div>
             <div className={classes.details}>
@@ -74,6 +86,7 @@ const Trip = ({
               legs.push(
                 <Transfer
                   key={`xfer_${index}`}
+                  trainHeaded={list[index + 1].trainHeadStation}
                   origDate={leg.destDate}
                   destDate={list[index + 1].origDate}
                 />

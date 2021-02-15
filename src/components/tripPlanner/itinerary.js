@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Logger from 'js-logger';
 import { makeStyles, Typography } from '@material-ui/core';
-import { getFormattedTime } from '../../utils/date';
+import { getFormattedTime, getTimeMeridian } from '../../utils/date';
 import Trip from './trip';
 
 const useStyles = makeStyles({
@@ -49,7 +49,9 @@ const Itinerary = ({
           <Typography variant="h5">{destination.name}</Typography>
           <Typography variant="caption">{destination.address}</Typography>
         </div>
-        <Typography variant="caption">{getFormattedTime(date)}</Typography>
+        <Typography variant="caption">
+          {getFormattedTime(date)} {getTimeMeridian(date)}
+        </Typography>
       </div>
       <div className={classes.trip}>
         {trips.map((item, index) => (

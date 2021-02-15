@@ -16,18 +16,24 @@ const useStyles = makeStyles((theme) => ({
   },
   details: {
     display: 'flex',
+    margin: '0 0 0 15px',
+  },
+  icon: {
+    width: '30px',
   },
 }));
 
-const Transfer = ({ origDate, destDate }) => {
+const Transfer = ({ origDate, destDate, trainHeaded }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <div className={classes.color} />
       <div>
-        <Typography variant="body2">Transfer</Typography>
+        <Typography variant="body2">Transfer: {trainHeaded}</Typography>
         <div className={classes.details}>
-          <ScheduleIcon fontSize="small" />
+          <div className={classes.icon}>
+            <ScheduleIcon fontSize="small" />
+          </div>
           <Typography variant="body2">
             {getFormattedTimeDifference(origDate, destDate)} min
           </Typography>
