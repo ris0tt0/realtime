@@ -36,3 +36,11 @@ export const getFormattedTime = (date = null) => {
   }
   return null;
 };
+export const getFormattedTimeDifference = (date1, date2) => {
+  if (date1 && date2) {
+    const ms = date2.getTime() - date1.getTime();
+
+    return ms / 1000 / 60;
+  }
+  return null;
+};
