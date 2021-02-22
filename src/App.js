@@ -6,11 +6,13 @@ import { requestInitialData } from './actions';
 import { RealTimeDepartures } from './screens/real-time-departures';
 import { Start } from './screens/start-page';
 import { TripPlanner } from './screens/trip-planner';
+import DateFnsUtils from '@date-io/date-fns';
 import {
   getAppDataIsInitLoaded,
   getAppDataIsInitLoadError,
   getAppDataIsRequesting,
 } from './selectors';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 const useStyles = makeStyles({
   root: {
@@ -40,10 +42,12 @@ const App = () => {
 
   if (isInitLoaded && !isInitLoadedError) {
     return (
-      <Paper className={classes.root} elevation={0}>
-        <RealTimeDepartures />
-        <TripPlanner />
-      </Paper>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Paper className={classes.root} elevation={0}>
+          <RealTimeDepartures />
+          <TripPlanner />
+        </Paper>
+      </MuiPickersUtilsProvider>
     );
   }
   if (isInitLoadedError) {

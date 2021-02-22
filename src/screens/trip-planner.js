@@ -1,10 +1,12 @@
 import {
   Button,
   Container,
+  makeStyles,
   Menu,
   MenuItem,
   Typography,
 } from '@material-ui/core';
+import { DateTimePicker } from '@material-ui/pickers';
 import Logger from 'js-logger';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +19,23 @@ import {
   getTripPlanningCurrentResultSelector,
 } from '../selectors';
 
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  station: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  trip: {
+    display: 'flex',
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
+});
+
 const getStationNameCreator = (stations) => (id) =>
   stations.find((station) => station.abbr === id).name;
 
@@ -26,6 +45,7 @@ const TripPlanner = () => {
   const isRequesting = useSelector(getTripPlanningIsRequestingSelector);
   const error = useSelector(getTripPlanningErrorSelector);
   const data = useSelector(getTripPlanningCurrentResultSelector);
+  const classes = useStyles();
 
   Logger.info(data);
 
@@ -34,8 +54,11 @@ const TripPlanner = () => {
   const [originId, setOriginId] = useState('origin');
   const [destinationId, setDestinationId] = useState('destination');
   const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const getName = getStationNameCreator(stations);
+
+  const handleDateChange = (date) => setSelectedDate(date);
 
   const handleMenuClick = (id) => {
     isOrigin ? setOriginId(id) : setDestinationId(id);
@@ -76,7 +99,7 @@ const TripPlanner = () => {
   return (
     <Container>
       <Typography variant="h2">Trip Planning</Typography>
-      <div>
+      <div className={classes.station}>
         <Typography variant="h5">A</Typography>
         <Button
           disabled={isRequesting}
@@ -88,7 +111,7 @@ const TripPlanner = () => {
           {originId === 'origin' ? 'origin' : getName(originId)}
         </Button>
       </div>
-      <div>
+      <div className={classes.station}>
         <Typography variant="h5">B</Typography>
         <Button
           disabled={isRequesting}
@@ -102,6 +125,7 @@ const TripPlanner = () => {
             : getName(destinationId)}
         </Button>
       </div>
+      <DateTimePicker value={selectedDate} onChange={handleDateChange} />
       <Button
         variant="outlined"
         disabled={searchDisabled}
