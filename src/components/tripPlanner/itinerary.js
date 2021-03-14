@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Logger from 'js-logger';
 import { makeStyles, Typography } from '@material-ui/core';
 import { getFormattedTime, getTimeMeridian } from '../../utils/date';
 import Trip from './trip';
@@ -35,8 +34,6 @@ const Itinerary = ({
   if (origin === null) {
     return null;
   }
-
-  Logger.info(trips);
 
   return (
     <div className={classes.root}>

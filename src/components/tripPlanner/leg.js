@@ -81,4 +81,4 @@ const Leg = ({ origin, destination, destDate, origDate, bikeflag, line }) => {
 
 Leg.propTypes = {};
 
-export default Leg;
+export { Leg };

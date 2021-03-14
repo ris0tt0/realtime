@@ -1,6 +1,6 @@
-import React from 'react';
+import { makeStyles, Typography } from '@material-ui/core';
 import { PropTypes } from 'prop-types';
-import { makeStyles, Paper, Typography } from '@material-ui/core';
+import React from 'react';
 
 const useStyles = makeStyles({
   platform: {
@@ -13,12 +13,16 @@ const useStyles = makeStyles({
   },
   destination: {
     justifyContent: 'space-between',
-    alignItems: 'flex-end',
     display: 'flex',
     padding: '0 10px',
   },
   estimates: {
     display: 'flex',
+  },
+  estimate: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   minutes: {
     padding: '0 5px',
@@ -30,7 +34,7 @@ const Platforms = ({ platformMap }) => {
 
   return Array.from(platformMap).map(
     ([platformName, destinationMap], index) => (
-      <Paper key={`-p${index}`} className={classes.platform}>
+      <div key={`-p${index}`} className={classes.platform}>
         <Typography variant="h6">Platform {platformName}</Typography>
         <div className={classes.destinations}>
           {Array.from(destinationMap).map(
@@ -38,13 +42,20 @@ const Platforms = ({ platformMap }) => {
               return (
                 <div key={`-${index}`} className={classes.destination}>
                   <div>
-                    <Typography variant="h5">{destination.name}</Typography>
+                    <Typography variant="h6">{destination.name}</Typography>
                   </div>
                   <div className={classes.estimates}>
                     {estimate.map((item) => (
-                      <Typography className={classes.minutes} variant="h4">
-                        {item.minutes}
-                      </Typography>
+                      <div className={classes.estimate}>
+                        <Typography className={classes.minutes} variant="h6">
+                          {isNaN(parseInt(item.minutes, 10))
+                            ? item.minutes
+                            : `${item.minutes} min`}
+                        </Typography>
+                        <Typography variant="caption">
+                          {item.length} car
+                        </Typography>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -52,7 +63,7 @@ const Platforms = ({ platformMap }) => {
             }
           )}
         </div>
-      </Paper>
+      </div>
     )
   );
 };

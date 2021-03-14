@@ -1,5 +1,3 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Accordion,
   AccordionDetails,
@@ -7,26 +5,35 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import { getFormattedTime, getTimeMeridian } from '../../utils/date';
-import AttachMoneyTwoToneIcon from '@material-ui/icons/AttachMoneyTwoTone';
-import AccessTimeTwoToneIcon from '@material-ui/icons/AccessTimeTwoTone';
+import AccessTimeTwoToneIcon from '@material-ui/icons/AccessTime';
+import AttachMoneyTwoToneIcon from '@material-ui/icons/AttachMoney';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Logger from 'js-logger';
-import Leg from './leg';
-import Transfer from './transfer';
+import React from 'react';
+import { TimeStandard } from '../common';
 import { ItineraryBar } from './common';
+import { Leg } from './leg';
+import Transfer from './transfer';
 
 const useStyles = makeStyles({
   root: {},
   header: {
     display: 'flex',
-    alignItems: 'center',
+    flexDirection: 'column',
     flex: 1,
   },
   time: {
-    minWidth: '180px',
+    display: 'flex',
+    alignItems: 'center',
   },
   details: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  detailss: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  detail: {
     display: 'flex',
   },
   leg: {},
@@ -54,26 +61,20 @@ const Trip = ({
       >
         <div className={classes.header}>
           <div className={classes.time}>
-            <Typography variant="h5">
-              {getFormattedTime(origDate)}{' '}
-              <Typography variant="subtitle2" component="span">
-                {getTimeMeridian(origDate)}
-              </Typography>{' '}
-              - {getFormattedTime(destDate)}{' '}
-              <Typography variant="subtitle2" component="span">
-                {getTimeMeridian(destDate)}
-              </Typography>
-            </Typography>
+            <TimeStandard date={origDate} />
+            <ItineraryBar leg={leg} />
+            <TimeStandard date={destDate} />
           </div>
-          <ItineraryBar leg={leg} />
-          <div>
-            <div className={classes.details}>
-              <AccessTimeTwoToneIcon fontSize="small" />
-              <Typography variant="caption">{tripTime}</Typography>
-            </div>
-            <div className={classes.details}>
-              <AttachMoneyTwoToneIcon fontSize="small" />
-              <Typography variant="caption">{fare}</Typography>
+          <div className={classes.details}>
+            <div className={classes.detailss}>
+              <div className={classes.detail}>
+                <AccessTimeTwoToneIcon fontSize="small" />
+                <Typography variant="body2">{tripTime} min</Typography>
+              </div>
+              <div className={classes.detail}>
+                <AttachMoneyTwoToneIcon fontSize="small" />
+                <Typography variant="body2">{fare}</Typography>
+              </div>
             </div>
           </div>
         </div>
@@ -99,7 +100,5 @@ const Trip = ({
     </Accordion>
   );
 };
-
-Trip.propTypes = {};
 
 export default Trip;

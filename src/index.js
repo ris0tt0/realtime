@@ -1,3 +1,4 @@
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import Logger from 'js-logger';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,9 +10,15 @@ import { store } from './store';
 // eslint-disable-next-line react-hooks/rules-of-hooks
 Logger.useDefaults();
 
+const theme = createMuiTheme({
+  palette: { type: 'dark' },
+});
+
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root')
 );

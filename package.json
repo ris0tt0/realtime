@@ -15,7 +15,6 @@
         "immer": "^8.0.0",
         "js-logger": "^1.6.1",
         "normalizr": "^3.6.1",
-        "prettier": "2.2.1",
         "react": "^17.0.1",
         "react-dom": "^17.0.1",
         "react-redux": "^7.2.2",
@@ -51,6 +50,7 @@
         ]
     },
     "devDependencies": {
+        "prettier": "2.2.1",
         "redux-mock-store": "^1.5.4"
     }
 }
