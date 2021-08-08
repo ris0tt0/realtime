@@ -4,12 +4,14 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { setName } from './actions';
+import { requestEtd } from './actions/real-time-estimates';
 import { App } from './app';
 import { store } from './store';
 
 Logger.useDefaults();
 
 store.dispatch(setName('jonathan gee bart app'));
+store.dispatch(requestEtd('mcar'));
 
 const theme = createTheme({
   palette: {

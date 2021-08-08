@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const { ModuleFederationPlugin } = require('webpack').container;
-
+const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const deps = require('../package.json').dependencies;
 
@@ -14,8 +14,8 @@ module.exports = {
     clean: true,
   },
   plugins: [
+    new Dotenv(),
     new HtmlWebpackPlugin({
-      title: 'jay app',
       template: path.resolve(__dirname, '../public/index.html'),
     }),
   ],
