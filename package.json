@@ -12,6 +12,7 @@
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "babel-loader": "^8.2.2",
+    "dotenv-webpack": "^7.0.3",
     "html-webpack-plugin": "^5.3.2",
     "prettier": "^2.3.2",
     "webpack": "^5.51.1",
@@ -22,8 +23,10 @@
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "axios": "^0.21.1",
     "immer": "^9.0.5",
     "js-logger": "^1.6.1",
+    "normalizr": "^3.6.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
