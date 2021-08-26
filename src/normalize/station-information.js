@@ -11,3 +11,5 @@ export const normalizeStations = (json) => {
 };
 
 export const normalizeStationInfo = (json) => json;
+
+export const normalizeStationAccess = (json) => json;

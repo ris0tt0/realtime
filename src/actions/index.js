@@ -1,4 +1,8 @@
-import { requestStationInfo, requestStations } from './station-information';
+import {
+  requestStationAccess,
+  requestStationInfo,
+  requestStations,
+} from './station-information';
 
 export const SET_NAME = 'set name';
 export const setName = (payload) => ({ type: SET_NAME, payload });
@@ -20,6 +24,7 @@ export const initBartApp = () => (dispatch) => {
 
   dispatch(requestStations())
     .then(() => dispatch(requestStationInfo()))
+    .then(() => dispatch(requestStationAccess()))
     .catch((error) => dispatch(requestingInitBartAppError(error)))
     .finally(() => dispatch(requestingInitBartApp(false)));
 };
