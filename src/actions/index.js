@@ -1,4 +1,5 @@
 import {
+  requestSchedule,
   requestSpecialSchedule,
   requestStationSchedule,
 } from './schedule-information';
@@ -31,6 +32,7 @@ export const initBartApp = () => (dispatch) => {
     .then(() => dispatch(requestStationAccess()))
     .then(() => dispatch(requestStationSchedule()))
     .then(() => dispatch(requestSpecialSchedule()))
+    .then(() => dispatch(requestSchedule()))
     .catch((error) => dispatch(requestingInitBartAppError(error)))
     .finally(() => dispatch(requestingInitBartApp(false)));
 };

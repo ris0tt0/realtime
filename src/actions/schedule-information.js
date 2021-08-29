@@ -1,4 +1,5 @@
 import {
+  normalizeSchedule,
   normalizeSpecialSchedule,
   normalizeStationSchedule,
 } from '../normalize/schedule-information';
@@ -62,5 +63,35 @@ export function requestSpecialSchedule() {
       .then((normalized) => dispatch(receiveSpecialSchedule(normalized)))
       .catch((error) => dispatch(requestingSpecialScheduleError(error)))
       .finally(() => dispatch(requestingSpecialSchedule(false)));
+  };
+}
+
+export const REQUESTING_SCHEDULE = 'requesting bart schedule';
+export const REQUESTING_SCHEDULE_ERROR = 'requesting bart schedule error';
+export const RECEIVE_SCHEDULE = 'receive bart schedule';
+
+const requestingSchedule = (payload) => ({
+  type: REQUESTING_SCHEDULE,
+  payload,
+});
+const requestingScheduleError = (payload) => ({
+  type: REQUESTING_SCHEDULE_ERROR,
+  payload,
+});
+const receiveSchedule = (payload) => ({
+  type: RECEIVE_SCHEDULE,
+  payload,
+});
+export function requestSchedule() {
+  return (dispatch, _, { BART_API_KEY }) => {
+    dispatch(requestingSchedule(true));
+    return fetch(
+      `https://api.bart.gov/api/sched.aspx?cmd=scheds&key=${BART_API_KEY}&json=y`
+    )
+      .then((response) => response.json())
+      .then((json) => normalizeSchedule(json))
+      .then((normalized) => dispatch(receiveSchedule(normalized)))
+      .catch((error) => dispatch(requestingScheduleError(error)))
+      .finally(() => dispatch(requestingSchedule(false)));
   };
 }
