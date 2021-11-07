@@ -5,7 +5,7 @@ const App = () => {
   return (
     <Container maxWidth="lg">
       <Paper>
-        <Stack sx={{ height: '100vh' }}>app</Stack>
+        <Stack sx={{ height: '100vh' }}>jbart</Stack>
       </Paper>
     </Container>
   );

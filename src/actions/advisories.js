@@ -20,7 +20,9 @@ export const requestBsa =
   () =>
   (dispatch, _, { BartKey }) => {
     dispatch(requestingBsa(true));
-    fetch(`http://api.bart.gov/api/bsa.aspx?cmd=bsa&key=${BartKey}&json=y`)
+    return fetch(
+      `http://api.bart.gov/api/bsa.aspx?cmd=bsa&key=${BartKey}&json=y`
+    )
       .then((response) => response.json())
       .then((json) => normalizeBsa(json))
       .then((data) => dispatch(requestBsaResult(data)))
@@ -50,7 +52,9 @@ export const requestCount =
   () =>
   (dispatch, _, { BartKey }) => {
     dispatch(requestingCount(true));
-    fetch(`http://api.bart.gov/api/bsa.aspx?cmd=count&key=${BartKey}&json=y`)
+    return fetch(
+      `http://api.bart.gov/api/bsa.aspx?cmd=count&key=${BartKey}&json=y`
+    )
       .then((response) => response.json())
       .then((json) => normalizeCount(json))
       .then((data) => dispatch(requestCountResult(data)))
@@ -80,7 +84,9 @@ export const requestElevator =
   () =>
   (dispatch, _, { BartKey }) => {
     dispatch(requestingElevator(true));
-    fetch(`http://api.bart.gov/api/bsa.aspx?cmd=elev&key=${BartKey}&json=y`)
+    return fetch(
+      `http://api.bart.gov/api/bsa.aspx?cmd=elev&key=${BartKey}&json=y`
+    )
       .then((response) => response.json())
       .then((json) => normalizeBsa(json))
       .then((data) => dispatch(requestElevatorResult(data)))

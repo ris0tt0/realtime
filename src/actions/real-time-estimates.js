@@ -20,7 +20,7 @@ export const requestEtd =
   (origin, platform = null, direction = null) =>
   (dispatch, _, { BartKey }) => {
     dispatch(requestingEtd(true));
-    fetch(
+    return fetch(
       `http://api.bart.gov/api/etd.aspx?cmd=etd&orig=${origin}&key=${BartKey}&json=y`
     )
       .then((response) => response.json())
