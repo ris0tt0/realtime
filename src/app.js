@@ -1,16 +1,14 @@
-import { Box, Paper } from '@material-ui/core';
+import { Container, Paper, Stack } from '@mui/material';
 import React from 'react';
 
-export const App = () => {
+const App = () => {
   return (
-    <Paper>
-      <Box
-        display="flex"
-        flex={1}
-        height="100vh"
-        justifyContent="center"
-        alignItems="center"
-      ></Box>
-    </Paper>
+    <Container maxWidth="lg">
+      <Paper>
+        <Stack sx={{ height: '100vh' }}>app</Stack>
+      </Paper>
+    </Container>
   );
 };
+
+export { App };

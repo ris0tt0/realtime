@@ -1,35 +1,34 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const { ModuleFederationPlugin } = require('webpack').container;
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
-const deps = require('../package.json').dependencies;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DotenvWebpackPlugin = require('dotenv-webpack');
 
 module.exports = {
   entry: {
     app: './src/index.js',
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'real time bart',
+      template: './public/index.html',
+    }),
+    new DotenvWebpackPlugin(),
+  ],
   output: {
-    filename: '[name].bundle.js',
+    filename: '[name]-[contenthash].js',
     path: path.resolve(__dirname, '../dist'),
     clean: true,
   },
-  plugins: [
-    new Dotenv(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, '../public/index.html'),
-    }),
-  ],
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.m?js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
             presets: [
-              ['@babel/preset-env', { targets: 'defaults' }],
               '@babel/preset-react',
+              ['@babel/preset-env', { targets: 'defaults' }],
             ],
           },
         },

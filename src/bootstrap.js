@@ -1,4 +1,5 @@
-import { createTheme, ThemeProvider } from '@material-ui/core';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import Logger from 'js-logger';
 import React from 'react';
 import { render } from 'react-dom';
@@ -23,13 +24,14 @@ store.dispatch(requestElevator());
 
 const theme = createTheme({
   palette: {
-    type: 'dark',
+    mode: 'dark',
   },
 });
 
 render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <App />
     </ThemeProvider>
   </Provider>,
