@@ -4,7 +4,7 @@ const DotenvWebpackPlugin = require('dotenv-webpack');
 
 module.exports = {
   entry: {
-    app: './src/index.js',
+    app: path.resolve(__dirname, '../src/index.js'),
   },
   plugins: [
     new HtmlWebpackPlugin({
