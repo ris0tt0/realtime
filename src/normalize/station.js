@@ -30,7 +30,7 @@ export const normalizeStns = (json) => {
     {
       idAttribute: (value, parent) => {
         Logger.info('----------', value, parent);
-        return 'asdfid';
+        return 'asdfid';git 
         //   return `id-${parent.stations.indexOf(value)}`;
       },
       processStrategy: (value, parent, key) => {

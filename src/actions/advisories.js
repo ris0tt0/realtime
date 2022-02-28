@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import { normalizeBsa, normalizeCount } from '../normalize/advisories';
 
 export const REQUESTING_BSA = 'requesting bsa';

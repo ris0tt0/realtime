@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const DotenvWebpackPlugin = require('dotenv-webpack');
 
 module.exports = {
@@ -12,6 +13,9 @@ module.exports = {
       template: './public/index.html',
     }),
     new DotenvWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[contenthash].css',
+    }),
   ],
   output: {
     filename: '[name]-[contenthash].js',
@@ -32,6 +36,11 @@ module.exports = {
             ],
           },
         },
+      },
+      {
+        test: /\.css$/,
+        exclude: /(node_modules|bower_components)/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
     ],
   },

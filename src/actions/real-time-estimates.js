@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import { normalizeEtd } from '../normalize/real-time-estimates';
 
 export const REQUESTING_ETD = 'requesting eid';

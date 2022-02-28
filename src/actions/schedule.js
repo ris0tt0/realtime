@@ -1,6 +1,5 @@
 import {
   normalizeFare,
-  normalizeHoliday,
   normalizeRouteSched,
   normalizeSpecial,
   normalizeStnSched,

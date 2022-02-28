@@ -1,5 +1,3 @@
-import CssBaseline from '@mui/material/CssBaseline';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logger from 'js-logger';
 import React from 'react';
 import { render } from 'react-dom';
@@ -24,6 +22,8 @@ import {
 import { App } from './app';
 import { store } from './store';
 
+import './index.css';
+
 Logger.useDefaults();
 
 store.dispatch(setName('jonathan gee bart app'));
@@ -42,18 +42,9 @@ store.dispatch(requestStationAccess());
 store.dispatch(requestStationInfo());
 store.dispatch(requestStations());
 
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
-
 render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <App />
-    </ThemeProvider>
+    <App />
   </Provider>,
   document.getElementById('g-bart')
 );
