@@ -23,6 +23,7 @@ import { App } from './app';
 import { store } from './store';
 
 import './index.css';
+import { BrowserRouter } from 'react-router-dom';
 
 Logger.useDefaults();
 
@@ -43,8 +44,10 @@ store.dispatch(requestStationInfo());
 store.dispatch(requestStations());
 
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('g-bart')
 );
