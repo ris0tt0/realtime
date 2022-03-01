@@ -74,7 +74,7 @@ export const requestingStnsError = (payload) => ({
   type: REQUESTING_STNS_ERROR,
   payload,
 });
-export const REQUEST_STNSL_RESULT = 'request Stns result';
+export const REQUEST_STNS_RESULT = 'request Stns result';
 export const requestStnsResult = (payload) => ({
   type: REQUEST_STNS_RESULT,
   payload,

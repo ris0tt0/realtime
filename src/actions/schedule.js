@@ -138,7 +138,7 @@ export const requestingStnSchedError = (payload) => ({
   type: REQUESTING_STNSCHED_ERROR,
   payload,
 });
-export const REQUEST_STNSCHEDL_RESULT = 'request StnSched result';
+export const REQUEST_STNSCHED_RESULT = 'request StnSched result';
 export const requestStnSchedResult = (payload) => ({
   type: REQUEST_STNSCHED_RESULT,
   payload,

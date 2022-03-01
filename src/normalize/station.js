@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import { normalize, schema } from 'normalizr';
 import { uriSchema } from './common';
 
@@ -29,20 +28,20 @@ export const normalizeStns = (json) => {
     {},
     {
       idAttribute: (value, parent) => {
-        Logger.info('----------', value, parent);
-        return 'asdfid';git 
+        // Logger.info('----------', value, parent);
+        return 'station-id';
         //   return `id-${parent.stations.indexOf(value)}`;
       },
       processStrategy: (value, parent, key) => {
-        Logger.info('2----------', value, parent, key);
-        return value;
+        // Logger.info('2----------', value, parent, key);
+        return value.station;
       },
     }
   );
 
   const normalized = normalize(json.root, {
     uri: uriSchema,
-    stations: [stnSchema],
+    stations: stnSchema,
   });
 
   return normalized;

@@ -8,8 +8,7 @@ export const normalizeEtd = (json) => {
     {},
     {
       idAttribute: (value, parent) => {
-        // Logger.info('parent', parent, '---', value);
-        return `id-${parent.estimate.indexOf(value)}`;
+        return `id-${parent.abbreviation}-${parent.estimate.indexOf(value)}`;
       },
     }
   );

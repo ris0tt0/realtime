@@ -1,4 +1,5 @@
 import { produce } from 'immer';
+import Logger from 'js-logger';
 import { combineReducers } from 'redux';
 import {
   REQUESTING_BSA,
@@ -40,8 +41,8 @@ import {
   REQUEST_SPECIAL_RESULT,
   REQUEST_STNACCESS_RESULT,
   REQUEST_STNINFO_RESULT,
-  REQUEST_STNSCHEDL_RESULT,
-  REQUEST_STNSL_RESULT,
+  REQUEST_STNSCHED_RESULT,
+  REQUEST_STNS_RESULT,
   REQUEST_TRIP_RESULT,
   SET_NAME,
 } from '../actions';
@@ -149,6 +150,7 @@ const jbart = produce((draft, action) => {
       draft.bsa.requesting = action.payload;
       break;
     case REQUESTING_BSA_ERROR:
+      Logger.warn('REQUESTING_BSA_ERROR', action.payload);
       draft.bsa.error = action.payload;
       break;
     case REQUEST_BSA_RESULT:
@@ -160,6 +162,7 @@ const jbart = produce((draft, action) => {
       draft.count.requesting = action.payload;
       break;
     case REQUESTING_COUNT_ERROR:
+      Logger.warn('REQUESTING_COUNT_ERROR', action.payload);
       draft.count.error = action.payload;
       break;
     case REQUEST_COUNT_RESULT:
@@ -171,6 +174,7 @@ const jbart = produce((draft, action) => {
       draft.elevator.requesting = action.payload;
       break;
     case REQUESTING_ELEVATOR_ERROR:
+      Logger.warn('REQUESTING_ELEVATOR_ERROR', action.payload);
       draft.elevator.error = action.payload;
       break;
     case REQUEST_ELEVATOR_RESULT:
@@ -182,6 +186,7 @@ const jbart = produce((draft, action) => {
       draft.etd.requesting = action.payload;
       break;
     case REQUESTING_ETD_ERROR:
+      Logger.warn('REQUESTING_ETD_ERROR', action.payload);
       draft.etd.error = action.payload;
       break;
     case REQUEST_ETD_RESULT:
@@ -193,6 +198,7 @@ const jbart = produce((draft, action) => {
       draft.routeinfo.requesting = action.payload;
       break;
     case REQUESTING_ROUTEINFO_ERROR:
+      Logger.warn('REQUESTING_ROUTEINFO_ERROR', action.payload);
       draft.routeinfo.error = action.payload;
       break;
     case REQUEST_ROUTEINFO_RESULT:
@@ -203,6 +209,7 @@ const jbart = produce((draft, action) => {
       draft.routes.requesting = action.payload;
       break;
     case REQUESTING_ROUTES_ERROR:
+      Logger.warn('REQUESTING_ROUTES_ERROR', action.payload);
       draft.routes.error = action.payload;
       break;
     case REQUEST_ROUTES_RESULT:
@@ -214,6 +221,7 @@ const jbart = produce((draft, action) => {
       draft.trip.requesting = action.payload;
       break;
     case REQUESTING_TRIP_ERROR:
+      Logger.warn('REQUESTING_TRIP_ERROR', action.payload);
       draft.trip.error = action.payload;
       break;
     case REQUEST_TRIP_RESULT:
@@ -224,6 +232,7 @@ const jbart = produce((draft, action) => {
       draft.fare.requesting = action.payload;
       break;
     case REQUESTING_FARE_ERROR:
+      Logger.warn('REQUESTING_FARE_ERROR', action.payload);
       draft.fare.error = action.payload;
       break;
     case REQUEST_FARE_RESULT:
@@ -234,6 +243,7 @@ const jbart = produce((draft, action) => {
       draft.routesched.requesting = action.payload;
       break;
     case REQUESTING_ROUTESCHED_ERROR:
+      Logger.warn('REQUESTING_ROUTESCHED_ERROR', action.payload);
       draft.routesched.error = action.payload;
       break;
     case REQUEST_ROUTESCHED_RESULT:
@@ -244,6 +254,7 @@ const jbart = produce((draft, action) => {
       draft.special.requesting = action.payload;
       break;
     case REQUESTING_SPECIAL_ERROR:
+      Logger.warn('REQUESTING_SPECIAL_ERROR', action.payload);
       draft.special.error = action.payload;
       break;
     case REQUEST_SPECIAL_RESULT:
@@ -254,9 +265,10 @@ const jbart = produce((draft, action) => {
       draft.stnsched.requesting = action.payload;
       break;
     case REQUESTING_STNSCHED_ERROR:
+      Logger.warn('REQUESTING_STNSCHED_ERROR', action.payload);
       draft.stnsched.error = action.payload;
       break;
-    case REQUEST_STNSCHEDL_RESULT:
+    case REQUEST_STNSCHED_RESULT:
       draft.stnsched.entities = action.payload.entities;
       draft.stnsched.result = action.payload.result;
       break;
@@ -265,6 +277,7 @@ const jbart = produce((draft, action) => {
       draft.stnaccess.requesting = action.payload;
       break;
     case REQUESTING_STNACCESS_ERROR:
+      Logger.warn('REQUESTING_STNACCESS_ERROR', action.payload);
       draft.stnaccess.error = action.payload;
       break;
     case REQUEST_STNACCESS_RESULT:
@@ -275,6 +288,7 @@ const jbart = produce((draft, action) => {
       draft.stninfo.requesting = action.payload;
       break;
     case REQUESTING_STNINFO_ERROR:
+      Logger.warn('REQUESTING_STNINFO_ERROR', action.payload);
       draft.stninfo.error = action.payload;
       break;
     case REQUEST_STNINFO_RESULT:
@@ -285,9 +299,10 @@ const jbart = produce((draft, action) => {
       draft.stns.requesting = action.payload;
       break;
     case REQUESTING_STNS_ERROR:
+      Logger.warn('REQUESTING_STNS_ERROR', action.payload);
       draft.stns.error = action.payload;
       break;
-    case REQUEST_STNSL_RESULT:
+    case REQUEST_STNS_RESULT:
       draft.stns.entities = action.payload.entities;
       draft.stns.result = action.payload.result;
       break;
