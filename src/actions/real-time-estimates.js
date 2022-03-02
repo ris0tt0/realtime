@@ -1,9 +1,9 @@
 import { normalizeEtd } from '../normalize/real-time-estimates';
 
-export const REQUESTING_ETD = 'requesting eid';
+export const REQUESTING_ETD = 'requesting etd';
 export const requestingEtd = (payload) => ({ type: REQUESTING_ETD, payload });
 
-export const REQUESTING_ETD_ERROR = 'requesting eid error';
+export const REQUESTING_ETD_ERROR = 'requesting etd error';
 export const requestingEtdError = (payload) => ({
   type: REQUESTING_ETD_ERROR,
   payload,

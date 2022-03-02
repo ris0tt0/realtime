@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { realTimeDeparturesListSelector } from '../../selectors/rtd';
@@ -10,11 +9,22 @@ const getMinutes = (minutes) => {
   return `${minutes} min`;
 };
 
+const ETDPlatform = ({ platform, children }) => {
+  return (
+    <div className="p-2">
+      <div className="text-xl font-semibold">Platform: {platform}</div>
+      <div className="px-2 border divide-y rounded divide-slate-600 border-slate-600">
+        {children}
+      </div>
+    </div>
+  );
+};
+
 const ETDList = ({ name, children }) => {
   return (
     <div>
       <div className="text-2xl">{name}</div>
-      <div className="p-2 m-2 border divide-y rounded divide-slate-600 border-slate-400">
+      <div className="p-2 m-2 border divide-y rounded divide-slate-600 border-slate-600">
         {children}
       </div>
     </div>
@@ -42,10 +52,28 @@ const Estimate = ({
 }) => {
   const bikeFlagIcon = bikeflag ? <div>bF</div> : null;
   return (
-    <div className="flex items-baseline space-x-1">
+    <div
+      className="flex items-baseline space-x-1"
+      //   style={{ borderBottom: `1px solid ${hexcolor}` }}
+    >
       <span className="text-xl">{getMinutes(minutes)}</span>
       <span className="text-xs">({length} car)</span>
     </div>
+  );
+};
+
+const estimateStation = (item, index) => {
+  const estChildren = item.estimate?.map((estimate, index) => {
+    return <Estimate key={`${estimate.minutes} ${index}`} {...estimate} />;
+  });
+
+  return (
+    <ETDLine
+      key={`${item.destination} ${index}`}
+      destination={item.destination}
+    >
+      {estChildren}
+    </ETDLine>
   );
 };
 
@@ -59,27 +87,62 @@ const RealTimeDeparturesResult = () => {
     }
   }, [results]);
 
-  const stationResults = useMemo(() => {
-    const etdChildren = rtd.etd?.map((item, index) => {
-      const estChildren = item.estimate?.map((estimate, index) => {
-        return <Estimate key={`${estimate.minutes} ${index} `} {...estimate} />;
-      });
-
-      return (
-        <ETDLine
-          key={`${item.destination} ${index}`}
-          destination={item.destination}
-        >
-          {estChildren}
-        </ETDLine>
-      );
-    });
+  const stationListResults = useMemo(() => {
+    const etdChildren = rtd.etd?.map((item, index) =>
+      estimateStation(item, index)
+    );
 
     return <ETDList name={rtd.name}>{etdChildren}</ETDList>;
   }, [rtd]);
 
+  const stationPlatformResults = useMemo(() => {
+    const platforms = rtd.etd?.reduce((platform, station, index) => {
+      station.estimate.forEach((est) => {
+        if (!platform.has(est.platform)) {
+          platform.set(est.platform, new Map());
+        }
+        if (
+          !platform
+            .get(est.platform)
+            .has(station.destination + station.abbreviation)
+        ) {
+          platform
+            .get(est.platform)
+            .set(station.destination + station.abbreviation, {
+              abbreviation: station.abbreviation,
+              destination: station.destination,
+              estimate: [],
+            });
+        }
+        platform
+          .get(est.platform)
+          .get(station.destination + station.abbreviation)
+          .estimate.push(est);
+      });
+      return platform;
+    }, new Map());
+
+    if (platforms) {
+      return [...platforms.entries()].map(([platform, stations], index) => {
+        const stationChild = [...stations.values()].map((item, index) =>
+          estimateStation(item, index)
+        );
+
+        return (
+          <ETDPlatform key={`${platform} ${index}`} platform={platform}>
+            {stationChild}
+          </ETDPlatform>
+        );
+      });
+    }
+    return null;
+  }, [rtd]);
+
   return (
-    <div className="w-full h-full">{stationResults ?? <div>error</div>}</div>
+    <div className="w-full h-full">
+      <>{stationListResults ?? <div>error</div>}</>
+      <>{stationPlatformResults ?? <div>error</div>}</>
+    </div>
   );
 };
 
