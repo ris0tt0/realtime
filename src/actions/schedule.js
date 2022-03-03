@@ -23,7 +23,7 @@ export const requestTripResult = (payload) => ({
 });
 
 export const requestTrip =
-  (origin = 'mcar', destination = '16th', date = 'now') =>
+  (origin = 'oakl', destination = 'sfia', date = 'now') =>
   (dispatch, _, { BartKey }) => {
     const cmd = 'arrive';
 

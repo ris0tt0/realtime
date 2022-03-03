@@ -4,6 +4,13 @@ import { createSelector } from 'reselect';
 const resultSelector = (state) => state.jbart.etd.result;
 const rtdEntitiesSelector = (state) => state.jbart.etd.entities;
 
+export const getRTDCurrentAbbrSelector = createSelector(
+  [resultSelector, rtdEntitiesSelector],
+  (results, entities) => {
+    return entities.station[results.station[0]].abbr;
+  }
+);
+
 export const realTimeDeparturesListSelector = createSelector(
   [resultSelector, rtdEntitiesSelector],
   (results, entities) => {

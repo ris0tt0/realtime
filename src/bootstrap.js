@@ -23,6 +23,7 @@ import { App } from './app';
 import { store } from './store';
 
 import './index.css';
+import 'tw-elements';
 import { BrowserRouter } from 'react-router-dom';
 
 Logger.useDefaults();

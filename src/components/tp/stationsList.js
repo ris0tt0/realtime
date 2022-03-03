@@ -1,43 +1,23 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import Logger from 'js-logger';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useCommands } from '../../hooks/useCommands';
-import { getRTDCurrentAbbrSelector } from '../../selectors/rtd';
 import { getStationsListSelector } from '../../selectors/station';
 
-function RealTimeDeparturesList() {
-  const [loading, setLoading] = useState(false);
+const MyList = ({ items = [], onSelect = () => null }) => {
   const [selected, setSelected] = useState();
-  const stations = useSelector(getStationsListSelector);
-  const currentAbbr = useSelector(getRTDCurrentAbbrSelector);
-  const commands = useCommands();
-
-  useEffect(() => {
-    Logger.info('useEffect::currentAbbr', currentAbbr);
-  }, [currentAbbr]);
-
-  useEffect(() => {
-    if (selected?.abbr) {
-      setLoading(true);
-      commands
-        .setRTDStationAbbr(selected.abbr)
-        .finally(() => setLoading(false));
-    }
-  }, [selected]);
-
-  // useEffect(() => {
-  //   setSelected(stations[0]);
-  // }, [stations]);
-
-  //   if (loading) {
-  //     return <div>loading</div>;
-  //   }
-
+  const handleSelect = useCallback(
+    (item) => {
+      Logger.info('handleSelect::', item);
+      setSelected(item);
+      onSelect(item.abbr);
+    },
+    [onSelect]
+  );
   return (
     <div className="w-full">
-      <Listbox value={selected} onChange={setSelected}>
+      <Listbox value={selected} onChange={handleSelect}>
         <div className="relative mt-1">
           <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
             <span className="block truncate text-slate-800">
@@ -57,9 +37,9 @@ function RealTimeDeparturesList() {
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {stations.map((station, personIdx) => (
+              {items.map((station, index) => (
                 <Listbox.Option
-                  key={personIdx}
+                  key={index}
                   className={({ active }) =>
                     `cursor-default select-none relative py-2 pl-10 pr-4 ${
                       active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'
@@ -91,6 +71,59 @@ function RealTimeDeparturesList() {
       </Listbox>
     </div>
   );
-}
+};
 
-export default RealTimeDeparturesList;
+const StationsList = () => {
+  const stations = useSelector(getStationsListSelector);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [originAbbr, setOriginAbbr] = useState(null);
+  const [destAbbr, setDestAbbr] = useState(null);
+
+  const handleOrigin = useCallback(
+    (abbr) => {
+      Logger.info('handleOrigin::abbr', abbr, destAbbr);
+      setOriginAbbr(abbr);
+      if (abbr === destAbbr) {
+        setErrorMsg('please select a unique origin');
+      } else {
+        setErrorMsg(null);
+      }
+    },
+    [destAbbr]
+  );
+
+  const handleDestination = useCallback(
+    (abbr) => {
+      Logger.info('handleDestination::', abbr, originAbbr);
+      setDestAbbr(abbr);
+      if (abbr === originAbbr) {
+        setErrorMsg('please select a unique destination');
+      } else {
+        setErrorMsg(null);
+      }
+    },
+    [originAbbr]
+  );
+
+  return (
+    <div className="flex flex-col w-full border border-purple-400 rounded">
+      <div className="flex w-full space-x-4">
+        <div className="w-full">
+          <div className="text-xs font-thin">origin:</div>
+          <MyList items={stations} onSelect={handleOrigin} />
+        </div>
+        <div className="w-full">
+          <div className="text-xs font-thin">destination:</div>
+          <MyList items={stations} onSelect={handleDestination} />
+        </div>
+      </div>
+      {errorMsg ? <div className="w-full text-red-500">{errorMsg}</div> : null}
+      <div className="py-2">
+        <span className="text-xs font-thin">time:</span>{' '}
+        <span className="font-mono text-sm hover:text-slate-400">NOW</span>
+      </div>
+    </div>
+  );
+};
+
+export default StationsList;
