@@ -11,3 +11,14 @@ export const getStationsListSelector = createSelector(
     return stations[result.stations];
   }
 );
+
+export const getStationsMapSelector = createSelector(
+  [getStationsListSelector],
+  (list) => {
+    return list.reduce((map, station, index) => {
+      map.set(station.abbr, station);
+      return map;
+    }, new Map());
+    // return stations[result.stations];
+  }
+);

@@ -5,7 +5,7 @@ import { uriSchema } from './common';
 export const normalizeTrip = (json) => {
   //   Logger.info('normalizTrip::', json);
   const fairSchema = new schema.Entity(
-    'fair',
+    'fare',
     {},
     {
       idAttribute: (value, parent) =>
@@ -80,7 +80,7 @@ export const normalizeTrip = (json) => {
       },
     }
   );
-  const requesetSchema = new schema.Entity(
+  const requestSchema = new schema.Entity(
     'request',
     { trip: [tripSchema] },
     {
@@ -90,7 +90,7 @@ export const normalizeTrip = (json) => {
   );
   const scheduleSchema = new schema.Entity(
     'schedule',
-    { request: requesetSchema },
+    { request: requestSchema },
     {
       idAttribute: (value, parent) =>
         `id-leg-${[...Object.values(parent)].join('-')}`,

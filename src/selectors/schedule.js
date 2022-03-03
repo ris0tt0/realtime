@@ -13,19 +13,33 @@ export const getTripScheduleSelector = createSelector(
     const trip = entities.request[
       entities.schedule[result.schedule].request
     ].trip.map((id) => {
-      const fares = entities.fares[entities.trip[id].fares];
-      return { ...entities.trip[id], fares };
+      const fares = entities.fares[entities.trip[id].fares].fare.map((id) => {
+        return entities.fare[id];
+      });
+
+      const leg = entities.trip[id].leg.map((id) => {
+        return entities.leg[id];
+      });
+
+      return { ...entities.trip[id], leg, fares };
     });
     const request = {
       ...entities.request[entities.schedule[result.schedule].request],
       trip,
     };
     const schedule = { ...entities.schedule[result.schedule], request };
-    Logger.info(
-      'asdfasdf',
-      entities.request[entities.schedule[result.schedule].request].trip
-    );
+    // Logger.info(
+    //   'asdfasdf',
+    //   entities.request[entities.schedule[result.schedule].request].trip
+    // );
 
     return { ...result, schedule };
+  }
+);
+
+export const getTripListSelector = createSelector(
+  [getTripScheduleSelector],
+  (result) => {
+    return result.schedule.request.trip;
   }
 );
