@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import React from 'react';
 import TripPlannerResults from '../components/tp/results';
 import StationsList from '../components/tp/stationsList';

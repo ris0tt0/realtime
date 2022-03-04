@@ -25,13 +25,52 @@ const useTripProps = () => {
     });
 
     if (!isEqual(data, propsRef.current)) {
-      Logger.info('useTripProps', list, stationMap);
+      // Logger.info('useTripProps', list, stationMap);
       propsRef.current = data;
       setProps(data);
     }
   }, [list, stationMap]);
 
   return props;
+};
+
+const Leg = ({
+  bikeflag,
+  destTimeMin,
+  destTimeDate,
+  destination,
+  line,
+  load,
+  origTimeMin,
+  origTimeDate,
+  origin,
+  trainHeadStation,
+}) => {
+  // Logger.info(
+  //   'leg::',
+  //   bikeflag,
+  //   destTimeMin,
+  //   destTimeDate,
+  //   destination,
+  //   line,
+  //   load,
+  //   origTimeMin,
+  //   origTimeDate,
+  //   origin,
+  //   trainHeadStation
+  // );
+  return (
+    <div className="flex flex-col p-1 m-1 border rounded border-slate-400">
+      <div className="flex justify-between text-xl">
+        <span>{origTimeMin}</span>
+        <span>{destTimeMin}</span>
+      </div>
+      <div className="flex justify-between text-sm">
+        <span>{origin.name}</span>
+        <span>{destination.name}</span>
+      </div>
+    </div>
+  );
 };
 
 const Trip = ({
@@ -45,17 +84,24 @@ const Trip = ({
   destTimeMin,
   destTimeDate,
 }) => {
+  const legChildren = useMemo(() => {
+    return leg.map((prop, index) => {
+      return <Leg key={index} {...prop} />;
+    });
+  }, [leg]);
+
   return (
-    <div>
-      <div>
-        <span>{origin.name}</span>><span>{destination.name}</span>
+    <div className="flex flex-col p-1 m-1 border rounded border-slate-400">
+      <div className="flex justify-between text-xl">
+        <span>{origTimeMin}</span>
+        <span>{destTimeMin}</span>
       </div>
-      <div>
-        <span className="flex items-baseline text-lg">
-          {origTimeMin} <span className="text-sm">{origTimeDate}</span>
-        </span>
+      <div className="flex justify-between text-sm">
+        <span>{origin.name}</span>
+        <span>{destination.name}</span>
       </div>
-      <div className="text-sm">fare:{fare}</div>
+      <div className="text-sm">fare: ${fare}</div>
+      {legChildren}
     </div>
   );
 };
@@ -65,13 +111,12 @@ const TripPlannerResults = () => {
 
   const trips = useMemo(() => {
     return tripProps.map((props, index) => {
-      Logger.info('trips::props', props);
       return <Trip key={index} {...props} />;
     });
   }, [tripProps]);
 
   return (
-    <div className="flex flex-col w-full h-full border border-teal-500 rounded">
+    <div className="w-full h-full overflow-scroll border border-teal-500 rounded">
       {trips}
     </div>
   );
