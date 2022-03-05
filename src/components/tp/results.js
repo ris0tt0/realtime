@@ -1,37 +1,8 @@
-import Logger from 'js-logger';
-import { isEqual } from 'lodash';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getTripListSelector } from '../../selectors/schedule';
-import { getStationsMapSelector } from '../../selectors/station';
+import React, { useMemo } from 'react';
+import { useTripProps } from './hooks';
 
-const useTripProps = () => {
-  const list = useSelector(getTripListSelector);
-  const stationMap = useSelector(getStationsMapSelector);
-  const propsRef = useRef([]);
-  const [props, setProps] = useState([]);
-
-  useEffect(() => {
-    const data = list.map((trip) => {
-      const origin = stationMap.get(trip.origin);
-      const destination = stationMap.get(trip.destination);
-      const leg = trip.leg.map((leg) => {
-        const origin = stationMap.get(leg.origin);
-        const destination = stationMap.get(leg.destination);
-        return { ...leg, origin, destination };
-      });
-
-      return { ...trip, leg, origin, destination };
-    });
-
-    if (!isEqual(data, propsRef.current)) {
-      // Logger.info('useTripProps', list, stationMap);
-      propsRef.current = data;
-      setProps(data);
-    }
-  }, [list, stationMap]);
-
-  return props;
+const Time = ({ min }) => {
+  return <>{min.toLowerCase()}</>;
 };
 
 const Leg = ({
@@ -46,28 +17,22 @@ const Leg = ({
   origin,
   trainHeadStation,
 }) => {
-  // Logger.info(
-  //   'leg::',
-  //   bikeflag,
-  //   destTimeMin,
-  //   destTimeDate,
-  //   destination,
-  //   line,
-  //   load,
-  //   origTimeMin,
-  //   origTimeDate,
-  //   origin,
-  //   trainHeadStation
-  // );
   return (
     <div className="flex flex-col p-1 m-1 border rounded border-slate-400">
-      <div className="flex justify-between text-xl">
-        <span>{origTimeMin}</span>
-        <span>{destTimeMin}</span>
-      </div>
-      <div className="flex justify-between text-sm">
-        <span>{origin.name}</span>
-        <span>{destination.name}</span>
+      <div className="flex flex-col justify-between text-sm">
+        <div className="space-x-5">
+          <span className="text-xl">
+            <Time min={origTimeMin} />
+          </span>
+          <span>{origin.name}</span>
+        </div>
+        <div className="ml-5 text-xs">{line.name}</div>
+        <div className="space-x-5">
+          <span className="text-xl">
+            <Time min={destTimeMin} />
+          </span>
+          <span>{destination.name}</span>
+        </div>
       </div>
     </div>
   );
@@ -86,6 +51,7 @@ const Trip = ({
 }) => {
   const legChildren = useMemo(() => {
     return leg.map((prop, index) => {
+      // Logger.info('leg::props', prop);
       return <Leg key={index} {...prop} />;
     });
   }, [leg]);

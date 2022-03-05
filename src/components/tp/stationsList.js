@@ -1,8 +1,9 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import Logger from 'js-logger';
-import React, { Fragment, useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useCommands } from '../../hooks/useCommands';
 import { getStationsListSelector } from '../../selectors/station';
 
 const MyList = ({ items = [], onSelect = () => null }) => {
@@ -74,20 +75,33 @@ const MyList = ({ items = [], onSelect = () => null }) => {
 };
 
 const StationsList = () => {
+  const commands = useCommands();
   const stations = useSelector(getStationsListSelector);
+  const [loading, setLoading] = useState();
   const [errorMsg, setErrorMsg] = useState(null);
   const [originAbbr, setOriginAbbr] = useState(null);
   const [destAbbr, setDestAbbr] = useState(null);
+
+  useEffect(() => {
+    Logger.info('search:', originAbbr, destAbbr);
+    if (originAbbr === null || destAbbr === null) {
+      return;
+    }
+    if (originAbbr === destAbbr) {
+      setErrorMsg('origin and destination must not be the same');
+      return;
+    }
+    setErrorMsg(null);
+    setLoading(true);
+    commands
+      .requestTripPlanning(originAbbr, destAbbr)
+      .finally(() => setLoading(false));
+  }, [commands, originAbbr, destAbbr]);
 
   const handleOrigin = useCallback(
     (abbr) => {
       Logger.info('handleOrigin::abbr', abbr, destAbbr);
       setOriginAbbr(abbr);
-      if (abbr === destAbbr) {
-        setErrorMsg('please select a unique origin');
-      } else {
-        setErrorMsg(null);
-      }
     },
     [destAbbr]
   );
@@ -96,11 +110,6 @@ const StationsList = () => {
     (abbr) => {
       Logger.info('handleDestination::', abbr, originAbbr);
       setDestAbbr(abbr);
-      if (abbr === originAbbr) {
-        setErrorMsg('please select a unique destination');
-      } else {
-        setErrorMsg(null);
-      }
     },
     [originAbbr]
   );

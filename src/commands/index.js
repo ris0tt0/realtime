@@ -1,5 +1,5 @@
 import Logger from 'js-logger';
-import { requestEtd } from '../actions';
+import { requestEtd, requestTrip } from '../actions';
 
 const commands = (dispatch, state) => {
   return {
@@ -8,6 +8,9 @@ const commands = (dispatch, state) => {
     },
     setRTDStationAbbr: (abbr) => {
       return dispatch(requestEtd(abbr));
+    },
+    requestTripPlanning: (originAbbr, destAbbr) => {
+      return dispatch(requestTrip(originAbbr, destAbbr));
     },
   };
 };

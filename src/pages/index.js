@@ -3,15 +3,14 @@ import { NavLink, Outlet } from 'react-router-dom';
 
 const Layout = () => {
   return (
-    <div className="w-full h-full flex">
-      <div className="w-1/5 border border-red-500 rounded h-full">
-        <div className="space-y-2 text-xs flex flex-col">
-          side panel
+    <div className="flex w-full h-full">
+      <div className="w-1/5 h-full border border-red-500 rounded">
+        <div className="flex flex-col space-y-2 text-xs">
           <NavLink to="rtd">Real Times</NavLink>
           <NavLink to="tripplanner">Trip Planner</NavLink>
         </div>
       </div>
-      <div className="h-full w-full border border-pink-700 rounded">
+      <div className="w-full h-full border border-pink-700 rounded">
         <Outlet />
       </div>
     </div>
