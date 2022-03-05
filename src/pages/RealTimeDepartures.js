@@ -1,6 +1,6 @@
 import React from 'react';
-import RealTimeDeparturesList from '../components/rtd/list';
-import RealTimeDeparturesResult from '../components/rtd/result';
+import RealTimeDeparturesList from '../containers/realTimeDepartures/list';
+import RealTimeDeparturesResult from '../containers/realTimeDepartures/result';
 
 const RealTimeDeparturesPage = () => {
   return (

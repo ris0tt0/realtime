@@ -1,6 +1,6 @@
 import React from 'react';
-import TripPlannerResults from '../components/tp/results';
-import StationsList from '../components/tp/stationsList';
+import TripPlannerResults from '../containers/tripPlanner/results';
+import StationsList from '../containers/tripPlanner/stationsList';
 
 const TripPlanner = () => {
   return (

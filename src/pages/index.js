@@ -6,7 +6,7 @@ const Layout = () => {
     <div className="flex w-full h-full">
       <div className="w-1/5 h-full border border-red-500 rounded">
         <div className="flex flex-col space-y-2 text-xs">
-          <NavLink to="rtd">Real Times</NavLink>
+          <NavLink to="rtd">Real Time Departures</NavLink>
           <NavLink to="tripplanner">Trip Planner</NavLink>
         </div>
       </div>
