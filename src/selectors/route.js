@@ -19,3 +19,16 @@ export const getRoutesMapSelector = createSelector(
     }, new Map());
   }
 );
+
+const getRouteInfoEntitySelector = (state) => state.jbart.routeinfo.entities;
+const getRouteInfoResultSelector = (state) => state.jbart.routeinfo.result;
+
+export const getRouteInfoSelector = createSelector(
+  [getRouteInfoEntitySelector, getRouteInfoResultSelector],
+  (entity, result) => {
+    const route = entity.routes[result.routes];
+    const config = entity.config[route.config];
+
+    return { ...route, config };
+  }
+);

@@ -2,6 +2,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import Logger from 'js-logger';
 import React, { Fragment, memo, useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const DropDownList = ({ items = [], onSelect = () => null }) => {
   const [selected, setSelected] = useState();
@@ -9,7 +10,7 @@ const DropDownList = ({ items = [], onSelect = () => null }) => {
     (item) => {
       Logger.info('handleSelect::', item);
       setSelected(item);
-      onSelect(item.abbr);
+      onSelect(item);
     },
     [onSelect]
   );
@@ -69,6 +70,11 @@ const DropDownList = ({ items = [], onSelect = () => null }) => {
       </Listbox>
     </div>
   );
+};
+
+DropDownList.propTypes = {
+  items: PropTypes.array,
+  onSelect: PropTypes.func,
 };
 
 export default memo(DropDownList);

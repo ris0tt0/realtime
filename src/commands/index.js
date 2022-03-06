@@ -1,5 +1,5 @@
 import Logger from 'js-logger';
-import { requestEtd, requestTrip } from '../actions';
+import { requestEtd, requestRouteInfo, requestTrip } from '../actions';
 
 const commands = (dispatch, state) => {
   return {
@@ -11,6 +11,9 @@ const commands = (dispatch, state) => {
     },
     requestTripPlanning: (originAbbr, destAbbr) => {
       return dispatch(requestTrip(originAbbr, destAbbr));
+    },
+    requestRouteInfo: (route) => {
+      return dispatch(requestRouteInfo(route));
     },
   };
 };

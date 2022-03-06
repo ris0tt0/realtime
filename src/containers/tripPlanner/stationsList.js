@@ -30,7 +30,7 @@ const StationsList = () => {
   }, [commands, originAbbr, destAbbr]);
 
   const handleOrigin = useCallback(
-    (abbr) => {
+    ({ abbr }) => {
       Logger.info('handleOrigin::abbr', abbr, destAbbr);
       setOriginAbbr(abbr);
     },
@@ -38,7 +38,7 @@ const StationsList = () => {
   );
 
   const handleDestination = useCallback(
-    (abbr) => {
+    ({ abbr }) => {
       Logger.info('handleDestination::', abbr, originAbbr);
       setDestAbbr(abbr);
     },
