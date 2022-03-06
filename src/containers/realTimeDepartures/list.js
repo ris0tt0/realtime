@@ -4,8 +4,8 @@ import Logger from 'js-logger';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useCommands } from '../../hooks/useCommands';
-import { getRTDCurrentAbbrSelector } from '../../selectors/rtd';
-import { getStationsListSelector } from '../../selectors/station';
+import { getRTDCurrentAbbrSelector } from '../../selectors/RealTimeDepartures';
+import { getStationsListSelector } from '../../selectors/Station';
 
 function RealTimeDeparturesList() {
   const [loading, setLoading] = useState(false);

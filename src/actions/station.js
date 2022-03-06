@@ -2,7 +2,7 @@ import {
   normalizeStnAccess,
   normalizeStnInfo,
   normalizeStns,
-} from '../normalize/station';
+} from '../normalize/Station';
 
 export const REQUESTING_STNACCESS = 'requesting StnAccess';
 export const requestingStnAccess = (payload) => ({
@@ -81,7 +81,7 @@ export const requestStnsResult = (payload) => ({
 });
 
 export const requestStations =
-  (route = '1') =>
+  () =>
   (dispatch, _, { BartKey }) => {
     dispatch(requestingStns(true));
     return fetch(

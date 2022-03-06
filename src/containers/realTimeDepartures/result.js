@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { realTimeDeparturesListSelector } from '../../selectors/rtd';
+import { realTimeDeparturesListSelector } from '../../selectors/RealTimeDepartures';
+import PropTypes from 'prop-types';
 
 const getMinutes = (minutes) => {
   if (minutes.toLowerCase() === 'leaving') {
@@ -20,6 +21,10 @@ const ETDPlatform = ({ platform, children }) => {
   );
 };
 
+ETDPlatform.propTypes = {
+  platform: PropTypes.string,
+};
+
 const ETDList = ({ name, children }) => {
   return (
     <div>
@@ -31,6 +36,10 @@ const ETDList = ({ name, children }) => {
   );
 };
 
+ETDList.propTypes = {
+  name: PropTypes.string,
+};
+
 const ETDLine = ({ destination, children }) => {
   return (
     <div className="flex justify-between">
@@ -38,6 +47,10 @@ const ETDLine = ({ destination, children }) => {
       <div className="flex space-x-2">{children}</div>
     </div>
   );
+};
+
+ETDLine.propTypes = {
+  destination: PropTypes.string,
 };
 
 const Estimate = ({

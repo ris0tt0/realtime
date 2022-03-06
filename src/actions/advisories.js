@@ -1,4 +1,4 @@
-import { normalizeBsa, normalizeCount } from '../normalize/advisories';
+import { normalizeBsa, normalizeCount } from '../normalize/Advisories';
 
 export const REQUESTING_BSA = 'requesting bsa';
 export const requestingBsa = (payload) => ({ type: REQUESTING_BSA, payload });

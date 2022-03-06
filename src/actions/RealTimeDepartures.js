@@ -1,4 +1,4 @@
-import { normalizeEtd } from '../normalize/real-time-estimates';
+import { normalizeEtd } from '../normalize/RealTimeDepartures';
 
 export const REQUESTING_ETD = 'requesting etd';
 export const requestingEtd = (payload) => ({ type: REQUESTING_ETD, payload });

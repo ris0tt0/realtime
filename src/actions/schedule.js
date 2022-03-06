@@ -4,7 +4,7 @@ import {
   normalizeSpecial,
   normalizeStnSched,
   normalizeTrip,
-} from '../normalize/schedule';
+} from '../normalize/Schedule';
 
 export const REQUESTING_TRIP = 'requesting Trip';
 export const requestingTrip = (payload) => ({

@@ -1,4 +1,4 @@
-import { normalizeRouteInfo, normalizeRoutes } from '../normalize/route';
+import { normalizeRouteInfo, normalizeRoutes } from '../normalize/Route';
 
 export const REQUESTING_ROUTEINFO = 'requesting routeinfo';
 export const requestingRouteInfo = (payload) => ({

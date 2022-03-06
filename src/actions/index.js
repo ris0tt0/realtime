@@ -1,8 +1,8 @@
-export const SET_NAME = 'set name';
+export const SET_NAME = 'set bart name';
 export const setName = (payload) => ({ type: SET_NAME, payload });
 
-export * from './advisories';
-export * from './real-time-estimates';
-export * from './route';
-export * from './schedule';
-export * from './station';
+export * from './Advisories';
+export * from './RealTimeDepartures';
+export * from './Route';
+export * from './Schedule';
+export * from './Station';

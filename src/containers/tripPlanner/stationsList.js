@@ -1,11 +1,9 @@
-import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import Logger from 'js-logger';
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DropDownList from '../../components/DropDownList';
 import { useCommands } from '../../hooks/useCommands';
-import { getStationsListSelector } from '../../selectors/station';
+import { getStationsListSelector } from '../../selectors/Station';
 
 const StationsList = () => {
   const commands = useCommands();
@@ -46,6 +44,10 @@ const StationsList = () => {
     },
     [originAbbr]
   );
+
+  if (loading) {
+    Logger.info('loading', loading);
+  }
 
   return (
     <div className="flex flex-col w-full border border-purple-400 rounded">

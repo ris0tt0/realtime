@@ -1,9 +1,9 @@
 import { isEqual } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getRoutesMapSelector } from '../../selectors/route';
-import { getTripListSelector } from '../../selectors/schedule';
-import { getStationsMapSelector } from '../../selectors/station';
+import { getRoutesMapSelector } from '../../selectors/Route';
+import { getTripListSelector } from '../../selectors/Schedule';
+import { getStationsMapSelector } from '../../selectors/Station';
 
 /**
  * Props data for the trip planner component.

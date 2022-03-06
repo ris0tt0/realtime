@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --config config/webpack.dev.js",
+    "lint": "eslint ./src",
     "build": "webpack --config config/webpack.prod.js",
     "build:dev": "webpack --config config/webpack.dev.js"
   },
@@ -15,6 +16,12 @@
     "babel-loader": "^8.2.3",
     "css-loader": "^6.6.0",
     "dotenv-webpack": "^7.1.0",
+    "eslint": "^8.10.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.3",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.5.3",
     "postcss-loader": "^6.2.1",
