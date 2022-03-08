@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import Results from '../containers/bartServiceAdvisories/results';
 
 const Layout = () => {
   return (
@@ -11,8 +12,13 @@ const Layout = () => {
           <NavLink to="routeinfo">Route Information</NavLink>
         </div>
       </div>
-      <div className="w-full h-full border border-pink-700 rounded">
-        <Outlet />
+      <div className="flex flex-col w-full h-full border border-pink-700 rounded">
+        <div className="flex w-full">
+          <Results />
+        </div>
+        <div className="flex w-full h-full overflow-scroll">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

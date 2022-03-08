@@ -4,7 +4,7 @@ import RealTimeDeparturesResult from '../containers/realTimeDepartures/result';
 
 const RealTimeDeparturesPage = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col flex-1">
       <div className="flex border border-pink-400 rounded">
         <RealTimeDeparturesList />
       </div>

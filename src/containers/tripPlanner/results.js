@@ -82,7 +82,7 @@ const TripPlannerResults = () => {
   }, [tripProps]);
 
   return (
-    <div className="w-full h-full overflow-scroll border border-teal-500 rounded">
+    <div className="flex flex-col w-full h-full overflow-scroll border border-teal-500 rounded">
       {trips}
     </div>
   );

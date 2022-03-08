@@ -13,7 +13,7 @@ const getMinutes = (minutes) => {
 const ETDPlatform = ({ platform, children }) => {
   return (
     <div className="p-2">
-      <div className="text-xl font-semibold">Platform: {platform}</div>
+      <div className="font-semibold">Platform: {platform}</div>
       <div className="px-2 border divide-y rounded divide-slate-600 border-slate-600">
         {children}
       </div>
@@ -43,7 +43,7 @@ ETDList.propTypes = {
 const ETDLine = ({ destination, children }) => {
   return (
     <div className="flex justify-between">
-      <div className="text-xl">{destination}</div>
+      <div className="">{destination}</div>
       <div className="flex space-x-2">{children}</div>
     </div>
   );
@@ -69,7 +69,7 @@ const Estimate = ({
       className="flex items-baseline space-x-1"
       //   style={{ borderBottom: `1px solid ${hexcolor}` }}
     >
-      <span className="text-xl">{getMinutes(minutes)}</span>
+      <span className="">{getMinutes(minutes)}</span>
       <span className="text-xs">({length} car)</span>
     </div>
   );
@@ -152,7 +152,7 @@ const RealTimeDeparturesResult = () => {
   }, [rtd]);
 
   return (
-    <div className="w-full h-full">
+    <div className="flex flex-col flex-1 w-full h-full">
       <>{stationListResults ?? <div>error</div>}</>
       <>{stationPlatformResults ?? <div>error</div>}</>
     </div>

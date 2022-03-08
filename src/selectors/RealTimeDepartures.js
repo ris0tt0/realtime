@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import { createSelector } from 'reselect';
 
 const resultSelector = (state) => state.jbart.etd.result;
