@@ -29,7 +29,7 @@ export const requestTrip =
 
     dispatch(requestingTrip(true));
     return fetch(
-      `http://api.bart.gov/api/sched.aspx?cmd=${cmd}&orig=${origin}&dest=${destination}&date=${date}&key=${BartKey}&b=2&a=2&l=1&json=y`
+      `http://api.bart.gov/api/sched.aspx?cmd=${cmd}&orig=${origin}&dest=${destination}&date=${date}&key=${BartKey}&b=4&a=0&l=1&json=y`
     )
       .then((response) => response.json())
       .then((json) => normalizeTrip(json))

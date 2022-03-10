@@ -1,14 +1,12 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
-import Logger from 'js-logger';
-import React, { Fragment, memo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { Fragment, memo, useCallback, useState } from 'react';
 
 const DropDownList = ({ items = [], onSelect = () => null }) => {
   const [selected, setSelected] = useState();
   const handleSelect = useCallback(
     (item) => {
-      Logger.info('handleSelect::', item);
       setSelected(item);
       onSelect(item);
     },
