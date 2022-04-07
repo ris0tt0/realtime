@@ -13,12 +13,14 @@ const useRouteInfoProps = () => {
   const [info, setInfo] = useState(null);
 
   useEffect(() => {
-    const config = routeInfo.config.map((id) => stationMap.get(id));
-    const data = { ...routeInfo, config };
+    if (routeInfo.config) {
+      const config = routeInfo.config?.map((id) => stationMap.get(id));
+      const data = { ...routeInfo, config };
 
-    if (!isEqual(data, routeInfoRef.current)) {
-      routeInfoRef.current = data;
-      setInfo(data);
+      if (!isEqual(data, routeInfoRef.current)) {
+        routeInfoRef.current = data;
+        setInfo(data);
+      }
     }
   }, [routeInfo]);
 

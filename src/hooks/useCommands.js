@@ -5,11 +5,13 @@ import { commands } from '../commands';
 
 const useCommands = () => {
   const dispatch = useDispatch();
-  const dispatchRef = useRef({});
-  const commandsRef = useRef({});
+  const dispatchRef = useRef(dispatch);
+  const commandsRef = useRef(commands(dispatch, {}));
+
+  Logger.info('useCommands::');
 
   if (dispatch !== dispatchRef.current) {
-    Logger.info('New use commands!!', dispatch, '-', dispatchRef.current);
+    Logger.info('useCommands:: new dispatch commands');
     dispatchRef.current = dispatch;
     commandsRef.current = commands(dispatch, {});
   }

@@ -49,6 +49,7 @@ import {
 
 const initState = {
   name: null,
+  isInit: false,
   // advisories
   bsa: {
     requesting: false,
