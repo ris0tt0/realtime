@@ -6,12 +6,12 @@ import Layout from './pages/Layout';
 import RealTimeDepartures from './pages/RealTimeDepartures';
 import RouteInfo from './pages/RouteInfo';
 import TripPlanner from './pages/TripPlanner';
-
+//<div className="flex items-center justify-center w-full h-screen bg-slate-700 text-slate-200">
 const App = () => {
   const commands = useCommands();
   Logger.info('App::commands', commands);
   return (
-    <div className="flex items-center justify-center w-full h-screen bg-slate-700 text-slate-200">
+    <div className="flex items-center justify-center w-full h-screen text-text-primary bg-background-primary">
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="rtd" element={<RealTimeDepartures />} />
