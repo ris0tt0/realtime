@@ -32,7 +32,7 @@ const List = () => {
   //   }
 
   return (
-    <div>
+    <div className="mx-2 border border-pink-600 rounded ">
       <DropDownList items={routes} onSelect={handleSelect} />
     </div>
   );

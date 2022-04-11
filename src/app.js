@@ -1,15 +1,11 @@
-import Logger from 'js-logger';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { useCommands } from './hooks/useCommands';
 import Layout from './pages/Layout';
 import RealTimeDepartures from './pages/RealTimeDepartures';
-import RouteInfo from './pages/RouteInfo';
+import RouteInfo from './pages/Routes';
 import TripPlanner from './pages/TripPlanner';
-//<div className="flex items-center justify-center w-full h-screen bg-slate-700 text-slate-200">
+
 const App = () => {
-  const commands = useCommands();
-  Logger.info('App::commands', commands);
   return (
     <div className="flex items-center justify-center w-full h-screen text-text-primary bg-background-primary">
       <Routes>
@@ -24,4 +20,4 @@ const App = () => {
   );
 };
 
-export { App };
+export default App;

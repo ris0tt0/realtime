@@ -1,14 +1,14 @@
 import React from 'react';
-import RealTimeDeparturesList from '../containers/realTimeDepartures/list';
-import RealTimeDeparturesResult from '../containers/realTimeDepartures/result';
+import RealTimeDeparturesList from '../containers/rtd/list';
+import RealTimeDeparturesResult from '../containers/rtd/result';
 
 const RealTimeDeparturesPage = () => {
   return (
     <div className="flex flex-col flex-1">
-      <div className="flex border border-pink-400 rounded">
+      <div className="flex p-2 m-2">
         <RealTimeDeparturesList />
       </div>
-      <div className="flex w-full h-full border border-green-400 rounded">
+      <div className="flex p-2 m-2">
         <RealTimeDeparturesResult />
       </div>
     </div>

@@ -1,10 +1,10 @@
 import React from 'react';
-import TripPlannerResults from '../containers/tripPlanner/results';
-import StationsList from '../containers/tripPlanner/stationsList';
+import StationsList from '../containers/tp/list';
+import TripPlannerResults from '../containers/tp/results';
 
 const TripPlanner = () => {
   return (
-    <div className="flex flex-col w-full h-full">
+    <div className="flex flex-col w-full h-full p-2 m-2">
       <StationsList />
       <TripPlannerResults />
     </div>

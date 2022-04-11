@@ -50,7 +50,7 @@ const StationsList = () => {
   }
 
   return (
-    <div className="flex flex-col w-full border border-purple-400 rounded">
+    <div className="flex flex-col w-full">
       <div className="flex w-full space-x-4">
         <div className="w-full">
           <div className="text-xs font-thin">origin:</div>

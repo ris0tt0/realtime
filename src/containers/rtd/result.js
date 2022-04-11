@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { realTimeDeparturesListSelector } from '../../selectors/RealTimeDepartures';
-import PropTypes from 'prop-types';
 
 const getMinutes = (minutes) => {
   if (minutes.toLowerCase() === 'leaving') {
@@ -23,6 +23,7 @@ const ETDPlatform = ({ platform, children }) => {
 
 ETDPlatform.propTypes = {
   platform: PropTypes.string,
+  children: PropTypes.array,
 };
 
 const ETDList = ({ name, children }) => {
@@ -38,6 +39,7 @@ const ETDList = ({ name, children }) => {
 
 ETDList.propTypes = {
   name: PropTypes.string,
+  children: PropTypes.array,
 };
 
 const ETDLine = ({ destination, children }) => {
@@ -51,6 +53,7 @@ const ETDLine = ({ destination, children }) => {
 
 ETDLine.propTypes = {
   destination: PropTypes.string,
+  children: PropTypes.array,
 };
 
 const Estimate = ({
@@ -63,14 +66,12 @@ const Estimate = ({
   minutes,
   platform,
 }) => {
-  const bikeFlagIcon = bikeflag ? <div>bF</div> : null;
+  const bikeFlagIcon = bikeflag == '1' ? <div>bF</div> : null;
+
   return (
-    <div
-      className="flex items-baseline space-x-1"
-      //   style={{ borderBottom: `1px solid ${hexcolor}` }}
-    >
+    <div className="flex items-baseline space-x-1">
       <span className="">{getMinutes(minutes)}</span>
-      <span className="text-xs">({length} car)</span>
+      <span className="text-xs text-text-secondary">({length} car)</span>
     </div>
   );
 };
@@ -88,6 +89,26 @@ const estimateStation = (item, index) => {
       {estChildren}
     </ETDLine>
   );
+};
+/**
+bikeflag: "1"
+color: "YELLOW"
+delay: "541"
+direction: "North"
+hexcolor: "#ffff33"
+length: "10"
+minutes: "Leaving"
+platform: "3"
+*/
+Estimate.propTypes = {
+  bikeflag: PropTypes.string,
+  color: PropTypes.string,
+  delay: PropTypes.string,
+  direction: PropTypes.string,
+  hexcolor: PropTypes.string,
+  length: PropTypes.string,
+  minutes: PropTypes.string,
+  platform: PropTypes.string,
 };
 
 const RealTimeDeparturesResult = () => {

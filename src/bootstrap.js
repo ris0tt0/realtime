@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import 'tw-elements';
 import { setName } from './actions';
-import { App } from './app';
+import App from './app';
 import { commands } from './commands';
 import './index.css';
 import { store } from './store';

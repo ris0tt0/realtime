@@ -14,6 +14,7 @@ import {
   requestStations,
   requestStationSchedule,
   requestTrip,
+  setRTDListValue,
 } from '../actions';
 
 class Commands {
@@ -85,24 +86,12 @@ class Commands {
 
   setRTDStationAbbr(abbr) {
     Logger.info('Commands::setRTDStationAbbr()', abbr);
-    // if (this.isIniting) {
-    //   return this.initPromise.then(() => this.dispatch(requestEtd(abbr)));
-    // }
-    // return this.dispatch(requestEtd(abbr));
 
     return this.checkInit(() => this.dispatch(requestEtd(abbr)));
   }
 
   requestTripPlanning(originAbbr, destAbbr) {
     Logger.info('Commands::requestTripPlanning()', originAbbr, destAbbr);
-    // Logger.info('Commands::requestTripPlanning()', originAbbr, destAbbr);
-    // if (this.isIniting) {
-    //   return this.initPromise.then(() =>
-    //     this.dispatch(requestTrip(originAbbr, destAbbr))
-    //   );
-    // }
-
-    // return this.dispatch(requestTrip(originAbbr, destAbbr));
 
     return this.checkInit(() =>
       this.dispatch(requestTrip(originAbbr, destAbbr))

@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import Results from '../containers/bartServiceAdvisories/results';
+import BSAResults from '../containers/bsa/results';
 
 const Layout = () => {
   return (
     <div className="flex w-full h-full">
-      <div className="w-1/5 h-full border border-red-500 rounded">
+      <div className="w-1/5 h-full bg-background-secondary">
         <div className="flex flex-col p-3 space-y-2 text-xs">
           <NavLink to="rtd">Real Time Departures</NavLink>
           <NavLink to="tripplanner">Trip Planner</NavLink>
@@ -14,7 +14,7 @@ const Layout = () => {
       </div>
       <div className="flex flex-col w-full h-full">
         <div className="flex w-full">
-          <Results />
+          <BSAResults />
         </div>
         <div className="flex w-full h-full overflow-scroll">
           <Outlet />

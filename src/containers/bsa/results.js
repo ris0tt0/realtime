@@ -34,9 +34,9 @@ const useBsaListProps = () => {
 
 const ServiceNoDelay = ({ advisory, onClick }) => {
   return (
-    <div className="flex items-center justify-between p-2 border border-green-200 rounded">
+    <div className="flex items-center justify-between p-2 border rounded border-info-main">
       <div className="flex mr-2">
-        <EmojiHappyIcon className="w-6 h-6" />
+        <EmojiHappyIcon className="w-6 h-6 text-info-main" />
       </div>
       <div className="flex w-full">{advisory}</div>
       <div className="flex self-start ml-2 ">
@@ -54,9 +54,9 @@ ServiceNoDelay.propTypes = {
 
 const ServiceAlert = ({ advisory, onClick }) => {
   return (
-    <div className="flex items-center justify-between p-2 border border-red-500 rounded">
+    <div className="flex items-center justify-between p-2 border rounded border-warning-main">
       <div className="flex mr-2">
-        <ExclamationIcon className="w-6 h-6" />
+        <ExclamationIcon className="w-6 h-6 text-warning-main" />
       </div>
       <div className="flex w-full">{advisory}</div>
       <div className="flex self-start ml-2 ">
