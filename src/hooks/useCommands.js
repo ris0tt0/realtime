@@ -1,22 +1,13 @@
-import Logger from 'js-logger';
-import { useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { commands } from '../commands';
+import { Commands } from '../commands';
 
 const useCommands = () => {
   const dispatch = useDispatch();
-  const dispatchRef = useRef(dispatch);
-  const commandsRef = useRef(commands(dispatch));
+  const [cmd, setCmd] = useState(Commands.getInstance(dispatch));
+  useEffect(() => setCmd(Commands.getInstance(dispatch)), [dispatch]);
 
-  // Logger.info('useCommands');
-
-  if (dispatch !== dispatchRef.current) {
-    Logger.info('useCommands:: new dispatch commands');
-    dispatchRef.current = dispatch;
-    commandsRef.current = commands(dispatch);
-  }
-
-  return commandsRef.current;
+  return cmd;
 };
 
 export { useCommands };

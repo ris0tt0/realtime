@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import { createSelector } from 'reselect';
 import { getDateTime } from '../utils';
 

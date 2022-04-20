@@ -6,13 +6,14 @@ import { BrowserRouter } from 'react-router-dom';
 import 'tw-elements';
 import { setName } from './actions';
 import App from './app';
-import { commands } from './commands';
+import { Commands } from './commands';
 import './index.css';
 import { store } from './store';
 
 Logger.useDefaults();
-const cmd = commands(store.dispatch);
-cmd.init();
+
+const commands = Commands.getInstance(store.dispatch);
+commands.init();
 
 store.dispatch(setName('jonathan gee bart app'));
 

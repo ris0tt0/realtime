@@ -14,7 +14,7 @@ import {
   requestStations,
   requestStationSchedule,
   requestTrip,
-  setRTDListValue,
+  // setRTDListValue,
 } from '../actions';
 
 class Commands {
@@ -98,17 +98,11 @@ class Commands {
     );
   }
 
-  requestRouteInfo(route) {
+  requestRouteInfo = async (route) => {
     Logger.info('Commands::requestRouteInfo()', route);
 
     return this.checkInit(() => this.dispatch(requestRouteInfo(route)));
-  }
+  };
 }
 
-const commands = (dispatch) => {
-  const cmd = Commands.getInstance(dispatch);
-
-  return cmd;
-};
-
-export { commands };
+export { Commands };

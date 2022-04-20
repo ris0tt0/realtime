@@ -16,7 +16,7 @@ export const requestEtdResult = (payload) => ({
 });
 
 export const requestEtd =
-  (origin, platform = null, direction = null) =>
+  (origin /*platform = null, direction = null*/) =>
   (dispatch, _, { BartKey }) => {
     dispatch(requestingEtd(true));
     return fetch(

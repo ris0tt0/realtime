@@ -57,16 +57,16 @@ ETDLine.propTypes = {
 };
 
 const Estimate = ({
-  bikeflag,
-  color,
-  delay,
-  direction,
-  hexcolor,
+  // bikeflag,
+  // color,
+  // delay,
+  // direction,
+  // hexcolor,
   length,
   minutes,
-  platform,
+  // platform,
 }) => {
-  const bikeFlagIcon = bikeflag == '1' ? <div>bF</div> : null;
+  // const bikeFlagIcon = bikeflag == '1' ? <div>bF</div> : null;
 
   return (
     <div className="flex items-baseline space-x-1">
@@ -130,7 +130,7 @@ const RealTimeDeparturesResult = () => {
   }, [rtd]);
 
   const stationPlatformResults = useMemo(() => {
-    const platforms = rtd.etd?.reduce((platform, station, index) => {
+    const platforms = rtd.etd?.reduce((platform, station) => {
       station.estimate.forEach((est) => {
         if (!platform.has(est.platform)) {
           platform.set(est.platform, new Map());

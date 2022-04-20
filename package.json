@@ -5,12 +5,14 @@
   "scripts": {
     "start": "webpack serve --config config/webpack.dev.js",
     "lint": "eslint ./src",
-    "test": "jest --env=jsdom",
+    "test": "jest",
     "build": "webpack --config config/webpack.prod.js",
-    "build:dev": "webpack --config config/webpack.dev.js"
+    "build:dev": "webpack --config config/webpack.dev.js",
+    "prepublish": "yarn lint && yarn test"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@testing-library/react": "^13.0.1",

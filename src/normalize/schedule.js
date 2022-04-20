@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import { normalize, schema } from 'normalizr';
 import { uriSchema } from './common';
 
@@ -8,9 +7,8 @@ export const normalizeTrip = (json) => {
     'fare',
     {},
     {
-      idAttribute: (value, parent) =>
-        `id-fair-${[...Object.values(value)].join('👍🏽')}`,
-      processStrategy: (value, parent) => {
+      idAttribute: (value) => `id-fair-${[...Object.values(value)].join('👍🏽')}`,
+      processStrategy: (value) => {
         return {
           amount: value['@amount'],
           cardClass: value['@class'],
@@ -25,7 +23,7 @@ export const normalizeTrip = (json) => {
     {
       idAttribute: (value, parent) =>
         `id-fares-${[...Object.values(parent)].join('-')}`,
-      processStrategy: (value, parent) => {
+      processStrategy: (value) => {
         return {
           level: value['@level'],
           fare: value['fare'],
@@ -37,9 +35,8 @@ export const normalizeTrip = (json) => {
     'leg',
     {},
     {
-      idAttribute: (value, parent) =>
-        `id-leg-${[...Object.values(value)].join('-')}`,
-      processStrategy: (value, parent) => {
+      idAttribute: (value) => `id-leg-${[...Object.values(value)].join('-')}`,
+      processStrategy: (value) => {
         return {
           order: value['@order'],
           origin: value['@origin'],
@@ -61,9 +58,8 @@ export const normalizeTrip = (json) => {
     'trip',
     { fares: fairsSchema, leg: [legSchema] },
     {
-      idAttribute: (value, parent) =>
-        `id-leg-${[...Object.values(value)].join('-')}`,
-      processStrategy: (value, parent) => {
+      idAttribute: (value) => `id-leg-${[...Object.values(value)].join('-')}`,
+      processStrategy: (value) => {
         return {
           origin: value['@origin'],
           destination: value['@destination'],

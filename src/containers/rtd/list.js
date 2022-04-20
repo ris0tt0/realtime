@@ -1,5 +1,6 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import Logger from 'js-logger';
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useCommands } from '../../hooks/useCommands';
@@ -12,6 +13,8 @@ function RealTimeDeparturesList() {
   const results = useSelector(realTimeDeparturesListSelector);
   const stations = useSelector(getStationsListSelector);
   const commands = useCommands();
+
+  Logger.info('RealTimeDepartuesList::loading', loading);
 
   useEffect(() => {
     if (results[0] && results[0].name) {

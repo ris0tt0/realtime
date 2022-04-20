@@ -1,7 +1,7 @@
 export const getTime = (time) => {
   const isPM = time.includes('PM');
   // pacific daylight
-  const isPDT = time.includes('PDT');
+  // const isPDT = time.includes('PDT');
   // the time.
   const times = [...time.matchAll(/\d\d/g)];
   let hour = times[0][0];

@@ -27,12 +27,12 @@ export const normalizeStns = (json) => {
     'stations',
     {},
     {
-      idAttribute: (value, parent) => {
+      idAttribute: () => {
         // Logger.info('----------', value, parent);
         return 'station-id';
         //   return `id-${parent.stations.indexOf(value)}`;
       },
-      processStrategy: (value, parent, key) => {
+      processStrategy: (value) => {
         // Logger.info('2----------', value, parent, key);
         return value.station;
       },

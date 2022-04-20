@@ -14,7 +14,7 @@ const App = () => {
           <Route path="tripplanner" element={<TripPlanner />} />
           <Route path="routeinfo" element={<RouteInfo />} />
         </Route>
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="*" element={<Navigate to="/rtd" />} />
       </Routes>
     </div>
   );
