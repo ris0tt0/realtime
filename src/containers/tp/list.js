@@ -3,7 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DropDownList from '../../components/DropDownList';
 import { useCommands } from '../../hooks/useCommands';
-import { getStationsListSelector } from '../../selectors/Station';
+import { getStationsListSelector } from '../../selectors/station';
+import { useTripListProps } from './hooks';
 
 const StationsList = () => {
   const commands = useCommands();
@@ -12,6 +13,7 @@ const StationsList = () => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [originAbbr, setOriginAbbr] = useState(null);
   const [destAbbr, setDestAbbr] = useState(null);
+  const [origin, destination] = useTripListProps();
 
   useEffect(() => {
     Logger.info('search:', originAbbr, destAbbr);
@@ -28,6 +30,10 @@ const StationsList = () => {
       .requestTripPlanning(originAbbr, destAbbr)
       .finally(() => setLoading(false));
   }, [commands, originAbbr, destAbbr]);
+
+  // useEffect(() => {
+  //   Logger.info('StationsList::', props);
+  // }, [props]);
 
   const handleOrigin = useCallback(
     ({ abbr }) => {
@@ -54,11 +60,19 @@ const StationsList = () => {
       <div className="flex w-full space-x-4">
         <div className="w-full">
           <div className="text-xs font-thin">origin:</div>
-          <DropDownList items={stations} onSelect={handleOrigin} />
+          <DropDownList
+            value={origin}
+            items={stations}
+            onSelect={handleOrigin}
+          />
         </div>
         <div className="w-full">
           <div className="text-xs font-thin">destination:</div>
-          <DropDownList items={stations} onSelect={handleDestination} />
+          <DropDownList
+            value={destination}
+            items={stations}
+            onSelect={handleDestination}
+          />
         </div>
       </div>
       {errorMsg ? <div className="w-full text-red-500">{errorMsg}</div> : null}

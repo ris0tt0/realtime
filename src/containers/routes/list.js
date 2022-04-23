@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import DropDownList from '../../components/DropDownList';
 import { useCommands } from '../../hooks/useCommands';
-import { getRoutesListSelector } from '../../selectors/Route';
+import { getRoutesListSelector } from '../../selectors/route';
 
 const List = () => {
   const routes = useSelector(getRoutesListSelector);

@@ -3,8 +3,8 @@ import { isEqual } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getRouteInfoSelector } from '../../selectors/Route';
-import { getStationsMapSelector } from '../../selectors/Station';
+import { getRouteInfoSelector } from '../../selectors/route';
+import { getStationsMapSelector } from '../../selectors/station';
 
 const useRouteInfoProps = () => {
   const routeInfo = useSelector(getRouteInfoSelector);

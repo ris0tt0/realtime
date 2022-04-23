@@ -1,10 +1,15 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import PropTypes from 'prop-types';
-import React, { Fragment, memo, useCallback, useState } from 'react';
+import React, { Fragment, memo, useCallback, useEffect, useState } from 'react';
 
-const DropDownList = ({ items = [], onSelect = () => null }) => {
+const DropDownList = ({ items = [], value = null, onSelect = () => null }) => {
   const [selected, setSelected] = useState();
+
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
+
   const handleSelect = useCallback(
     (item) => {
       setSelected(item);
@@ -71,6 +76,7 @@ const DropDownList = ({ items = [], onSelect = () => null }) => {
 };
 
 DropDownList.propTypes = {
+  value: PropTypes.object,
   items: PropTypes.array,
   onSelect: PropTypes.func,
 };

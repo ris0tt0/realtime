@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { getBsaListSelector } from '../../selectors/Advisories';
+import { getBsaListSelector } from '../../selectors/advisories';
 import PropTypes from 'prop-types';
 import {
   EmojiHappyIcon,
