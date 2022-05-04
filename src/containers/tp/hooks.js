@@ -1,5 +1,4 @@
-import Logger from 'js-logger';
-import { isEqual, result } from 'lodash';
+import { isEqual } from 'lodash';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getRoutesMapSelector } from '../../selectors/route';

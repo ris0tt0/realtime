@@ -1,31 +1,7 @@
 import Logger from 'js-logger';
-import { isEqual } from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { getRouteInfoSelector } from '../../selectors/route';
-import { getStationsMapSelector } from '../../selectors/station';
-
-const useRouteInfoProps = () => {
-  const routeInfo = useSelector(getRouteInfoSelector);
-  const stationMap = useSelector(getStationsMapSelector);
-  const routeInfoRef = useRef({});
-  const [info, setInfo] = useState(null);
-
-  useEffect(() => {
-    if (routeInfo.config) {
-      const config = routeInfo.config?.map((id) => stationMap.get(id));
-      const data = { ...routeInfo, config };
-
-      if (!isEqual(data, routeInfoRef.current)) {
-        routeInfoRef.current = data;
-        setInfo(data);
-      }
-    }
-  }, [routeInfo]);
-
-  return info;
-};
+import React from 'react';
+import { useRouteInfoProps } from './hooks';
 
 const Config = ({ stations }) => {
   const list = stations.map((station, index) => {
@@ -46,10 +22,10 @@ const Results = () => {
   return (
     <div className="mx-2">
       <div className="text-lg">
-        {routeInfo?.name} - {routeInfo.routeID}
+        {routeInfo?.name} - {routeInfo?.routeID}
       </div>
       <div className="text-xs">
-        <Config stations={routeInfo.config} />
+        <Config stations={routeInfo?.config} />
       </div>
     </div>
   );

@@ -4,10 +4,12 @@ import { useSelector } from 'react-redux';
 import DropDownList from '../../components/DropDownList';
 import { useCommands } from '../../hooks/useCommands';
 import { getRoutesListSelector } from '../../selectors/route';
+import { useRouteResultProps } from './hooks';
 
 const List = () => {
   const routes = useSelector(getRoutesListSelector);
   const commands = useCommands();
+  const route = useRouteResultProps();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => Logger.info('RouteInfoList::', loading), [loading]);
@@ -20,20 +22,9 @@ const List = () => {
     [commands]
   );
 
-  //   if (loading) {
-  //     return (
-  //       <div
-  //         className="inline-block w-8 h-8 border-4 rounded-full spinner-border animate-spin"
-  //         role="status"
-  //       >
-  //         <span className="visually-hidden">Loading...</span>
-  //       </div>
-  //     );
-  //   }
-
   return (
-    <div className="mx-2 border border-pink-600 rounded ">
-      <DropDownList items={routes} onSelect={handleSelect} />
+    <div className="mx-2 ">
+      <DropDownList value={route} items={routes} onSelect={handleSelect} />
     </div>
   );
 };
