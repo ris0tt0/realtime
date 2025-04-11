@@ -1,0 +1,40 @@
+import { styled } from '@mui/material';
+import { Link } from 'react-router-dom';
+
+export const LoadingStyled = styled('div')`
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const RoutesLinkStyled = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  border-radius: 5px;
+  &:hover {
+    background-color: #f0f0f0;
+  }
+  &:active {
+    background-color: #e0e0e0;
+  }
+  &:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+  }
+`;
+
+export const RoutesContainerListStyled = styled('div')`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px red solid;
+  overflow: scroll;
+  height: 100%;
+`;
+
+export const RoutesContainerStyled = styled('div')`
+  display: flex;
+  height: 100%;
+`;

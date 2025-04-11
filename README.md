@@ -2,4 +2,7 @@ This reactjs application utilizes the BART API to get Real Time Departures from 
 
 I use redux to store the application data. reselect to create selectors for my application. I also normalize the API data with normalizr.
 
+while installing:
+yarn dlx @yarnpkg/sdks vscode
+
 A working version is hosted [here](http://bart.jonathangee.com)

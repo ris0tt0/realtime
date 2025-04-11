@@ -1,1 +1,0 @@
-Contains the actions for this BART application.
