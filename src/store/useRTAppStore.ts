@@ -1,20 +1,40 @@
 import { create } from 'zustand';
 import { BartRoute, BartStation } from '../db';
 
+export type SortStationsBy = 'name' | 'platform';
+
 export type RTAppStore = {
+  totalTrainsInService: number;
+  rteUpdatedTimestamp: string;
+  rteSortBy: SortStationsBy;
   routes: BartRoute[];
   stations: BartStation[];
   routesMap: Record<string, BartRoute>;
   stationsMap: Record<string, BartStation>;
+  setRteSortBy: (sortBy: SortStationsBy) => void;
   setRoutes: (routes: BartRoute[]) => void;
   setStations: (stations: BartStation[]) => void;
+  setTotalTrainsInService: (count: number) => void;
+  setRteUpdatedTimestamp: (timestamp: string) => void;
 };
 
 export const useRTAppStore = create<RTAppStore>((set) => ({
+  totalTrainsInService: 0,
+  rteUpdatedTimestamp: '',
+  rteSortBy: 'name',
   routes: [],
   stations: [],
   routesMap: {},
   stationsMap: {},
+  setRteSortBy: (sortBy: SortStationsBy) => {
+    set(() => ({ rteSortBy: sortBy }));
+  },
+  setTotalTrainsInService: (count: number) => {
+    set(() => ({ totalTrainsInService: count }));
+  },
+  setRteUpdatedTimestamp: (timestamp: string) => {
+    set(() => ({ rteUpdatedTimestamp: timestamp }));
+  },
   setRoutes: (routes: BartRoute[]) => {
     set(() => {
       const routesMap = routes.reduce(

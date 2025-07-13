@@ -1,9 +1,12 @@
 {
   "name": "gbart",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "private": true,
-  "packageManager": "yarn@4.6.0",
+  "packageManager": "yarn@4.9.2",
+  "exports": {
+    ".": null
+  },
   "scripts": {
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production",

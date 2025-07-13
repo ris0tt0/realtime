@@ -1,10 +1,10 @@
 import Logger from 'js-logger';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { StationsParams } from '../..';
-import { BartETD, BartStation, BartStationsETD } from '../../../db';
-import { useCommands } from '../../../hooks/useCommands';
-import { useRTAppStore } from '../../../store/useRTAppStore';
+import { BartETD, BartStation, BartStationsETD } from '../db';
+import { StationsParams } from '../routes';
+import { useRTAppStore } from '../store/useRTAppStore';
+import { useCommands } from './useCommands';
 
 export type BartStationsETDFull = BartStationsETD & { station: BartStation };
 export type BartETDFull = BartETD & { station: BartStation };

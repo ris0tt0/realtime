@@ -1,27 +1,57 @@
-import React, { FC } from 'react';
-import { Outlet } from 'react-router-dom';
-import { useRTAppStore } from '../../store/useRTAppStore';
-import {
-  RoutesContainerListStyled,
-  RoutesContainerStyled,
-  RoutesLinkStyled,
-} from '../styled';
+import { Button, MenuItem, Select } from '@mui/material';
+import { styled } from '@mui/system';
+import Logger from 'js-logger';
+import React, { FC, useEffect, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useStations } from '../../hooks/useStations';
+import { RoutesContainerStyled } from '../styled';
+import { useTotalTrainsInService } from '../../hooks/useTotalTrains';
+
+const TrainSelectionContainer = styled('div')`
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+`;
+
+const TrainsInService: FC = () => {
+  const total = useTotalTrainsInService();
+
+  return <span>{total} trains currently in service</span>;
+};
 
 export const RealTimeEstimates: FC = () => {
-  const stations = useRTAppStore((state) => state.stations);
+  const [stationId, setStationid] = useState('12TH');
+  const navigate = useNavigate();
+  const stations = useStations();
+
+  const handleClick = () => {
+    Logger.info('Station selected:', stationId);
+    navigate(`${stationId}`);
+  };
+
+  const items = stations.map((station) => (
+    <MenuItem
+      key={station.abbr}
+      value={station.abbr}
+      onClick={() => setStationid(station.abbr)}
+    >
+      {station.name}
+    </MenuItem>
+  ));
+
   return (
     <RoutesContainerStyled>
-      <RoutesContainerListStyled>
-        {stations.map((station) => (
-          <RoutesLinkStyled to={`${station.abbr}`} key={station.abbr}>
-            {station.name}
-          </RoutesLinkStyled>
-        ))}
-      </RoutesContainerListStyled>
-      <div>
-        <div>This is the title?</div>
-        <Outlet />
-      </div>
+      <h1>Real Time Estimates</h1>
+      <TrainsInService />
+      <TrainSelectionContainer>
+        <Select fullWidth value={stationId}>
+          {items}
+        </Select>
+        <Button variant="outlined" onClick={handleClick}>
+          Select
+        </Button>
+      </TrainSelectionContainer>
+      <Outlet />
     </RoutesContainerStyled>
   );
 };

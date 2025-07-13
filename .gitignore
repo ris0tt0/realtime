@@ -17,6 +17,7 @@ stats.json
 
 # testing
 dist/
+lib/
 node_modules/
 .vscode/
 

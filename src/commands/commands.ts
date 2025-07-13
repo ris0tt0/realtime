@@ -1,7 +1,7 @@
 import Logger from 'js-logger';
 import { Commands } from '.';
 import { RealTimeApi } from '../api';
-import { BartRoute, BartRouteDetail, BartStation, DB } from '../db';
+import { BartRoute, BartStation, DB } from '../db';
 
 export type CommandsImplParams = {
   api: RealTimeApi;
@@ -110,6 +110,12 @@ class CommandsImpl implements Commands {
     Logger.info('getStationEstimates', stationId, platform, direction, data);
 
     return data;
+  };
+  updateTrainsInserviceCount = async () => {
+    const trainsInService = await this.api.getTrainCount();
+    Logger.info('updateTrainsInserviceCount', trainsInService);
+    if (trainsInService) {
+    }
   };
 }
 

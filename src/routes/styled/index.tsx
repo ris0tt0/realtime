@@ -29,12 +29,13 @@ export const RoutesContainerListStyled = styled('div')`
   display: flex;
   flex-direction: column;
   padding: 10px;
-  border: 1px red solid;
   overflow: scroll;
   height: 100%;
 `;
 
 export const RoutesContainerStyled = styled('div')`
   display: flex;
+  flex-direction: column;
   height: 100%;
+  width: 100%;
 `;

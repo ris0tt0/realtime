@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useRTAppStore } from '../../store/useRTAppStore';
+import { useRoutes } from '../../hooks/useRoutes';
 import {
   RoutesContainerListStyled,
   RoutesContainerStyled,
@@ -8,7 +8,7 @@ import {
 } from '../styled';
 
 export const BartRoutes: FC = () => {
-  const routes = useRTAppStore((state) => state.routes);
+  const routes = useRoutes();
   return (
     <RoutesContainerStyled>
       <RoutesContainerListStyled>

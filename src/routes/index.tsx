@@ -1,13 +1,15 @@
 import React, { FC } from 'react';
-import { createBrowserRouter, Route, RouterProvider } from 'react-router-dom';
-import { Root } from './root';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { About } from './about';
+import { Root } from './root';
 import { BartRoutes } from './routes';
 import { RouteDetail } from './routes/details';
+import { RealTimeEstimates } from './rte';
+import { RTEDetail } from './rte/details';
 import { BartStations } from './station';
 import { StationDetail } from './station/details';
-import { RealTimeEstimates } from './rte';
-import { RTEDetail } from './rte/detail';
+import { RteAbout } from './rte/about';
+import { Landing } from './landing';
 
 export type StationsParams = {
   stationId: string;
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
     path: '/',
     Component: Root,
     children: [
+      { index: true, Component: Landing },
       { path: 'about', Component: About },
       {
         path: 'routes',
@@ -36,7 +39,13 @@ const router = createBrowserRouter([
       {
         path: 'rte',
         Component: RealTimeEstimates,
-        children: [{ path: ':stationId', Component: RTEDetail }],
+        children: [
+          {
+            index: true,
+            Component: RteAbout,
+          },
+          { path: ':stationId', Component: RTEDetail },
+        ],
       },
     ],
   },
