@@ -2,11 +2,9 @@ import { Paper, styled } from '@mui/material';
 import React, { FC } from 'react';
 import { RTEStationSelect } from '../../containers/rte/listSelection';
 import { RTEStationUpdated } from '../../containers/rte/updateStation';
+import { BartStaionEstimate } from '../../db';
 import { BartStationsETDFull } from '../../hooks/useRealTimeEstimateDetails';
 import { useSortBy } from '../../hooks/useSortBy';
-import Logger from 'js-logger';
-import { stat } from 'fs';
-import { BartStaionEstimate } from '../../db';
 
 export const ETAStlyled = styled('div')`
   display: flex;
@@ -142,7 +140,7 @@ export const RTEStationDetail: FC<{ station: BartStationsETDFull }> = ({
   const sort = useSortBy();
 
   return (
-    <Paper>
+    <div>
       <HeaderContainer>
         <h2>{station.name}</h2>
         <RTEStationUpdated />
@@ -155,6 +153,6 @@ export const RTEStationDetail: FC<{ station: BartStationsETDFull }> = ({
           <RTEProfileList station={station} />
         )}
       </div>
-    </Paper>
+    </div>
   );
 };
