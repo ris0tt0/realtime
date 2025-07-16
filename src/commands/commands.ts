@@ -9,6 +9,7 @@ export type CommandsImplParams = {
   setRoutes: (routes: BartRoute[]) => void;
   setStations: (stations: BartStation[]) => void;
   setTotalTrainsInService: (total: number) => void;
+  setRteUpdatedTimestamp: (timestamp: Date) => void;
 };
 
 class CommandsImpl implements Commands {
@@ -18,6 +19,9 @@ class CommandsImpl implements Commands {
   private setRoutes: (routes: BartRoute[]) => void;
   private setStations: (stations: BartStation[]) => void;
   private setTotalTrainsInService: (total: number) => void;
+  private setRteUpdatedTimestamp: (timestamp: Date) => void;
+
+  private rteRefresh: any | null = null;
 
   constructor({
     api,
@@ -25,12 +29,14 @@ class CommandsImpl implements Commands {
     setRoutes,
     setStations,
     setTotalTrainsInService,
+    setRteUpdatedTimestamp,
   }: CommandsImplParams) {
     this.api = api;
     this.db = db;
     this.setRoutes = setRoutes;
     this.setStations = setStations;
     this.setTotalTrainsInService = setTotalTrainsInService;
+    this.setRteUpdatedTimestamp = setRteUpdatedTimestamp;
   }
 
   init = async () => {
@@ -112,15 +118,29 @@ class CommandsImpl implements Commands {
     platform?: number,
     direction?: string,
   ) => {
+    this.rteRefresh = async () => {
+      return this.getStationEstimates(stationId, platform, direction);
+    };
+
     const data = await this.api.getRealTimeEstimates(
       stationId,
       platform,
       direction,
     );
 
+    this.setRteUpdatedTimestamp(new Date());
+
     Logger.info('getStationEstimates', stationId, platform, direction, data);
 
     return data;
+  };
+
+  getStationEstimatesRefresh = async () => {
+    if (this.rteRefresh !== null) {
+      const data = await this.rteRefresh();
+
+      return data;
+    }
   };
 
   updateTrainsInserviceCount = async () => {

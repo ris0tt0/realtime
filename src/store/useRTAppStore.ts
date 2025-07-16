@@ -5,7 +5,7 @@ export type SortStationsBy = 'name' | 'platform';
 
 export type RTAppStore = {
   totalTrainsInService: number;
-  rteUpdatedTimestamp: string;
+  rteUpdatedTimestamp: Date;
   rteSortBy: SortStationsBy;
   routes: BartRoute[];
   stations: BartStation[];
@@ -15,12 +15,12 @@ export type RTAppStore = {
   setRoutes: (routes: BartRoute[]) => void;
   setStations: (stations: BartStation[]) => void;
   setTotalTrainsInService: (count: number) => void;
-  setRteUpdatedTimestamp: (timestamp: string) => void;
+  setRteUpdatedTimestamp: (timestamp: Date) => void;
 };
 
 export const useRTAppStore = create<RTAppStore>((set) => ({
   totalTrainsInService: 0,
-  rteUpdatedTimestamp: '',
+  rteUpdatedTimestamp: new Date(),
   rteSortBy: 'name',
   routes: [],
   stations: [],
@@ -32,7 +32,7 @@ export const useRTAppStore = create<RTAppStore>((set) => ({
   setTotalTrainsInService: (count: number) => {
     set(() => ({ totalTrainsInService: count }));
   },
-  setRteUpdatedTimestamp: (timestamp: string) => {
+  setRteUpdatedTimestamp: (timestamp: Date) => {
     set(() => ({ rteUpdatedTimestamp: timestamp }));
   },
   setRoutes: (routes: BartRoute[]) => {

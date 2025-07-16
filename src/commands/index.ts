@@ -8,5 +8,6 @@ export interface Commands {
     platform?: number,
     direction?: string,
   ): Promise<any>;
+  getStationEstimatesRefresh(): Promise<any>;
   getRouteDetails(routeNumber: string): Promise<BartRouteDetail>;
 }

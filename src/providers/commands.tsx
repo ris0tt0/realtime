@@ -10,6 +10,7 @@ import { IndexedDB } from '../db/indexedDB';
 import { useSetRoutes } from '../hooks/useRoutes';
 import { useSetStations } from '../hooks/useStations';
 import { useSetTotalTrainsInService } from '../hooks/useTotalTrains';
+import { useSetRTEUpdatedTime } from '../hooks/useRTEUpdatedTime';
 
 const StatusContainer = styled('div')`
   display: flex,
@@ -25,6 +26,7 @@ export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
   const setRoutes = useSetRoutes();
   const setStations = useSetStations();
   const setTotalTrainsInService = useSetTotalTrainsInService();
+  const setRteUpdatedTimestamp = useSetRTEUpdatedTime();
 
   useEffect(() => {
     const api: RealTimeApi = new RealTimeApiImpl();
@@ -36,6 +38,7 @@ export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
       setRoutes,
       setStations,
       setTotalTrainsInService,
+      setRteUpdatedTimestamp,
     });
 
     commands
