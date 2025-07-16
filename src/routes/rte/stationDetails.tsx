@@ -1,22 +1,12 @@
-import { Refresh } from '@mui/icons-material';
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Paper,
-  Radio,
-  RadioGroup,
-  styled,
-} from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import Logger from 'js-logger';
+import { Paper, styled } from '@mui/material';
 import React, { FC } from 'react';
-import { useCommands } from '../../hooks/useCommands';
+import { RTEStationSelect } from '../../containers/rte/listSelection';
+import { RTEStationUpdated } from '../../containers/rte/updateStation';
 import { BartStationsETDFull } from '../../hooks/useRealTimeEstimateDetails';
-import { useSetSortBy, useSortBy } from '../../hooks/useSortBy';
-import { SortStationsBy } from '../../store/useRTAppStore';
-import { useParams } from 'react-router-dom';
-import { StationsParams } from '..';
+import { useSortBy } from '../../hooks/useSortBy';
+import Logger from 'js-logger';
+import { stat } from 'fs';
+import { BartStaionEstimate } from '../../db';
 
 export const ETAStlyled = styled('div')`
   display: flex;
@@ -25,6 +15,7 @@ export const ETAStlyled = styled('div')`
 export const ESTStyled = styled('div')<{ bartColor: string }>((props) => {
   return {
     display: 'flex',
+    gap: '0.5rem',
     padding: '5px 10px',
     borderBottomStyle: 'solid',
     borderBottomWidth: '1px',
@@ -38,71 +29,25 @@ const StationEtaContainer = styled(Paper)`
   align-items: center;
   gap: 0.5rem;
 `;
+const StationPlatformEtaContainer = styled(Paper)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding-left: 1rem;
+`;
 
-const HeaderContainer = styled(Paper)`
+const HeaderContainer = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-const SortStationsContainer = styled(FormControl)`
-  flex-direction: row;
-  align-items: center;
-  gap: 2rem;
-  padding-bottom: 1rem;
+const PlatformHader = styled('h4')`
+  margin-bottom: 0px;
 `;
 
-export const RTEStationUpdated: FC = () => {
-  const commands = useCommands();
-  const { stationId } = useParams<StationsParams>();
-
-  const handleClick = () => {
-    Logger.info('Refreshing station details', stationId);
-  };
-  return (
-    <span>
-      <span>Updated 5:09pm</span>
-      <IconButton onClick={handleClick}>
-        <Refresh />
-      </IconButton>
-    </span>
-  );
-};
-
-export const RTEStationSelect: FC = () => {
-  const sort = useSortBy();
-  const setSortBy = useSetSortBy();
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value as SortStationsBy;
-    setSortBy(value);
-  };
-
-  return (
-    <SortStationsContainer>
-      <FormLabel id="sort-station-radio-buttons-group-label">
-        Sort Stations by
-      </FormLabel>
-      <RadioGroup
-        aria-labelledby="sort-station-radio-buttons-group-label"
-        defaultValue="female"
-        name="sort-station-radio-buttons-group"
-        row
-        value={sort}
-        onChange={handleChange}
-      >
-        <FormControlLabel value="name" control={<Radio />} label="Name" />
-        <FormControlLabel
-          value="platform"
-          control={<Radio />}
-          label="Platform"
-        />
-      </RadioGroup>
-    </SortStationsContainer>
-  );
-};
-
-export const RTEStationDetail: FC<{ station: BartStationsETDFull }> = ({
+export const RTENameList: FC<{ station: BartStationsETDFull }> = ({
   station,
 }) => {
   const etd =
@@ -113,7 +58,10 @@ export const RTEStationDetail: FC<{ station: BartStationsETDFull }> = ({
             ? 'Leaving'
             : `${est.minutes} min`;
         return (
-          <ESTStyled key={est.minutes} bartColor={est.hexcolor}>
+          <ESTStyled
+            key={`${est.minutes}-${est.hexcolor}`}
+            bartColor={est.hexcolor}
+          >
             <span>{minutes}</span>
             <span>({est.length} car)</span>
           </ESTStyled>
@@ -127,6 +75,72 @@ export const RTEStationDetail: FC<{ station: BartStationsETDFull }> = ({
       );
     }) ?? null;
 
+  return <>{etd}</>;
+};
+
+export const RTEProfileList: FC<{ station: BartStationsETDFull }> = ({
+  station,
+}) => {
+  const platforms =
+    station.etd?.reduce(
+      (retVal, etd) => {
+        etd.estimate.forEach((est) => {
+          if (!retVal[est.platform]) {
+            retVal[est.platform] = {};
+          }
+          if (!retVal[est.platform][etd.destination]) {
+            retVal[est.platform][etd.destination] = [];
+          }
+          retVal[est.platform][etd.destination].push(est);
+        });
+
+        return retVal;
+      },
+      {} as Record<string, Record<string, BartStaionEstimate[]>>,
+    ) ?? {};
+
+  const items = Object.entries(platforms).map(([platformName, station]) => {
+    const stations = Object.entries(station).map(([destination, est]) => {
+      const eta = est.map((est: BartStaionEstimate) => {
+        const minutes =
+          est.minutes.toLowerCase() === 'leaving'
+            ? 'Leaving'
+            : `${est.minutes} min`;
+        return (
+          <ESTStyled
+            key={`${est.minutes}-${est.hexcolor}`}
+            bartColor={est.hexcolor}
+          >
+            <span>{minutes}</span>
+            <span>({est.length} car)</span>
+          </ESTStyled>
+        );
+      });
+
+      return (
+        <StationPlatformEtaContainer key={destination}>
+          <div>{destination}</div>
+          <ETAStlyled> {eta}</ETAStlyled>
+        </StationPlatformEtaContainer>
+      );
+    });
+
+    return (
+      <div>
+        <PlatformHader>Platform {platformName}</PlatformHader>
+        <div>{stations}</div>
+      </div>
+    );
+  });
+
+  return <>{items}</>;
+};
+
+export const RTEStationDetail: FC<{ station: BartStationsETDFull }> = ({
+  station,
+}) => {
+  const sort = useSortBy();
+
   return (
     <Paper>
       <HeaderContainer>
@@ -135,7 +149,11 @@ export const RTEStationDetail: FC<{ station: BartStationsETDFull }> = ({
       </HeaderContainer>
       <div>
         <RTEStationSelect />
-        {etd}
+        {sort === 'name' ? (
+          <RTENameList station={station} />
+        ) : (
+          <RTEProfileList station={station} />
+        )}
       </div>
     </Paper>
   );

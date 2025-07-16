@@ -9,3 +9,8 @@ export const useStationsMap = () => {
   const stationsMap = useRTAppStore((state) => state.stationsMap);
   return stationsMap;
 };
+
+export const useSetStations = () => {
+  const stationsMap = useRTAppStore((state) => state.setStations);
+  return stationsMap;
+};

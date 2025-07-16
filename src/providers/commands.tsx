@@ -7,7 +7,9 @@ import CommandsImpl from '../commands/commands';
 import { CommandsContext } from '../contexts/commands';
 import { DB } from '../db';
 import { IndexedDB } from '../db/indexedDB';
-import { useRTAppStore } from '../store/useRTAppStore';
+import { useSetRoutes } from '../hooks/useRoutes';
+import { useSetStations } from '../hooks/useStations';
+import { useSetTotalTrainsInService } from '../hooks/useTotalTrains';
 
 const StatusContainer = styled('div')`
   display: flex,
@@ -20,8 +22,9 @@ const StatusContainer = styled('div')`
 export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isError, setIsError] = useState(false);
   const [commands, setCommands] = useState<Commands | null>(null);
-  const setRoutes = useRTAppStore((state) => state.setRoutes);
-  const setStations = useRTAppStore((state) => state.setStations);
+  const setRoutes = useSetRoutes();
+  const setStations = useSetStations();
+  const setTotalTrainsInService = useSetTotalTrainsInService();
 
   useEffect(() => {
     const api: RealTimeApi = new RealTimeApiImpl();
@@ -32,6 +35,7 @@ export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
       db,
       setRoutes,
       setStations,
+      setTotalTrainsInService,
     });
 
     commands

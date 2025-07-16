@@ -46,7 +46,7 @@ export class RealTimeApiImpl implements RealTimeApi {
     const request = await this.axios.get(`/bsa.aspx`, {
       params: { cmd: 'count' },
     });
-    return request.data;
+    return request.data?.root?.traincount ?? 0;
   };
 
   getRealTimeEstimates = async (

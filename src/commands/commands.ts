@@ -8,19 +8,29 @@ export type CommandsImplParams = {
   db: DB;
   setRoutes: (routes: BartRoute[]) => void;
   setStations: (stations: BartStation[]) => void;
+  setTotalTrainsInService: (total: number) => void;
 };
 
 class CommandsImpl implements Commands {
   api: RealTimeApi;
   db: DB;
+
   private setRoutes: (routes: BartRoute[]) => void;
   private setStations: (stations: BartStation[]) => void;
+  private setTotalTrainsInService: (total: number) => void;
 
-  constructor({ api, db, setRoutes, setStations }: CommandsImplParams) {
+  constructor({
+    api,
+    db,
+    setRoutes,
+    setStations,
+    setTotalTrainsInService,
+  }: CommandsImplParams) {
     this.api = api;
     this.db = db;
     this.setRoutes = setRoutes;
     this.setStations = setStations;
+    this.setTotalTrainsInService = setTotalTrainsInService;
   }
 
   init = async () => {
@@ -52,6 +62,7 @@ class CommandsImpl implements Commands {
     } else {
       this.setRoutes(routes);
     }
+    await this.updateTrainsInserviceCount();
   };
   getStationDetails = async (stationId: string) => {
     const station = await this.db.getStationDetail(stationId);
@@ -111,11 +122,12 @@ class CommandsImpl implements Commands {
 
     return data;
   };
+
   updateTrainsInserviceCount = async () => {
-    const trainsInService = await this.api.getTrainCount();
-    Logger.info('updateTrainsInserviceCount', trainsInService);
-    if (trainsInService) {
-    }
+    const trainsInService = (await this.api.getTrainCount()) ?? 0;
+    this.setTotalTrainsInService(trainsInService);
+
+    return trainsInService;
   };
 }
 

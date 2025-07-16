@@ -4,6 +4,12 @@ import { StationsParams } from '..';
 import { BartStationDetail } from '../../db';
 import { useCommands } from '../../hooks/useCommands';
 import { Loading } from '../styled/loading';
+import Logger from 'js-logger';
+import { styled } from '@mui/material';
+
+const HeaderName = styled('h2')`
+  margin-bottom: 0px;
+`;
 
 export const StationDetail: FC = () => {
   const commands = useCommands();
@@ -29,10 +35,20 @@ export const StationDetail: FC = () => {
     return <Loading />;
   }
 
+  Logger.info('StationDetail', stationData);
+
+  if (!stationData) {
+    return <div>no data</div>;
+  }
+
   return (
     <div>
-      <h1>Station Detail {stationId}</h1>
-      <div>Station Detail:{stationData?.name}</div>
+      <HeaderName>{stationData.name}</HeaderName>
+      <div>
+        {stationData.address}, {stationData.city}, {stationData.state}{' '}
+        {stationData.zipcode}
+      </div>
+      <p>{stationData.intro}</p>
     </div>
   );
 };

@@ -1,24 +1,17 @@
 import React, { FC } from 'react';
-import { Outlet } from 'react-router-dom';
-import { useStations } from '../../hooks/useStations';
-import {
-  RoutesContainerListStyled,
-  RoutesContainerStyled,
-  RoutesLinkStyled,
-} from '../styled';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { StationListSelection } from '../rte';
+import { RoutesContainerStyled } from '../styled';
 
 export const BartStations: FC = () => {
-  const stations = useStations();
+  const navigate = useNavigate();
 
   return (
     <RoutesContainerStyled>
-      <RoutesContainerListStyled>
-        {stations.map((station) => (
-          <RoutesLinkStyled to={`${station.abbr}`} key={station.abbr}>
-            {station.name}
-          </RoutesLinkStyled>
-        ))}
-      </RoutesContainerListStyled>
+      <h1>Stations</h1>
+      <StationListSelection
+        onSelectStationAbbr={(stationId: string) => navigate(stationId)}
+      />
       <Outlet />
     </RoutesContainerStyled>
   );

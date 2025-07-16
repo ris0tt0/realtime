@@ -3,15 +3,15 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { BartETD, BartStation, BartStationsETD } from '../db';
 import { StationsParams } from '../routes';
-import { useRTAppStore } from '../store/useRTAppStore';
 import { useCommands } from './useCommands';
+import { useStationsMap } from './useStations';
 
 export type BartStationsETDFull = BartStationsETD & { station: BartStation };
 export type BartETDFull = BartETD & { station: BartStation };
 
 export const useRTEDetail = () => {
   const commands = useCommands();
-  const stationsMap = useRTAppStore((state) => state.stationsMap);
+  const stationsMap = useStationsMap();
   const [data, setData] = useState<BartStationsETDFull[] | null>(null);
   const { stationId } = useParams<StationsParams>();
 

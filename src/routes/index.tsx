@@ -10,6 +10,8 @@ import { BartStations } from './station';
 import { StationDetail } from './station/details';
 import { RteAbout } from './rte/about';
 import { Landing } from './landing';
+import { StationsAboutRoute } from './station/about';
+import { RoutesAboutRoute } from './routes/about';
 
 export type StationsParams = {
   stationId: string;
@@ -29,12 +31,24 @@ const router = createBrowserRouter([
       {
         path: 'routes',
         Component: BartRoutes,
-        children: [{ path: ':routeNumber', Component: RouteDetail }],
+        children: [
+          {
+            index: true,
+            Component: RoutesAboutRoute,
+          },
+          { path: ':routeNumber', Component: RouteDetail },
+        ],
       },
       {
         path: 'stations',
         Component: BartStations,
-        children: [{ path: ':stationId', Component: StationDetail }],
+        children: [
+          {
+            index: true,
+            Component: StationsAboutRoute,
+          },
+          { path: ':stationId', Component: StationDetail },
+        ],
       },
       {
         path: 'rte',
