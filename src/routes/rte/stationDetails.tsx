@@ -4,7 +4,7 @@ import { RTEStationSelect } from '../../containers/rte/listSelection';
 import { RTEPlatformList } from '../../containers/rte/platformList';
 import { RTEStationNameList } from '../../containers/rte/stationList';
 import { RTEStationUpdated } from '../../containers/rte/updateStation';
-import { BartStationsETDFull } from '../../hooks/useRealTimeEstimateDetails';
+import { BartStationsETDFull } from '../../hooks/useRealTimeEstimates';
 import { useSortBy } from '../../hooks/useSortBy';
 
 export const ETAStlyled = styled('div')`

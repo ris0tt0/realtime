@@ -35,7 +35,12 @@ export const StationDetail: FC = () => {
     return <Loading />;
   }
 
-  Logger.info('StationDetail', stationData);
+  Logger.info(
+    'StationDetail',
+    stationData,
+    stationData?.intro,
+    stationData?.intro.indexOf('Maps of this'),
+  );
 
   if (!stationData) {
     return <div>no data</div>;

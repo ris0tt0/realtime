@@ -1,58 +1,52 @@
 # Project Title
 
-BART real time train estimates
+Bay Area Rapid Transit stations, routes and real time estimates.
 
 ## Description
 
-This application utilizes the BART api to gather information on real time train estimates, Route and station information. Please select an optoin in the menu.
+This application utilizes the BART api to gather information on real time train estimates, Route and station information. Please select an optoin in the menu. A working version is hosted here: [bart real time](http://jay-real-time.srv658343.hstgr.cloud/)
 
 ## Getting Started
 
 ### Dependencies
 
-- Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-- ex. Windows 10
+- modern yarn
+- nodejs
 
 ### Installing
 
-- How/where to download your program
-- Any modifications needed to be made to files/folders
+- [real time repository](https://github.com/ris0tt0/realtime)
+- Please create a .env file and copy your own api key from [bart](https://www.bart.gov/schedules/developers/api)
+- for vscode users, install this plugin by running this command:
+
+```
+yarn dlx @yarnpkg/sdks vscode
+```
 
 ### Executing program
 
-- How to run the program
-- Step-by-step bullets
+- To build for production:
 
 ```
-code blocks for commands
+yarn build:prod
 ```
 
-## Help
-
-Any advise for common problems or issues.
+- To build for development:
 
 ```
-command to run if program contains helper info
+yarn build:dev
 ```
 
 ## Authors
 
 Contributors names and contact info
 
-ex. Dominique Pizzie  
-ex. [@DomPizzie](https://twitter.com/dompizzie)
-
-## Version History
-
-- 0.2
-  - Various bug fixes and optimizations
-  - See [commit change]() or See [release history]()
-- 0.1
-  - Initial Release
+Jonathan Gee
+<j@jonathangee.com>
 
 ## License
 
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+This project is licensed under the MIT License - see the LICENSE.md file for details
 
 ## Acknowledgments
 

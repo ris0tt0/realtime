@@ -1,13 +1,13 @@
 import { BartRouteDetail, BartStationDetail } from '../db';
+import { BartStationsETDFull } from '../hooks/useRealTimeEstimates';
 
 export interface Commands {
   init(): Promise<boolean>;
   getStationDetails(stationId: string): Promise<BartStationDetail>;
-  getStationEstimates(
+  udpateStationRealTimeEstimates(
     stationId: string,
     platform?: number,
     direction?: string,
-  ): Promise<any>;
-  getStationEstimatesRefresh(): Promise<any>;
+  ): Promise<BartStationsETDFull[] | null>;
   getRouteDetails(routeNumber: string): Promise<BartRouteDetail>;
 }

@@ -1,10 +1,12 @@
 import { create } from 'zustand';
 import { BartRoute, BartStation } from '../db';
+import { BartStationsETDFull } from '../hooks/useRealTimeEstimates';
 
 export type SortStationsBy = 'name' | 'platform';
 
 export type RTAppStore = {
   totalTrainsInService: number;
+  realTimeEstimates: BartStationsETDFull[] | null;
   rteUpdatedTimestamp: Date;
   rteSortBy: SortStationsBy;
   routes: BartRoute[];
@@ -16,16 +18,21 @@ export type RTAppStore = {
   setStations: (stations: BartStation[]) => void;
   setTotalTrainsInService: (count: number) => void;
   setRteUpdatedTimestamp: (timestamp: Date) => void;
+  setRealTimeEstimates: (stations: BartStationsETDFull[] | null) => void;
 };
 
 export const useRTAppStore = create<RTAppStore>((set) => ({
   totalTrainsInService: 0,
+  realTimeEstimates: null,
   rteUpdatedTimestamp: new Date(),
   rteSortBy: 'name',
   routes: [],
   stations: [],
   routesMap: {},
   stationsMap: {},
+  setRealTimeEstimates: (stations: BartStationsETDFull[] | null) => {
+    set(() => ({ realTimeEstimates: stations }));
+  },
   setRteSortBy: (sortBy: SortStationsBy) => {
     set(() => ({ rteSortBy: sortBy }));
   },

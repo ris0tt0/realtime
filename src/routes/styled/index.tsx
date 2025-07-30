@@ -9,6 +9,10 @@ export const LoadingStyled = styled('div')`
   align-items: center;
 `;
 
+export const LinkStyled = styled(Link)`
+  color: inherit;
+`;
+
 export const RoutesLinkStyled = styled(Link)`
   text-decoration: none;
   color: inherit;

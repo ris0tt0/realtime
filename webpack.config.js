@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const { FederatedTypesPlugin } = require('@module-federation/typescript');
+const { publicDecrypt } = require('crypto');
 
 const federationConfig = {
   name: 'jayrt',
@@ -83,6 +84,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'brt-[name].js',
+    publicPath: '/',
     clean: true,
   },
   devServer: {
@@ -99,6 +101,7 @@ const config = {
     }),
     new Dotenv({
       defaults: true,
+      safe: true,
     }),
     new ModuleFederationPlugin({
       ...federationConfig,

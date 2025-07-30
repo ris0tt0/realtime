@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { RealTimeApi } from '.';
 
-const api_key = process.env.BART_API_KEY ?? 'DEMO_KEY';
+const api_key = process.env.BART_API_KEY;
 
 const config = {
   baseURL: 'https://api.bart.gov/api',

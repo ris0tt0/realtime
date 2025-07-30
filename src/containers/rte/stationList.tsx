@@ -1,17 +1,18 @@
 import React, { FC } from 'react';
-import { BartStationsETDFull } from '../../hooks/useRealTimeEstimateDetails';
+import { BartStationsETDFull } from '../../hooks/useRealTimeEstimates';
 import {
   ESTStyled,
   ETAStlyled,
   StationEtaContainer,
 } from '../../routes/rte/stationDetails';
 import { Paper } from '@mui/material';
+import { LinkStyled } from '../../routes/styled';
 
 export const RTEStationNameList: FC<{ station: BartStationsETDFull }> = ({
   station,
 }) => {
   const etd =
-    station.etd?.map(({ destination, estimate }) => {
+    station.etd?.map(({ abbreviation, destination, estimate }) => {
       const eta = estimate.map((est) => {
         const minutes =
           est.minutes.toLowerCase() === 'leaving'
@@ -29,7 +30,9 @@ export const RTEStationNameList: FC<{ station: BartStationsETDFull }> = ({
       });
       return (
         <StationEtaContainer key={destination}>
-          <div>{destination}</div>
+          <LinkStyled to={`/stations/${abbreviation}`}>
+            {destination}
+          </LinkStyled>
           <ETAStlyled> {eta}</ETAStlyled>
         </StationEtaContainer>
       );

@@ -1,12 +1,13 @@
 import { Paper, styled } from '@mui/material';
 import React, { FC } from 'react';
 import { BartStaionEstimate } from '../../db';
-import { BartStationsETDFull } from '../../hooks/useRealTimeEstimateDetails';
+import { BartStationsETDFull } from '../../hooks/useRealTimeEstimates';
 import {
   ESTStyled,
   ETAStlyled,
   StationEtaContainer,
 } from '../../routes/rte/stationDetails';
+import { LinkStyled } from '../../routes/styled';
 
 const PlatformTitleHeader = styled('h4')`
   margin: 0px;
@@ -36,19 +37,25 @@ export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
           }
           //by destination
           if (!retVal[est.platform][etd.destination]) {
-            retVal[est.platform][etd.destination] = [];
+            retVal[est.platform][etd.destination] = {
+              abbr: etd.abbreviation,
+              est: [],
+            };
           }
-          retVal[est.platform][etd.destination].push(est);
+          retVal[est.platform][etd.destination].est.push(est);
         });
 
         return retVal;
       },
-      {} as Record<string, Record<string, BartStaionEstimate[]>>,
+      {} as Record<
+        string,
+        Record<string, { abbr: string; est: BartStaionEstimate[] }>
+      >,
     ) ?? {};
 
   const items = Object.entries(platforms).map(([platformName, station]) => {
-    const stations = Object.entries(station).map(([destination, est]) => {
-      const eta = est.map((est: BartStaionEstimate) => {
+    const stations = Object.entries(station).map(([destination, station]) => {
+      const eta = station.est.map((est: BartStaionEstimate) => {
         const minutes =
           est.minutes.toLowerCase() === 'leaving'
             ? 'Leaving'
@@ -66,14 +73,16 @@ export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
 
       return (
         <StationEtaContainer key={destination}>
-          <div>{destination}</div>
+          <LinkStyled to={`/stations/${station.abbr}`}>
+            {destination}
+          </LinkStyled>
           <ETAStlyled>{eta}</ETAStlyled>
         </StationEtaContainer>
       );
     });
 
     return (
-      <div>
+      <div key={platformName}>
         <PlatformTitleHeader>Platform {platformName}</PlatformTitleHeader>
         <StationsEtdContainer>{stations}</StationsEtdContainer>
       </div>

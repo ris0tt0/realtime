@@ -7,7 +7,7 @@ export const BartRoutes: FC = () => {
   const navigate = useNavigate();
   return (
     <RoutesContainerStyled>
-      <h1>BART Routes</h1>
+      <h1>Routes</h1>
       <RoutesListSelection onSelectRoute={(abbr) => navigate(abbr)} />
       <Outlet />
     </RoutesContainerStyled>

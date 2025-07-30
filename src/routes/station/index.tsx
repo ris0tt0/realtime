@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { StationListSelection } from '../rte';
+import { StationsListSelection } from '../../containers/stationsListSelection';
 import { RoutesContainerStyled } from '../styled';
 
 export const BartStations: FC = () => {
@@ -9,7 +9,7 @@ export const BartStations: FC = () => {
   return (
     <RoutesContainerStyled>
       <h1>Stations</h1>
-      <StationListSelection
+      <StationsListSelection
         onSelectStationAbbr={(stationId: string) => navigate(stationId)}
       />
       <Outlet />

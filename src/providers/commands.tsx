@@ -7,10 +7,12 @@ import CommandsImpl from '../commands/commands';
 import { CommandsContext } from '../contexts/commands';
 import { DB } from '../db';
 import { IndexedDB } from '../db/indexedDB';
+import { useSetRTE } from '../hooks/useRealTimeEstimates';
 import { useSetRoutes } from '../hooks/useRoutes';
-import { useSetStations } from '../hooks/useStations';
-import { useSetTotalTrainsInService } from '../hooks/useTotalTrains';
 import { useSetRTEUpdatedTime } from '../hooks/useRTEUpdatedTime';
+import { useSetStations, useStationsMap } from '../hooks/useStations';
+import { useSetTotalTrainsInService } from '../hooks/useTotalTrains';
+import { Loading } from '../routes/styled/loading';
 
 const StatusContainer = styled('div')`
   display: flex,
@@ -23,6 +25,8 @@ const StatusContainer = styled('div')`
 export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isError, setIsError] = useState(false);
   const [commands, setCommands] = useState<Commands | null>(null);
+  const stationsMap = useStationsMap();
+  const setRTE = useSetRTE();
   const setRoutes = useSetRoutes();
   const setStations = useSetStations();
   const setTotalTrainsInService = useSetTotalTrainsInService();
@@ -35,6 +39,8 @@ export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
     const commands: Commands = new CommandsImpl({
       api,
       db,
+      stationsMap,
+      setRTE,
       setRoutes,
       setStations,
       setTotalTrainsInService,
@@ -54,7 +60,7 @@ export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
   }
 
   if (!commands) {
-    return <StatusContainer>initing</StatusContainer>;
+    return <Loading />;
   }
 
   return (
