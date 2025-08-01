@@ -1,68 +1,93 @@
-# Project Title
+# 🚇 BART Real-Time Tracker
 
-Bay Area Rapid Transit stations, routes and real time estimates.
+A modern, fully **data-driven** React.js application that uses the **BART Legacy API** to display real-time Bay Area Rapid Transit information — including live departure times, route information, and station details.
 
-## Description
+🔗 **Live Demo**: [realtime.jonathangee.com](https://realtime.jonathangee.com)
 
-This application utilizes the BART api to gather information on real time train estimates, Route and station information. Please select an optoin in the menu. A working version is hosted here: [bart real time](http://jay-real-time.srv658343.hstgr.cloud/)
+## 📌 Overview
 
-## Getting Started
+This app is designed for BART commuters and transit enthusiasts who want fast, reliable, and clean access to system data from any device. It leverages modern front-end tools to present legacy transit data in a real-time, user-friendly experience.
 
-### Dependencies
+The project is bundled with **Webpack 5** and uses **Webpack Module Federation** to expose key components for use in other applications. This enables true micro-frontend architecture and remote composition.
 
-- modern yarn
-- nodejs
+---
 
-### Installing
+## 🚀 Features
 
-- [real time repository](https://github.com/ris0tt0/realtime)
-- Please create a .env file and copy your own api key from [bart](https://www.bart.gov/schedules/developers/api)
-- for vscode users, install this plugin by running this command:
+- **Real-Time Departures** — View upcoming train departures from any station
+- **Station Info** — Explore BART stations, including location, lines served, and ETD data
+- **Route Info** — Visualize all BART lines with stop lists and route details
+- **Offline Support** — IndexedDB-based caching of data for faster reloads
+- **Modular Architecture** — Clean, scalable React app structure
+- **Module Federation** — Exposes BART components for remote consumption
 
-```
+---
+
+## 🧠 Tech Stack
+
+- **React.js** — Functional components & hooks
+- **Webpack 5** — Custom build setup for full control
+- **Webpack Module Federation** — Exposes components across app boundaries
+- **Axios** — HTTP client for API communication
+- **Zustand** — Lightweight state management for route/station/ETD state
+- **IndexedDB** — Long-term browser storage for offline support
+- **BART Legacy API** — Official public API providing all transit data
+- **Material UI** — UI styling
+- **Yarn 3+ (Modern)** — Zero-install package management with PnP
+
+---
+
+## 📄 Pages
+
+### `/about`
+
+General overview of the application, features, and tech.
+
+### `/routes`
+
+- Select a BART route from a dropdown
+- View details such as line color, direction, and all stops
+
+### `/stations`
+
+- Select a station from a dropdown
+- See location, basic info, and associated routes
+
+### `/departures`
+
+- Select a station and view **real-time train departure estimates**
+- Info includes destination, platform, wait time, train length, and more
+
+---
+
+## 🧪 Running the App
+
+```bash
+# Install dependencies (Yarn PnP)
+yarn
+
+# Enable VSCode support for Yarn PnP
 yarn dlx @yarnpkg/sdks vscode
+
+# Start local dev server
+yarn start
 ```
 
-### Executing program
+---
 
-- To build for production:
+## 📦 Build
 
-```
+```bash
+# Build for development
+yarn build:dev
+
+# Build for production
 yarn build:prod
 ```
+## 📬 Feedback & Contributions
+Feel free to fork, open issues, or submit PRs.
+This project is open to ideas and collaboration.
 
-- To build for development:
-
-```
-yarn build:dev
-```
-
-## Authors
-
-Contributors names and contact info
-
-Jonathan Gee
-<j@jonathangee.com>
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE.md file for details
-
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-
-- [awesome-readme](https://github.com/matiassingers/awesome-readme)
-- [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-- [dbader](https://github.com/dbader/readme-template)
-- [zenorocha](https://gist.github.com/zenorocha/4526327)
-- [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
-
-This reactjs application utilizes the BART API to get Real Time Departures from a specific station. You may use also plan a trip between two stations.
-
-I use redux to store the application data. reselect to create selectors for my application. I also normalize the API data with normalizr.
-
-while installing:
-yarn dlx @yarnpkg/sdks vscode
-
-A working version is hosted [here](http://bart.jonathangee.com)
+## 🔒 License
+MIT License
+You are free to use, modify, and distribute this code with attribution.
