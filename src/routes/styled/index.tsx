@@ -9,9 +9,16 @@ export const LoadingStyled = styled('div')`
   align-items: center;
 `;
 
-export const LinkStyled = styled(Link)`
-  color: inherit;
-`;
+export const LinkStyled = styled(Link)(
+  ({ theme }) =>
+    `
+    color: inherit;
+    :hover {
+      text-decoration: none;
+      color: ${theme.palette.text.secondary};
+    }
+  `,
+);
 
 export const RoutesLinkStyled = styled(Link)`
   text-decoration: none;

@@ -11,6 +11,22 @@ const HeaderName = styled('h2')`
   margin-bottom: 0px;
 `;
 
+const remoteArtifactors = (intro: string) => {
+  const stationMap = intro.replace('Station Map', '');
+  const transitStops = stationMap.replace('Transit Stops', '');
+  const transitRoutes = transitStops.replace('Transit Routes', '');
+  const schedulesAndFares = transitRoutes.replace('Schedules and Fares', '');
+  const mapsOfTheStatinns = schedulesAndFares.replace(
+    'Maps of this station:',
+    '',
+  );
+
+  const result = mapsOfTheStatinns.replace('Maps of this station', '');
+  const mapsOfTheStatoin = result.replace('Maps of the station:', '');
+
+  return mapsOfTheStatoin;
+};
+
 export const StationDetail: FC = () => {
   const commands = useCommands();
   const { stationId } = useParams<StationsParams>();
@@ -35,13 +51,6 @@ export const StationDetail: FC = () => {
     return <Loading />;
   }
 
-  Logger.info(
-    'StationDetail',
-    stationData,
-    stationData?.intro,
-    stationData?.intro.indexOf('Maps of this'),
-  );
-
   if (!stationData) {
     return <div>no data</div>;
   }
@@ -53,7 +62,7 @@ export const StationDetail: FC = () => {
         {stationData.address}, {stationData.city}, {stationData.state}{' '}
         {stationData.zipcode}
       </div>
-      <p>{stationData.intro}</p>
+      <p>{remoteArtifactors(stationData.intro)}</p>
     </div>
   );
 };

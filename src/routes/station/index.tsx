@@ -8,7 +8,6 @@ export const BartStations: FC = () => {
 
   return (
     <RoutesContainerStyled>
-      <h1>Stations</h1>
       <StationsListSelection
         onSelectStationAbbr={(stationId: string) => navigate(stationId)}
       />

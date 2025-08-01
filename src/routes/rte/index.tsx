@@ -9,7 +9,6 @@ export const RealTimeEstimates: FC = () => {
 
   return (
     <RoutesContainerStyled>
-      <h1>Real Time Estimates</h1>
       <TrainsInService />
       <StationsListSelection
         onSelectStationAbbr={(stationId: string) => navigate(stationId)}
