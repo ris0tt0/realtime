@@ -2,7 +2,7 @@
 
 A modern, fully **data-driven** React.js application that uses the **BART Legacy API** to display real-time Bay Area Rapid Transit information — including live departure times, route information, and station details.
 
-🔗 **Live Demo**: [realtime.jonathangee.com](https://realtime.jonathangee.com)
+🔗 **Live Demo**: [BART](http://jay-real-time.srv658343.hstgr.cloud)
 
 ## 📌 Overview
 
