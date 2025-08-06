@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { LinkStyled } from '../styled';
 import { Link } from 'react-router-dom';
 
 export const About: FC = () => {
@@ -14,14 +13,12 @@ export const About: FC = () => {
       <h3>🛠 Features</h3>
       <ul>
         <li>🚉 View live departures for any BART station</li>
-        <li>
-          📍 Select a station to get detailed arrival and route information
-        </li>
-        <li>🔄 Refresh data in real-time using BART’s public legacy API</li>
-        <li>💾 Offline support with long-term data caching</li>
-        <li>⚡ Built for performance with modern React best practices</li>
+        <li>Select a station to get detailed arrival and route information</li>
+        <li>Refresh data in real-time using BART’s public legacy API</li>
+        <li>Offline support with long-term data caching</li>
+        <li>Built for performance with modern React best practices</li>
       </ul>
-      <h3>💡 Why This App?</h3>
+      <h3>Why This App?</h3>
       <p>
         BART’s legacy API still delivers reliable real-time transit data. This
         app showcases how legacy APIs can be integrated into a performant and
@@ -29,7 +26,7 @@ export const About: FC = () => {
         exploring the Bay Area, this app gives you fast access to up-to-date
         train times.
       </p>
-      <h3>⚙️ Tech Stack</h3>
+      <h3>Tech Stack</h3>
       <ul>
         <li>React.js (Functional Components + Hooks)</li>
         <li>Axios for handling API requests</li>
@@ -41,7 +38,7 @@ export const About: FC = () => {
         <li>BART Legacy API</li>
         <li>Deployed via dokku</li>
       </ul>
-      <h3>📬 Feedback</h3>{' '}
+      <h3>Feedback</h3>
       <p>
         This project is open source and always improving. If you have ideas or
         run into bugs, feel free to submit feedback or contribute on GitHub
