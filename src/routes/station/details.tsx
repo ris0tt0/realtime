@@ -1,31 +1,28 @@
+import { styled } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { StationsParams } from '..';
 import { BartStationDetail } from '../../db';
 import { useCommands } from '../../hooks/useCommands';
+import { removeArtifacts } from '../../utils';
 import { Loading } from '../styled/loading';
-import Logger from 'js-logger';
-import { styled } from '@mui/material';
+import { RouteLines } from './components/routeLines';
+import { RteList } from './components/rteList';
+import { StationScheduleList } from './components/stationScheduleList';
 
-const HeaderName = styled('h2')`
+export const HeaderTwoName = styled('h2')`
   margin-bottom: 0px;
 `;
 
-const remoteArtifactors = (intro: string) => {
-  const stationMap = intro.replace('Station Map', '');
-  const transitStops = stationMap.replace('Transit Stops', '');
-  const transitRoutes = transitStops.replace('Transit Routes', '');
-  const schedulesAndFares = transitRoutes.replace('Schedules and Fares', '');
-  const mapsOfTheStatinns = schedulesAndFares.replace(
-    'Maps of this station:',
-    '',
-  );
+const StationDetailInfoContainer = styled('div')`
+  display: flex;
+  flex: 1;
+`;
 
-  const result = mapsOfTheStatinns.replace('Maps of this station', '');
-  const mapsOfTheStatoin = result.replace('Maps of the station:', '');
-
-  return mapsOfTheStatoin;
-};
+const HalfContainer = styled('div')`
+  display: flex;
+  width: 50%;
+`;
 
 export const StationDetail: FC = () => {
   const commands = useCommands();
@@ -57,12 +54,26 @@ export const StationDetail: FC = () => {
 
   return (
     <div>
-      <HeaderName>{stationData.name}</HeaderName>
+      <HeaderTwoName>{stationData.name}</HeaderTwoName>
       <div>
         {stationData.address}, {stationData.city}, {stationData.state}{' '}
         {stationData.zipcode}
       </div>
-      <p>{remoteArtifactors(stationData.intro)}</p>
+      <p>{removeArtifacts(stationData.intro)}</p>
+      <StationDetailInfoContainer>
+        <HalfContainer>
+          <RouteLines
+            north={stationData.north_routes.route}
+            south={stationData.south_routes.route}
+          />
+        </HalfContainer>
+        <HalfContainer>
+          <RteList compact={true} id={stationId} />
+        </HalfContainer>
+      </StationDetailInfoContainer>
+      <StationDetailInfoContainer>
+        <StationScheduleList id={stationId} />
+      </StationDetailInfoContainer>
     </div>
   );
 };

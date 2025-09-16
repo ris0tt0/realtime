@@ -1,16 +1,29 @@
+import { Stack, styled } from '@mui/material';
 import React, { FC } from 'react';
-import { BartStationsETDFull } from '../../hooks/useRealTimeEstimates';
+import { BartStationsETDFull } from '../../db';
 import {
   ESTStyled,
   ETAStlyled,
   StationEtaContainer,
 } from '../../routes/rte/stationDetails';
-import { Paper } from '@mui/material';
 import { LinkStyled } from '../../routes/styled';
+import { BackgroundPaperContainer } from '../../styled';
 
-export const RTEStationNameList: FC<{ station: BartStationsETDFull }> = ({
-  station,
-}) => {
+export const NoDepartureStyled = styled('div')(
+  ({ theme }) => `
+  display: flex;
+  background: ${theme.palette.background.paper}
+  width: 100%;
+  height: 300px;
+  justify-content: center;
+  align-items: center;
+`,
+);
+
+export const RTEStationNameList: FC<{
+  station: BartStationsETDFull;
+  compact?: boolean;
+}> = ({ station, compact = false }) => {
   const etd =
     station.etd?.map(({ abbreviation, destination, estimate }) => {
       const eta = estimate.map((est) => {
@@ -24,7 +37,7 @@ export const RTEStationNameList: FC<{ station: BartStationsETDFull }> = ({
             bartColor={est.hexcolor}
           >
             <span>{minutes}</span>
-            <span>({est.length} car)</span>
+            {compact ? null : <span>({est.length} car)</span>}
           </ESTStyled>
         );
       });
@@ -38,5 +51,9 @@ export const RTEStationNameList: FC<{ station: BartStationsETDFull }> = ({
       );
     }) ?? null;
 
-  return <Paper>{etd}</Paper>;
+  if (!etd) {
+    return <NoDepartureStyled>No departes scheduled</NoDepartureStyled>;
+  }
+
+  return <Stack sx={{ width: '100%' }}>{etd}</Stack>;
 };

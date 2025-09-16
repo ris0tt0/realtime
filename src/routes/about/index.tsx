@@ -10,9 +10,9 @@ export const About: FC = () => {
         using the BART Legacy API to provide real-time transit information for
         Bay Area Rapid Transit riders.
       </p>
-      <h3>🛠 Features</h3>
+      <h3>Features</h3>
       <ul>
-        <li>🚉 View live departures for any BART station</li>
+        <li>View live departures for any BART station</li>
         <li>Select a station to get detailed arrival and route information</li>
         <li>Refresh data in real-time using BART’s public legacy API</li>
         <li>Offline support with long-term data caching</li>

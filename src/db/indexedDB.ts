@@ -4,14 +4,16 @@ import {
   BartRouteDetail,
   BartStation,
   BartStationDetail,
+  BartStationScheduleDetail,
   DB,
 } from '.';
 
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const DB_NAME = 'rtbrt-db';
 const STATIONS_STORE_NAME = 'stations';
 const ROUTES_STORE_NAME = 'routes';
 const STATION_DETAILS_STORE_NAME = 'stationDetails';
+const STATION_SCHEDULE_STORE_NAME = 'stationSchedule';
 const ROUTE_DETAILS_STORE_NAME = 'routeDetails';
 
 export class IndexedDB implements DB {
@@ -36,17 +38,22 @@ export class IndexedDB implements DB {
         if (db.objectStoreNames.contains(ROUTE_DETAILS_STORE_NAME)) {
           db.deleteObjectStore(ROUTE_DETAILS_STORE_NAME);
         }
+        if (db.objectStoreNames.contains(STATION_SCHEDULE_STORE_NAME)) {
+          db.deleteObjectStore(STATION_SCHEDULE_STORE_NAME);
+        }
         // add the store
         const stationsStore = db.createObjectStore(STATIONS_STORE_NAME, {
           keyPath: 'abbr',
           autoIncrement: false,
         });
         stationsStore.createIndex('name', 'name', { unique: true });
+
         const routesStore = db.createObjectStore(ROUTES_STORE_NAME, {
           keyPath: 'routeID',
           autoIncrement: false,
         });
         routesStore.createIndex('number', 'number', { unique: true });
+
         const stationDetailsStore = db.createObjectStore(
           STATION_DETAILS_STORE_NAME,
           {
@@ -55,6 +62,16 @@ export class IndexedDB implements DB {
           },
         );
         stationDetailsStore.createIndex('name', 'name', { unique: true });
+
+        const stationScheduleStore = db.createObjectStore(
+          STATION_SCHEDULE_STORE_NAME,
+          {
+            keyPath: 'id',
+            autoIncrement: false,
+          },
+        );
+        stationScheduleStore.createIndex('abbr', 'abbr', { unique: false });
+
         const routenDetailsStore = db.createObjectStore(
           ROUTE_DETAILS_STORE_NAME,
           {
@@ -99,6 +116,40 @@ export class IndexedDB implements DB {
         }
       }
     });
+
+    return retVal;
+  }
+  getStationSchedule(
+    stationId: string,
+    day: string,
+  ): Promise<BartStationScheduleDetail | null> {
+    const retVal = new Promise<BartStationScheduleDetail | null>(
+      (resolve, reject) => {
+        const id = `${stationId}-${day}`;
+        if (this.db) {
+          const transaction = this.db.transaction(
+            STATION_SCHEDULE_STORE_NAME,
+            'readonly',
+          );
+          if (transaction) {
+            const store = transaction.objectStore(STATION_SCHEDULE_STORE_NAME);
+            const request = store.get(id);
+            request.onsuccess = () => {
+              resolve(request.result ?? null);
+            };
+            request.onerror = (event) => {
+              Logger.error(
+                'Error getting station schedule from IndexedDB',
+                stationId,
+                event,
+              );
+              reject(event);
+            };
+            return;
+          }
+        }
+      },
+    );
 
     return retVal;
   }
@@ -230,6 +281,30 @@ export class IndexedDB implements DB {
 
     return retVal;
   }
+
+  setStationSchedule(schedule: BartStationScheduleDetail): Promise<void> {
+    const retVal = new Promise<void>((resolve, reject) => {
+      if (this.db) {
+        const transaction = this.db.transaction(
+          STATION_SCHEDULE_STORE_NAME,
+          'readwrite',
+        );
+        if (transaction) {
+          const store = transaction.objectStore(STATION_SCHEDULE_STORE_NAME);
+          const request = store.put(schedule);
+          request.onsuccess = () => {
+            resolve();
+          };
+          request.onerror = (event) => {
+            reject(event);
+          };
+        }
+      }
+    });
+
+    return retVal;
+  }
+
   setStations = (stations: BartStation[]) => {
     const retVal = new Promise<void>((resolve, reject) => {
       if (this.db) {

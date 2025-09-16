@@ -1,10 +1,10 @@
-# 🚇 BART Real-Time Tracker
+# BART Real-Time Tracker
 
 A modern, fully **data-driven** React.js application that uses the **BART Legacy API** to display real-time Bay Area Rapid Transit information — including live departure times, route information, and station details.
 
 🔗 **Live Demo**: [BART](https://realtime.jrgee.com)
 
-## 📌 Overview
+## Overview
 
 This app is designed for BART commuters and transit enthusiasts who want fast, reliable, and clean access to system data from any device. It leverages modern front-end tools to present legacy transit data in a real-time, user-friendly experience.
 
@@ -12,7 +12,7 @@ The project is bundled with **Webpack 5** and uses **Webpack Module Federation**
 
 ---
 
-## 🚀 Features
+## Features
 
 - **Real-Time Departures** — View upcoming train departures from any station
 - **Station Info** — Explore BART stations, including location, lines served, and ETD data
@@ -23,7 +23,7 @@ The project is bundled with **Webpack 5** and uses **Webpack Module Federation**
 
 ---
 
-## 🧠 Tech Stack
+## Tech Stack
 
 - **React.js** — Functional components & hooks
 - **Webpack 5** — Custom build setup for full control
@@ -37,7 +37,7 @@ The project is bundled with **Webpack 5** and uses **Webpack Module Federation**
 
 ---
 
-## 📄 Pages
+## Pages
 
 ### `/about`
 
@@ -60,7 +60,7 @@ General overview of the application, features, and tech.
 
 ---
 
-## 🧪 Running the App
+## Running the App
 
 ```bash
 # Install dependencies (Yarn PnP)
@@ -75,7 +75,7 @@ yarn start
 
 ---
 
-## 📦 Build
+## Build
 
 ```bash
 # Build for development
@@ -85,12 +85,12 @@ yarn build:dev
 yarn build:prod
 ```
 
-## 📬 Feedback & Contributions
+## Feedback & Contributions
 
 Feel free to fork, open issues, or submit PRs.
 This project is open to ideas and collaboration.
 
-## 🔒 License
+## License
 
 MIT License
 You are free to use, modify, and distribute this code with attribution.

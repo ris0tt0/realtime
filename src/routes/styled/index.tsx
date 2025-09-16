@@ -1,6 +1,10 @@
 import { styled } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+export const LinesRteContainer = styled('div')`
+  margin: 0px 0.5rem;
+`;
+
 export const LoadingStyled = styled('div')`
   display: flex;
   width: 100%;

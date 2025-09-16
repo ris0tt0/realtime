@@ -7,8 +7,9 @@ import {
   styled,
 } from '@mui/material';
 import React, { FC } from 'react';
-import { useSetSortBy, useSortBy } from '../../hooks/useSortBy';
-import { SortStationsBy } from '../../store/useRTAppStore';
+import { RealTimeEstimaates, SortStationsBy } from '../../db';
+import { useRteDispatch } from '../../store';
+import { setRte } from '../../store/rte';
 
 const SortStationsContainer = styled(FormControl)`
   flex-direction: row;
@@ -17,13 +18,13 @@ const SortStationsContainer = styled(FormControl)`
   padding-bottom: 1rem;
 `;
 
-export const RTEStationSelect: FC = () => {
-  const sort = useSortBy();
-  const setSortBy = useSetSortBy();
+export const RTEStationSelect: FC<{ rte: RealTimeEstimaates }> = ({ rte }) => {
+  const dispatch = useRteDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value as SortStationsBy;
-    setSortBy(value);
+    const sort = event.target.value as SortStationsBy;
+    const result = { ...rte, sort };
+    dispatch(setRte(result));
   };
 
   return (
@@ -36,7 +37,7 @@ export const RTEStationSelect: FC = () => {
         defaultValue="female"
         name="sort-station-radio-buttons-group"
         row
-        value={sort}
+        value={rte.sort}
         onChange={handleChange}
       >
         <FormControlLabel value="name" control={<Radio />} label="Name" />

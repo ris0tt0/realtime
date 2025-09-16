@@ -1,11 +1,7 @@
-import { useRTAppStore } from '../store/useRTAppStore';
+import { useSelector } from 'react-redux';
+import { trainsInServiceSelector } from '../selectors';
 
 export const useTotalTrainsInService = () => {
-  const total = useRTAppStore((state) => state.totalTrainsInService);
+  const total = useSelector(trainsInServiceSelector);
   return total;
-};
-
-export const useSetTotalTrainsInService = () => {
-  const setTrains = useRTAppStore((state) => state.setTotalTrainsInService);
-  return setTrains;
 };

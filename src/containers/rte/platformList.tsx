@@ -1,13 +1,13 @@
-import { Paper, styled } from '@mui/material';
+import { Stack, styled } from '@mui/material';
 import React, { FC } from 'react';
-import { BartStaionEstimate } from '../../db';
-import { BartStationsETDFull } from '../../hooks/useRealTimeEstimates';
+import { BartStaionEstimate, BartStationsETDFull } from '../../db';
 import {
   ESTStyled,
   ETAStlyled,
   StationEtaContainer,
 } from '../../routes/rte/stationDetails';
 import { LinkStyled } from '../../routes/styled';
+import { NoDepartureStyled } from './stationList';
 
 const PlatformTitleHeader = styled('h4')`
   margin: 0px;
@@ -16,12 +16,6 @@ const PlatformTitleHeader = styled('h4')`
 
 const StationsEtdContainer = styled('div')`
   margin-left: 1rem;
-`;
-
-const PlatformsContainer = styled(Paper)`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
 `;
 
 export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
@@ -89,5 +83,9 @@ export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
     );
   });
 
-  return <PlatformsContainer>{items}</PlatformsContainer>;
+  if (items.length < 1) {
+    return <NoDepartureStyled>No departes scheduled</NoDepartureStyled>;
+  }
+
+  return <Stack>{items}</Stack>;
 };

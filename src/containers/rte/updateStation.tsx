@@ -2,9 +2,9 @@ import { Refresh } from '@mui/icons-material';
 import { IconButton, styled, Typography } from '@mui/material';
 import { format } from 'date-fns';
 import React, { FC, useState } from 'react';
-import { useCommands } from '../../hooks/useCommands';
-import { useRTEUpdatedTime } from '../../hooks/useRTEUpdatedTime';
 import { useParams } from 'react-router-dom';
+import { useCommands } from '../../hooks/useCommands';
+import { useRteUpdatedTime } from '../../hooks/useRTEUpdatedTime';
 import { StationsParams } from '../../routes';
 
 // 15 seconds
@@ -20,7 +20,9 @@ export const RTEStationUpdated: FC = () => {
   const commands = useCommands();
   const { stationId } = useParams<StationsParams>();
   const [error, setError] = useState(false);
-  const updated = useRTEUpdatedTime();
+  const updated = useRteUpdatedTime(stationId);
+
+  if (!updated) return;
 
   const handleClick = () => {
     const now = Date.now();

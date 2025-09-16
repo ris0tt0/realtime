@@ -1,37 +1,34 @@
-import React, { FC, useEffect } from 'react';
+import Logger from 'js-logger';
+import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useCommands } from '../../hooks/useCommands';
-import { useRTE, useSetRTE } from '../../hooks/useRealTimeEstimates';
-import { RTEStationDetail } from './stationDetails';
 import { StationsParams } from '..';
+import { useCommands } from '../../hooks/useCommands';
+import { useRte } from '../../hooks/useRte';
+import { RTEStationDetail } from './stationDetails';
 
-const useRequestBartRealTimeEstimates = () => {
+export const RTEDetail: FC = () => {
   const commands = useCommands();
   const { stationId } = useParams<StationsParams>();
+  const [loading, setLoading] = useState(true);
+  const rte = useRte(stationId);
 
   useEffect(() => {
     if (stationId) {
-      commands.udpateStationRealTimeEstimates(stationId).then((data) => {});
+      setLoading(true);
+      commands
+        .udpateStationRealTimeEstimates(stationId)
+        .then((data) => {})
+        .finally(() => setLoading(false));
     }
   }, [stationId]);
-};
 
-export const RTEDetail: FC = () => {
-  const setRTE = useSetRTE();
-  useRequestBartRealTimeEstimates();
-
-  useEffect(() => () => setRTE(null), []);
-
-  const data = useRTE();
-
-  if (data === null) {
+  if (!rte) {
     return null;
   }
 
-  const result =
-    data.map((station) => {
-      return <RTEStationDetail key={station.abbr} station={station} />;
-    }) ?? null;
+  if (loading) {
+    return <div>loading</div>;
+  }
 
-  return <>{result}</>;
+  return <RTEStationDetail rte={rte} />;
 };

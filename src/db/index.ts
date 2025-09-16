@@ -1,3 +1,6 @@
+export type SortStationsBy = 'name' | 'platform';
+export type LinePlatforms = 'PL 1' | 'PL 2' | 'PL 3' | 'PL 4';
+
 export type BartStation = {
   abbr: string;
   address: string;
@@ -8,6 +11,30 @@ export type BartStation = {
   name: string;
   state: string;
   zipcode: string;
+};
+
+export type BartStationSchedule = {
+  routeID: string;
+  north: Record<string, BartStationScheduleItem>;
+  south: Record<string, BartStationScheduleItem>;
+};
+
+export type BartStationScheduleItem = {
+  bikeflag: string;
+  line: string;
+  load: string;
+  origTime: string;
+  platform: string;
+  trainHeadStation: string;
+};
+
+export type BartStationScheduleDetail = {
+  id: string;
+  abbr: string;
+  date: string;
+  name: string;
+  items: BartStationScheduleItem[];
+  platforms: Record<LinePlatforms, BartStationScheduleItem[]>;
 };
 
 export type BartStationDetail = {
@@ -34,12 +61,14 @@ export type BartStationDetail = {
 
 export type BartRoute = {
   abbr: string;
+  originStation: string;
+  destinationStation: string;
   color: string;
   direction: string;
   hexcolor: string;
   name: string;
   number: string;
-  routeId: string;
+  routeID: string;
 };
 
 export type BartRouteDetail = {
@@ -81,14 +110,33 @@ export type BartStaionEstimate = {
   platform: string;
 };
 
+export type RealTimeEstimaates = {
+  id: string;
+  update: string;
+  sort: SortStationsBy;
+  data: BartStationsETDFull;
+};
+
 export interface DB {
   init(): Promise<null>;
+
   getStationDetail(stationId: string): Promise<BartStationDetail | null>;
   setStationDetail(station: BartStationDetail): Promise<void>;
+
+  getStationSchedule(
+    stationId: string,
+    day: string,
+  ): Promise<BartStationScheduleDetail | null>;
+  setStationSchedule(station: BartStationScheduleDetail): Promise<void>;
+
   getStations(): Promise<BartStation[] | null>;
   setStations(stations: BartStation[]): Promise<void>;
+
   getRouteDetail(routeNumber: string): Promise<BartRouteDetail | null>;
   setRouteDetail(route: BartRouteDetail): Promise<void>;
+
   getRoutes(): Promise<BartRoute[] | null>;
   setRoutes(routes: BartRoute[]): Promise<void>;
 }
+
+export type BartStationsETDFull = BartStationsETD & { station: BartStation };

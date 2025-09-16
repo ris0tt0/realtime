@@ -4,8 +4,9 @@ import { RTEStationSelect } from '../../containers/rte/listSelection';
 import { RTEPlatformList } from '../../containers/rte/platformList';
 import { RTEStationNameList } from '../../containers/rte/stationList';
 import { RTEStationUpdated } from '../../containers/rte/updateStation';
-import { BartStationsETDFull } from '../../hooks/useRealTimeEstimates';
-import { useSortBy } from '../../hooks/useSortBy';
+import { BartStationsETDFull, RealTimeEstimaates } from '../../db';
+import Logger from 'js-logger';
+import { BackgroundPaperContainer } from '../../styled';
 
 export const ETAStlyled = styled('div')`
   display: flex;
@@ -35,23 +36,26 @@ const HeaderContainer = styled('div')`
   align-items: baseline;
 `;
 
-export const RTEStationDetail: FC<{ station: BartStationsETDFull }> = ({
-  station,
-}) => {
-  const sort = useSortBy();
-
+export const RTEStationDetail: FC<{
+  rte: RealTimeEstimaates;
+}> = ({ rte }) => {
+  Logger.info('rtestationdetail', rte);
   return (
     <div>
       <HeaderContainer>
-        <h2>{station.name}</h2>
+        <h2>{rte.data.name}</h2>
         <RTEStationUpdated />
       </HeaderContainer>
       <div>
-        <RTEStationSelect />
-        {sort === 'name' ? (
-          <RTEStationNameList station={station} />
+        <RTEStationSelect rte={rte} />
+        {rte.sort === 'name' ? (
+          <BackgroundPaperContainer sx={{ padding: '0px 1rem' }}>
+            <RTEStationNameList station={rte.data} />
+          </BackgroundPaperContainer>
         ) : (
-          <RTEPlatformList station={station} />
+          <BackgroundPaperContainer sx={{ padding: '0px 1rem' }}>
+            <RTEPlatformList station={rte.data} />
+          </BackgroundPaperContainer>
         )}
       </div>
     </div>

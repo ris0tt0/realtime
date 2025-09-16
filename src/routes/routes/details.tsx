@@ -1,4 +1,4 @@
-import { Box, Paper, styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import Logger from 'js-logger';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -15,11 +15,10 @@ const BartLinesList = styled('ul')`
   padding: 0;
 `;
 
-const BartLineContainer = styled(Paper)`
+const BartLineContainer = styled('div')`
   display: flex;
   flex-direction: row;
   padding: 1rem;
-  border: 1px ${(props) => props.theme.palette.info.main} solid;
 `;
 
 export const BartLine = styled('div')<{ bartColor: string }>((props) => {
