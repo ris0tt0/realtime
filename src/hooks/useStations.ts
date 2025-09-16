@@ -1,16 +1,14 @@
-import { useRTAppStore } from '../store/useRTAppStore';
+import { useSelector } from 'react-redux';
+import { stationsListSelector, stationsSelector } from '../selectors';
 
 export const useStations = () => {
-  const stations = useRTAppStore((state) => state.stations);
+  const stations = useSelector(stationsListSelector);
+
   return stations;
 };
 
 export const useStationsMap = () => {
-  const stationsMap = useRTAppStore((state) => state.stationsMap);
-  return stationsMap;
-};
+  const stations = useSelector(stationsSelector);
 
-export const useSetStations = () => {
-  const stationsMap = useRTAppStore((state) => state.setStations);
-  return stationsMap;
+  return stations;
 };

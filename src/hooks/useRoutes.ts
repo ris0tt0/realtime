@@ -1,16 +1,25 @@
-import { useRTAppStore } from '../store/useRTAppStore';
+import { useSelector } from 'react-redux';
+import { routesListSelector, routesSelector } from '../selectors';
+
+export const useRouteLines = (id?: string[]) => {
+  const map = useSelector(routesSelector);
+
+  if (!id) return null;
+
+  const routes = id.map((id) => {
+    return map[id];
+  });
+
+  return routes;
+};
 
 export const useRoutes = () => {
-  const routes = useRTAppStore((state) => state.routes);
+  const routes = useSelector(routesListSelector);
+
   return routes;
 };
 
 export const useRoutesMap = () => {
-  const routesMap = useRTAppStore((state) => state.routesMap);
-  return routesMap;
-};
-
-export const useSetRoutes = () => {
-  const setRoutes = useRTAppStore((state) => state.setRoutes);
-  return setRoutes;
+  const map = useSelector(routesSelector);
+  return map;
 };

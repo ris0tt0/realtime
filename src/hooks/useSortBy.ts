@@ -1,11 +1,12 @@
-import { useRTAppStore } from '../store/useRTAppStore';
+import { useSelector } from 'react-redux';
+import { rteSelector } from '../selectors';
 
-export const useSortBy = () => {
-  const sort = useRTAppStore((state) => state.rteSortBy);
-  return sort;
-};
+export const useSortBy = (id?: string) => {
+  const map = useSelector(rteSelector);
+  if (!id) return null;
 
-export const useSetSortBy = () => {
-  const setSortBy = useRTAppStore((state) => state.setRteSortBy);
-  return setSortBy;
+  const rte = map[id] ?? null;
+  if (!rte) return null;
+
+  return rte.sort;
 };

@@ -1,15 +1,15 @@
-import { useRTAppStore } from '../store/useRTAppStore';
+import { useSelector } from 'react-redux';
+import { rteSelector } from '../selectors';
 
-export const useRTEUpdatedTime = () => {
-  const rteUpdatedTimestamp = useRTAppStore(
-    (state) => state.rteUpdatedTimestamp,
-  );
-  return rteUpdatedTimestamp;
-};
+export const useRteUpdatedTime = (id?: string) => {
+  const map = useSelector(rteSelector);
+  if (!id) return null;
 
-export const useSetRTEUpdatedTime = () => {
-  const setRteUpdatedTimestamp = useRTAppStore(
-    (state) => state.setRteUpdatedTimestamp,
-  );
-  return setRteUpdatedTimestamp;
+  const rte = map[id];
+
+  if (!rte) return null;
+
+  const date = new Date(rte.update);
+
+  return date;
 };

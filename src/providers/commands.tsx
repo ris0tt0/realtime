@@ -1,5 +1,7 @@
 import { styled } from '@mui/material';
+import Logger from 'js-logger';
 import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { useStore } from 'react-redux';
 import { RealTimeApi } from '../api';
 import { RealTimeApiImpl } from '../api/realtime';
 import { Commands } from '../commands';
@@ -7,12 +9,9 @@ import CommandsImpl from '../commands/commands';
 import { CommandsContext } from '../contexts/commands';
 import { DB } from '../db';
 import { IndexedDB } from '../db/indexedDB';
-import { useSetRTE } from '../hooks/useRealTimeEstimates';
-import { useSetRoutes } from '../hooks/useRoutes';
-import { useSetRTEUpdatedTime } from '../hooks/useRTEUpdatedTime';
-import { useSetStations, useStationsMap } from '../hooks/useStations';
-import { useSetTotalTrainsInService } from '../hooks/useTotalTrains';
 import { Loading } from '../routes/styled/loading';
+import { useRteDispatch } from '../store';
+import { RteState } from '../store/rte';
 
 const StatusContainer = styled('div')`
   display: flex,
@@ -25,12 +24,10 @@ const StatusContainer = styled('div')`
 export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [isError, setIsError] = useState(false);
   const [commands, setCommands] = useState<Commands | null>(null);
-  const stationsMap = useStationsMap();
-  const setRTE = useSetRTE();
-  const setRoutes = useSetRoutes();
-  const setStations = useSetStations();
-  const setTotalTrainsInService = useSetTotalTrainsInService();
-  const setRteUpdatedTimestamp = useSetRTEUpdatedTime();
+  const dispatch = useRteDispatch();
+  const store = useStore<RteState>();
+
+  Logger.info('CommandsProvider::init');
 
   useEffect(() => {
     const api: RealTimeApi = new RealTimeApiImpl();
@@ -39,12 +36,8 @@ export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
     const commands: Commands = new CommandsImpl({
       api,
       db,
-      stationsMap,
-      setRTE,
-      setRoutes,
-      setStations,
-      setTotalTrainsInService,
-      setRteUpdatedTimestamp,
+      dispatch,
+      store,
     });
 
     commands
@@ -52,7 +45,10 @@ export const CommandsProvider: FC<PropsWithChildren> = ({ children }) => {
       .then(() => {
         setCommands(commands);
       })
-      .catch(() => setIsError(true));
+      .catch((error) => {
+        Logger.error('commands::provider', error);
+        setIsError(true);
+      });
   }, []);
 
   if (isError) {

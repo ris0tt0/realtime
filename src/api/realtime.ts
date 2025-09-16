@@ -8,7 +8,7 @@ const config = {
   params: { key: api_key, json: 'y' },
 };
 export class RealTimeApiImpl implements RealTimeApi {
-  axios: AxiosInstance;
+  private axios: AxiosInstance;
   constructor() {
     this.axios = axios.create(config);
   }
@@ -42,11 +42,26 @@ export class RealTimeApiImpl implements RealTimeApi {
     return request.data;
   };
 
+  // type getSTationScheduleDate =  'today' | 'sa' | 'su';
+
+  getStationSchedule = async (stationId: string, date: string = 'today') => {
+    const request = await this.axios.get(`/sched.aspx`, {
+      params: { cmd: 'stnsched', orig: stationId, date },
+    });
+    return request.data;
+  };
   getTrainCount = async () => {
     const request = await this.axios.get(`/bsa.aspx`, {
       params: { cmd: 'count' },
     });
     return request.data?.root?.traincount ?? 0;
+  };
+
+  getAdvisories = async () => {
+    const request = await this.axios.get(`/bsa.aspx`, {
+      params: { cmd: 'bsa' },
+    });
+    return request.data;
   };
 
   getRealTimeEstimates = async (
