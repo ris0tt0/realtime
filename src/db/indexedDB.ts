@@ -72,16 +72,16 @@ export class IndexedDB implements DB {
         );
         stationScheduleStore.createIndex('abbr', 'abbr', { unique: false });
 
-        const routenDetailsStore = db.createObjectStore(
+        const routeDetailsStore = db.createObjectStore(
           ROUTE_DETAILS_STORE_NAME,
           {
             keyPath: 'abbr',
             autoIncrement: false,
           },
         );
-        routenDetailsStore.createIndex('name', 'name', { unique: true });
-        routenDetailsStore.createIndex('number', 'number', { unique: true });
-        routenDetailsStore.createIndex('routeID', 'routeID', { unique: true });
+        routeDetailsStore.createIndex('name', 'name', { unique: true });
+        routeDetailsStore.createIndex('number', 'number', { unique: true });
+        routeDetailsStore.createIndex('routeID', 'routeID', { unique: true });
       };
       request.onerror = (event) => {
         Logger.error("Why didn't you allow my web app to use IndexedDB?!");
@@ -366,7 +366,6 @@ export class IndexedDB implements DB {
 
           Promise.all(stationRequests)
             .then(() => {
-              Logger.info('👍🏾db::setEiyrwa:allSuccess');
               resolve();
             })
             .catch((error) => {

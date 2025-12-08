@@ -43,31 +43,28 @@ export const StationScheduleList: FC<{ id?: string }> = ({ id }) => {
   return (
     <Stack flex={1}>
       <Stack>
-        <p>Station Schedule Results</p>
+        <h3>Station Schedule Results</h3>
         <ScheduleControlsContainer>
-          <div>
-            <ButtonGroup
-              disabled={loading}
-              variant="text"
-              aria-label="Basic button group"
-            >
-              <Button
-                disabled={day === 'today'}
-                onClick={() => setDay('today')}
-              >
-                today
-              </Button>
-              <Button disabled={day === 'wd'} onClick={() => setDay('wd')}>
-                weekday
-              </Button>
-              <Button disabled={day === 'sa'} onClick={() => setDay('sa')}>
-                saturday
-              </Button>
-              <Button disabled={day === 'su'} onClick={() => setDay('su')}>
-                sunday
-              </Button>
-            </ButtonGroup>
-          </div>
+          <ButtonGroup
+            component="menu"
+            disabled={loading}
+            variant="text"
+            aria-label="select day button group"
+            sx={{ padding: 0, margin: 0 }}
+          >
+            <Button disabled={day === 'today'} onClick={() => setDay('today')}>
+              today
+            </Button>
+            <Button disabled={day === 'wd'} onClick={() => setDay('wd')}>
+              weekday
+            </Button>
+            <Button disabled={day === 'sa'} onClick={() => setDay('sa')}>
+              saturday
+            </Button>
+            <Button disabled={day === 'su'} onClick={() => setDay('su')}>
+              sunday
+            </Button>
+          </ButtonGroup>
           {scheduleDetail?.date && (
             <div>for the date of {scheduleDetail.date}</div>
           )}
@@ -76,7 +73,7 @@ export const StationScheduleList: FC<{ id?: string }> = ({ id }) => {
       <Stack flex={1} direction="row">
         {loading ? (
           <Stack
-            height={320}
+            height={540}
             flex="1"
             justifyContent="center"
             alignItems="center"

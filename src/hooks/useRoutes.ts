@@ -1,8 +1,12 @@
 import { useSelector } from 'react-redux';
-import { routesListSelector, routesSelector } from '../selectors';
+import {
+  routesListSelector,
+  routesNumberSelector,
+  routesSelector,
+} from '../selectors';
 
 export const useRouteLines = (id?: string[]) => {
-  const map = useSelector(routesSelector);
+  const map = useSelector(routesNumberSelector);
 
   if (!id) return null;
 
@@ -15,6 +19,12 @@ export const useRouteLines = (id?: string[]) => {
 
 export const useRoutes = () => {
   const routes = useSelector(routesListSelector);
+
+  return routes;
+};
+
+export const useRoutesNumberMap = () => {
+  const routes = useSelector(routesNumberSelector);
 
   return routes;
 };

@@ -1,4 +1,10 @@
-import { Button, MenuItem, Select } from '@mui/material';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
 import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useStations } from '../hooks/useStations';
@@ -9,7 +15,7 @@ export const StationsListSelection: FC<{
   onSelectStationAbbr: (abbr: string) => void;
 }> = ({ onSelectStationAbbr }) => {
   const { stationId = '12TH' } = useParams<StationsParams>();
-  const [currentStationId, setCurrentStationid] = useState(stationId);
+  const [currentStationId, setCurrentStationId] = useState(stationId);
   const stations = useStations();
 
   const handleClick = () => {
@@ -20,7 +26,7 @@ export const StationsListSelection: FC<{
     <MenuItem
       key={station.abbr}
       value={station.abbr}
-      onClick={() => setCurrentStationid(station.abbr)}
+      onClick={() => setCurrentStationId(station.abbr)}
     >
       {station.name}
     </MenuItem>
@@ -28,9 +34,16 @@ export const StationsListSelection: FC<{
 
   return (
     <ListSelectionContainer>
-      <Select fullWidth value={currentStationId}>
-        {items}
-      </Select>
+      <FormControl fullWidth>
+        <InputLabel id="stations-select-label">Stations</InputLabel>
+        <Select
+          labelId="stations-select-label"
+          fullWidth
+          value={currentStationId}
+        >
+          {items}
+        </Select>
+      </FormControl>
       <Button variant="outlined" onClick={handleClick}>
         Select
       </Button>

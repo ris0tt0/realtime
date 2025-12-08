@@ -4,7 +4,7 @@ import {
   BartRoute,
   BartStation,
   BartStationSchedule,
-  RealTimeEstimaates,
+  RealTimeEstimates,
 } from '../db';
 
 export type RteState = {
@@ -12,12 +12,14 @@ export type RteState = {
   totalTrainsInService: number;
   // any bart issues
   advisories: string[];
-  //routest by id
+  //routes by route abbr
   routes: Record<string, BartRoute>;
+  //routes by route number
+  routeNumbers: Record<string, BartRoute>;
   //stations by station id
   stations: Record<string, BartStation>;
   //real time estimates
-  rte: Record<string, RealTimeEstimaates>;
+  rte: Record<string, RealTimeEstimates>;
   stationSchedule: Record<string, BartStationSchedule>;
 };
 
@@ -26,8 +28,10 @@ const initialState: RteState = {
   totalTrainsInService: 0,
   // any bart issues
   advisories: [],
-  //routest by id
+  //routes by route id
   routes: {},
+  //routes by route number
+  routeNumbers: {},
   //stations by station id
   stations: {},
   //real time estimates
@@ -51,7 +55,10 @@ const rteSlice = createSlice({
     setRoutes(state, action: PayloadAction<Record<string, BartRoute>>) {
       state.routes = action.payload;
     },
-    setRte(state, action: PayloadAction<RealTimeEstimaates>) {
+    setRoutesByNumber(state, action: PayloadAction<Record<string, BartRoute>>) {
+      state.routeNumbers = action.payload;
+    },
+    setRte(state, action: PayloadAction<RealTimeEstimates>) {
       const id = action.payload.id;
       const current = state.rte[id] ?? {};
 
@@ -74,6 +81,7 @@ export const {
   setAdvisories,
   setStations,
   setRoutes,
+  setRoutesByNumber,
   setRte,
   setStationSchedule,
 } = actions;

@@ -93,11 +93,11 @@ export type BartStationsETD = {
 export type BartETD = {
   abbreviation: string;
   destination: string;
-  estimate: BartStaionEstimate[];
+  estimate: BartStationEstimate[];
   limited: string;
 };
 
-export type BartStaionEstimate = {
+export type BartStationEstimate = {
   bikeflag: string;
   cancelflag: string;
   color: string;
@@ -110,7 +110,7 @@ export type BartStaionEstimate = {
   platform: string;
 };
 
-export type RealTimeEstimaates = {
+export type RealTimeEstimates = {
   id: string;
   update: string;
   sort: SortStationsBy;

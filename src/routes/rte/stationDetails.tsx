@@ -4,11 +4,9 @@ import { RTEStationSelect } from '../../containers/rte/listSelection';
 import { RTEPlatformList } from '../../containers/rte/platformList';
 import { RTEStationNameList } from '../../containers/rte/stationList';
 import { RTEStationUpdated } from '../../containers/rte/updateStation';
-import { BartStationsETDFull, RealTimeEstimaates } from '../../db';
-import Logger from 'js-logger';
-import { BackgroundPaperContainer } from '../../styled';
+import { RealTimeEstimates } from '../../db';
 
-export const ETAStlyled = styled('div')`
+export const ETAStyledContainer = styled('div')`
   display: flex;
 `;
 
@@ -37,9 +35,8 @@ const HeaderContainer = styled('div')`
 `;
 
 export const RTEStationDetail: FC<{
-  rte: RealTimeEstimaates;
+  rte: RealTimeEstimates;
 }> = ({ rte }) => {
-  Logger.info('rtestationdetail', rte);
   return (
     <div>
       <HeaderContainer>
@@ -49,13 +46,9 @@ export const RTEStationDetail: FC<{
       <div>
         <RTEStationSelect rte={rte} />
         {rte.sort === 'name' ? (
-          <BackgroundPaperContainer sx={{ padding: '0px 1rem' }}>
-            <RTEStationNameList station={rte.data} />
-          </BackgroundPaperContainer>
+          <RTEStationNameList station={rte.data} />
         ) : (
-          <BackgroundPaperContainer sx={{ padding: '0px 1rem' }}>
-            <RTEPlatformList station={rte.data} />
-          </BackgroundPaperContainer>
+          <RTEPlatformList station={rte.data} />
         )}
       </div>
     </div>

@@ -16,7 +16,7 @@ export const RTEDetail: FC = () => {
     if (stationId) {
       setLoading(true);
       commands
-        .udpateStationRealTimeEstimates(stationId)
+        .updateStationRealTimeEstimates(stationId)
         .then((data) => {})
         .finally(() => setLoading(false));
     }

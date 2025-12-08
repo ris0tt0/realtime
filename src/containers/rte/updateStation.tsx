@@ -4,11 +4,11 @@ import { format } from 'date-fns';
 import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCommands } from '../../hooks/useCommands';
-import { useRteUpdatedTime } from '../../hooks/useRTEUpdatedTime';
 import { StationsParams } from '../../routes';
+import { useRteUpdatedTime } from '../../hooks/useRteUpdatedTime';
 
 // 15 seconds
-const TOTTAL_MS = 15 * 1000;
+const TOTAL_MS = 15 * 1000;
 
 const UpdatedContainer = styled('div')`
   display: flex;
@@ -29,13 +29,13 @@ export const RTEStationUpdated: FC = () => {
     const when = updated.valueOf();
     const diff = now - when;
 
-    if (diff < TOTTAL_MS) {
+    if (diff < TOTAL_MS) {
       setError(true);
       return;
     }
 
     setError(false);
-    if (stationId) commands.udpateStationRealTimeEstimates(stationId);
+    if (stationId) commands.updateStationRealTimeEstimates(stationId);
   };
 
   const time = format(updated, 'h:mm aaa');

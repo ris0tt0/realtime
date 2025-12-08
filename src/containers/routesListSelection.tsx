@@ -1,9 +1,16 @@
-import { Button, MenuItem, Select } from '@mui/material';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
 import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRoutes } from '../hooks/useRoutes';
 import { RoutesParams } from '../routes';
 import { ListSelectionContainer } from './styled';
+import Logger from 'js-logger';
 
 export const RoutesListSelection: FC<{
   onSelectRoute: (abbr: string) => void;
@@ -15,6 +22,8 @@ export const RoutesListSelection: FC<{
   const handleClick = () => {
     onSelectStationAbbr(currentRouteNumber);
   };
+
+  Logger.info('THESE ARE THE ROUTES', routes);
 
   const items = routes.map((route) => (
     <MenuItem
@@ -28,9 +37,12 @@ export const RoutesListSelection: FC<{
 
   return (
     <ListSelectionContainer>
-      <Select fullWidth value={currentRouteNumber}>
-        {items}
-      </Select>
+      <FormControl fullWidth>
+        <InputLabel id="routes-select-label">Routes</InputLabel>
+        <Select labelId="routes-select-label" value={currentRouteNumber}>
+          {items}
+        </Select>
+      </FormControl>
       <Button variant="outlined" onClick={handleClick}>
         Select
       </Button>

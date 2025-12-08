@@ -1,13 +1,9 @@
-import { Stack, styled } from '@mui/material';
+import { Box, Stack, styled } from '@mui/material';
 import React, { FC } from 'react';
 import { BartStationScheduleItem } from '../../../db';
-import { useRoutesMap } from '../../../hooks/useRoutes';
+import { useRoutesMap, useRoutesNumberMap } from '../../../hooks/useRoutes';
 import { useStationsMap } from '../../../hooks/useStations';
-import {
-  BackgroundPaperContainer,
-  ListItemContainer,
-  UnorderedListContainer,
-} from '../../../styled';
+import { ListItemContainer, UnorderedListContainer } from '../../../styled';
 
 const ScheduleItemTime = styled('span')`
   font-weight: bold;
@@ -18,7 +14,7 @@ export const ScheduleTime: FC<{
   title: string;
   items?: BartStationScheduleItem[];
 }> = ({ items, title }) => {
-  const routes = useRoutesMap();
+  const routes = useRoutesNumberMap();
   const stations = useStationsMap();
 
   if (!items) return null;
@@ -42,11 +38,11 @@ export const ScheduleTime: FC<{
 
   return (
     <Stack flex={1}>
-      <BackgroundPaperContainer>
-        <Stack sx={{ margin: '0.5rem 0.5rem' }}>{title}</Stack>
-      </BackgroundPaperContainer>
+      <Box component="h4" sx={{ margin: '0.5rem 0.5rem' }}>
+        {title}
+      </Box>
       <Stack sx={{ margin: '0 0.5rem' }}>
-        <Stack height={300} overflow="auto">
+        <Stack height={450} overflow="auto">
           <UnorderedListContainer>{platform1}</UnorderedListContainer>
         </Stack>
       </Stack>

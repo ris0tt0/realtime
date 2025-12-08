@@ -1,16 +1,16 @@
 import { Container, styled } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useCommands } from '../../hooks/useCommands';
-import { BackgroundPaperContainer } from '../../styled';
 
-const MenuStyled = styled(BackgroundPaperContainer)`
-  flex-direction: row;
+export const MenuStyled = styled('nav')(
+  ({ theme }) => `
+  display: flex;
   gap: 1rem;
-  padding: 1rem 0.5rem;
-`;
+`,
+);
 
-const LinkStyled = styled(NavLink)`
+const MenuLinkStyled = styled(NavLink)`
   text-decoration: none;
   color: inherit;
 
@@ -23,13 +23,41 @@ const LinkStyled = styled(NavLink)`
   }
 `;
 
+export const LinkStyled = styled(Link)`
+  color: inherit;
+`;
+
+const RootContainer = styled(Container)(
+  ({ theme }) => `
+    header {
+      background: ${theme.palette.background.paper};
+      position: sticky;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      top: 0;
+      z-index: 10;
+      gap: 1rem;
+      padding: 0 .5rem;
+    }
+
+    footer {
+      display: flex;
+      background: ${theme.palette.background.paper};
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem 0.5rem;
+  }
+`,
+);
+
 const RouteMenu: FC = () => {
   return (
     <MenuStyled>
-      <LinkStyled to="routes">routes</LinkStyled>
-      <LinkStyled to="stations">stations</LinkStyled>
-      <LinkStyled to="rte">real time estimates</LinkStyled>
-      <LinkStyled to="about">about</LinkStyled>
+      <MenuLinkStyled to="routes">routes</MenuLinkStyled>
+      <MenuLinkStyled to="stations">stations</MenuLinkStyled>
+      <MenuLinkStyled to="rte">real time estimates</MenuLinkStyled>
+      <MenuLinkStyled to="about">about</MenuLinkStyled>
     </MenuStyled>
   );
 };
@@ -49,9 +77,17 @@ export const Advisories: FC = () => {
 
 export const Root: FC = () => {
   return (
-    <Container maxWidth="lg">
-      <RouteMenu />
+    <RootContainer maxWidth="lg">
+      <header>
+        <h1>BART Legacy API</h1>
+        <RouteMenu />
+      </header>
       <Outlet />
-    </Container>
+      <footer>
+        <MenuLinkStyled to="mailto:j@jonathangee.com">
+          &copy; Jonathan Gee
+        </MenuLinkStyled>
+      </footer>
+    </RootContainer>
   );
 };

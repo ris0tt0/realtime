@@ -12,7 +12,7 @@ export interface Commands {
     stationId: string,
     date: string,
   ): Promise<BartStationScheduleDetail>;
-  udpateStationRealTimeEstimates(
+  updateStationRealTimeEstimates(
     stationId: string,
     platform?: number,
     direction?: string,

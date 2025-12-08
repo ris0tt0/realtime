@@ -1,12 +1,8 @@
-import { styled } from '@mui/material';
 import React, { FC } from 'react';
 import { BartRoute } from '../../../db';
 import { ListItemContainer, UnorderedListContainer } from '../../../styled';
-import { LinesRteContainer, LinkStyled } from '../../styled';
-
-const HeaderStyled = styled('h5')`
-  margin: 0px;
-`;
+import { LinkStyled } from '../../styled';
+import { Box } from '@mui/material';
 
 export const Lines: FC<{ title: string; line: BartRoute[] | null }> = ({
   title,
@@ -16,8 +12,10 @@ export const Lines: FC<{ title: string; line: BartRoute[] | null }> = ({
     return null;
   }
   return (
-    <LinesRteContainer>
-      <HeaderStyled>{title}</HeaderStyled>
+    <>
+      <Box component="h4" sx={{ margin: '0' }}>
+        {title}
+      </Box>
       <UnorderedListContainer>
         {line.map((route) => {
           return (
@@ -29,6 +27,6 @@ export const Lines: FC<{ title: string; line: BartRoute[] | null }> = ({
           );
         }) ?? null}
       </UnorderedListContainer>
-    </LinesRteContainer>
+    </>
   );
 };
