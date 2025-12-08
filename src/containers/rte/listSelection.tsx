@@ -7,7 +7,7 @@ import {
   styled,
 } from '@mui/material';
 import React, { FC } from 'react';
-import { RealTimeEstimaates, SortStationsBy } from '../../db';
+import { RealTimeEstimates, SortStationsBy } from '../../db';
 import { useRteDispatch } from '../../store';
 import { setRte } from '../../store/rte';
 
@@ -18,7 +18,7 @@ const SortStationsContainer = styled(FormControl)`
   padding-bottom: 1rem;
 `;
 
-export const RTEStationSelect: FC<{ rte: RealTimeEstimaates }> = ({ rte }) => {
+export const RTEStationSelect: FC<{ rte: RealTimeEstimates }> = ({ rte }) => {
   const dispatch = useRteDispatch();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

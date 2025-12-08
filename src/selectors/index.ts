@@ -4,12 +4,21 @@ import { RteState } from '../store/rte';
 export const trainsInServiceSelector = (state: RteState) =>
   state.totalTrainsInService;
 
-export const routesSelector = (state: RteState) => state.routes;
+export const routesNumberSelector = (state: RteState) => state.routeNumbers;
+export const routeNumbersListSelector = createSelector(
+  [routesNumberSelector],
+  (routes) => {
+    const list = Array.from(Object.values(routes));
+    return list;
+  },
+);
 
+export const routesSelector = (state: RteState) => state.routes;
 export const routesListSelector = createSelector([routesSelector], (routes) => {
   const list = Array.from(Object.values(routes));
   return list;
 });
+
 export const stationsSelector = (state: RteState) => state.stations;
 
 export const stationsListSelector = createSelector(

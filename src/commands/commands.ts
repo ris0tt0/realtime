@@ -1,5 +1,4 @@
 import { Store } from '@reduxjs/toolkit';
-import Logger from 'js-logger';
 import { Commands } from '.';
 import { RealTimeApi } from '../api';
 import {
@@ -10,19 +9,20 @@ import {
   BartStationsETD,
   BartStationsETDFull,
   DB,
-  RealTimeEstimaates,
+  RealTimeEstimates,
   SortStationsBy,
 } from '../db';
 import { RteDispatch } from '../store';
 import {
   RteState,
   setRoutes,
+  setRoutesByNumber,
   setRte,
   setStations,
   setStationSchedule,
   setTotalTrainsInService,
 } from '../store/rte';
-import { getSomeDaybefore } from '../utils';
+import { getSomeDayBefore } from '../utils';
 
 export type CommandsImplParams = {
   api: RealTimeApi;
@@ -53,7 +53,7 @@ class CommandsImpl implements Commands {
 
     return state.stations;
   }
-  protected async setRte(rte: RealTimeEstimaates) {
+  protected async setRte(rte: RealTimeEstimates) {
     this.dispatch(setRte(rte));
 
     return null;
@@ -72,15 +72,22 @@ class CommandsImpl implements Commands {
     return null;
   }
   protected async setRoutes(routes: BartRoute[]) {
-    const map = routes.reduce(
+    const routeAbbr = routes.reduce(
       (retVal, route) => {
         retVal[route.abbr] = route;
+        return retVal;
+      },
+      {} as Record<string, BartRoute>,
+    );
+    const routeNumber = routes.reduce(
+      (retVal, route) => {
         retVal[route.routeID] = route;
         return retVal;
       },
       {} as Record<string, BartRoute>,
     );
-    this.dispatch(setRoutes(map));
+    this.dispatch(setRoutes(routeAbbr));
+    this.dispatch(setRoutesByNumber(routeNumber));
 
     return null;
   }
@@ -127,12 +134,11 @@ class CommandsImpl implements Commands {
     } else {
       this.setRoutes(routes);
     }
-    await this.updateTrainsInserviceCount();
+    await this.updateTrainsInServiceCount();
     await this.updateAdvisories();
   };
   getStationDetails = async (stationId: string) => {
     const station = await this.db.getStationDetail(stationId);
-    Logger.info('getStationDetails', stationId, station);
     if (station === null) {
       const stationResult = await this.api.getStationDetail(stationId);
       if (stationResult.root.stations.station) {
@@ -162,8 +168,8 @@ class CommandsImpl implements Commands {
   };
   getStationSchedule = async (stationId: string, day: string) => {
     const schedule = await this.db.getStationSchedule(stationId, day);
-    const reset = getSomeDaybefore(schedule?.date);
-    Logger.info('👍🏾getStationSchedule', reset);
+    const reset = getSomeDayBefore(schedule?.date);
+
     if (schedule === null || reset) {
       const scheduleResult = await this.api.getStationSchedule(stationId, day);
       const id = `${stationId}-${day}`;
@@ -234,7 +240,7 @@ class CommandsImpl implements Commands {
 
     return data;
   };
-  udpateStationRealTimeEstimates = async (
+  updateStationRealTimeEstimates = async (
     stationId: string,
     platform?: number,
     direction?: string,
@@ -265,7 +271,6 @@ class CommandsImpl implements Commands {
           };
         },
       );
-      Logger.info('RTEDetail', stationId, result.root, stations);
 
       const original = rteMap[stationId] ?? null;
 
@@ -291,7 +296,7 @@ class CommandsImpl implements Commands {
     return null;
   };
 
-  updateTrainsInserviceCount = async () => {
+  updateTrainsInServiceCount = async () => {
     const trainsInService = (await this.api.getTrainCount()) ?? 0;
     this.dispatch(setTotalTrainsInService(trainsInService));
 
@@ -310,8 +315,6 @@ class CommandsImpl implements Commands {
 
       return advisories.root.bsa;
     }
-
-    Logger.info('commands::updateAdvisories', advisories);
 
     return [];
   };

@@ -3,11 +3,10 @@ import React, { FC } from 'react';
 import { BartStationsETDFull } from '../../db';
 import {
   ESTStyled,
-  ETAStlyled,
+  ETAStyledContainer,
   StationEtaContainer,
 } from '../../routes/rte/stationDetails';
 import { LinkStyled } from '../../routes/styled';
-import { BackgroundPaperContainer } from '../../styled';
 
 export const NoDepartureStyled = styled('div')(
   ({ theme }) => `
@@ -46,13 +45,13 @@ export const RTEStationNameList: FC<{
           <LinkStyled to={`/stations/${abbreviation}`}>
             {destination}
           </LinkStyled>
-          <ETAStlyled> {eta}</ETAStlyled>
+          <ETAStyledContainer> {eta}</ETAStyledContainer>
         </StationEtaContainer>
       );
     }) ?? null;
 
   if (!etd) {
-    return <NoDepartureStyled>No departes scheduled</NoDepartureStyled>;
+    return <NoDepartureStyled>No departures scheduled</NoDepartureStyled>;
   }
 
   return <Stack sx={{ width: '100%' }}>{etd}</Stack>;

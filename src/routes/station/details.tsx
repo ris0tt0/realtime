@@ -1,4 +1,4 @@
-import { styled } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { StationsParams } from '..';
@@ -10,17 +10,14 @@ import { RouteLines } from './components/routeLines';
 import { RteList } from './components/rteList';
 import { StationScheduleList } from './components/stationScheduleList';
 
-export const HeaderTwoName = styled('h2')`
-  margin-bottom: 0px;
-`;
-
-const StationDetailInfoContainer = styled('div')`
+const StationDetailInfoContainer = styled('section')`
   display: flex;
   flex: 1;
 `;
 
-const HalfContainer = styled('div')`
+const HalfContainer = styled('section')`
   display: flex;
+  flex-direction: column;
   width: 50%;
 `;
 
@@ -54,13 +51,13 @@ export const StationDetail: FC = () => {
 
   return (
     <div>
-      <HeaderTwoName>{stationData.name}</HeaderTwoName>
-      <div>
+      <h2>{stationData.name}</h2>
+      <p>
         {stationData.address}, {stationData.city}, {stationData.state}{' '}
         {stationData.zipcode}
-      </div>
+      </p>
       <p>{removeArtifacts(stationData.intro)}</p>
-      <StationDetailInfoContainer>
+      <Box sx={{ display: 'flex' }}>
         <HalfContainer>
           <RouteLines
             north={stationData.north_routes.route}
@@ -70,7 +67,7 @@ export const StationDetail: FC = () => {
         <HalfContainer>
           <RteList compact={true} id={stationId} />
         </HalfContainer>
-      </StationDetailInfoContainer>
+      </Box>
       <StationDetailInfoContainer>
         <StationScheduleList id={stationId} />
       </StationDetailInfoContainer>

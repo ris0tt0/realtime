@@ -1,5 +1,4 @@
 import { Box, styled } from '@mui/material';
-import Logger from 'js-logger';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { RoutesParams } from '..';
@@ -30,8 +29,6 @@ export const BartLine = styled('div')<{ bartColor: string }>((props) => {
   };
 });
 
-const BartlinesListItem = styled('li')``;
-
 const BartLineInfo = styled('div')`
   display: flex;
   justify-content: space-between;
@@ -47,9 +44,9 @@ const BartLines: FC<{ color: string; stations: string[] }> = ({
     const station = stationsMap[abbr];
 
     return (
-      <BartlinesListItem key={abbr}>
+      <li key={abbr}>
         <LinkStyled to={`/stations/${station.abbr}`}>{station.name}</LinkStyled>
-      </BartlinesListItem>
+      </li>
     );
   });
 
@@ -86,11 +83,10 @@ export const RouteDetail: FC = () => {
   if (!routeData) {
     return <div>No route data found 😔</div>;
   }
-  Logger.info('RouteDetails', routeData);
 
   return (
-    <div>
-      <h3>{routeData.name}</h3>
+    <section>
+      <h2>{routeData.name}</h2>
       <Box sx={{ width: '300px' }}>
         <BartLineInfo>
           <div>Route {routeData.number} </div>
@@ -101,6 +97,6 @@ export const RouteDetail: FC = () => {
           stations={routeData.config.station}
         />
       </Box>
-    </div>
+    </section>
   );
 };

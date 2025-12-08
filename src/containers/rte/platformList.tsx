@@ -1,9 +1,9 @@
 import { Stack, styled } from '@mui/material';
 import React, { FC } from 'react';
-import { BartStaionEstimate, BartStationsETDFull } from '../../db';
+import { BartStationEstimate, BartStationsETDFull } from '../../db';
 import {
   ESTStyled,
-  ETAStlyled,
+  ETAStyledContainer,
   StationEtaContainer,
 } from '../../routes/rte/stationDetails';
 import { LinkStyled } from '../../routes/styled';
@@ -43,13 +43,13 @@ export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
       },
       {} as Record<
         string,
-        Record<string, { abbr: string; est: BartStaionEstimate[] }>
+        Record<string, { abbr: string; est: BartStationEstimate[] }>
       >,
     ) ?? {};
 
   const items = Object.entries(platforms).map(([platformName, station]) => {
     const stations = Object.entries(station).map(([destination, station]) => {
-      const eta = station.est.map((est: BartStaionEstimate) => {
+      const eta = station.est.map((est: BartStationEstimate) => {
         const minutes =
           est.minutes.toLowerCase() === 'leaving'
             ? 'Leaving'
@@ -70,7 +70,7 @@ export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
           <LinkStyled to={`/stations/${station.abbr}`}>
             {destination}
           </LinkStyled>
-          <ETAStlyled>{eta}</ETAStlyled>
+          <ETAStyledContainer>{eta}</ETAStyledContainer>
         </StationEtaContainer>
       );
     });
@@ -84,7 +84,7 @@ export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
   });
 
   if (items.length < 1) {
-    return <NoDepartureStyled>No departes scheduled</NoDepartureStyled>;
+    return <NoDepartureStyled>No departures scheduled</NoDepartureStyled>;
   }
 
   return <Stack>{items}</Stack>;
