@@ -1,7 +1,7 @@
 import { Box, Stack, styled } from '@mui/material';
 import React, { FC } from 'react';
 import { BartStationScheduleItem } from '../../../db';
-import { useRoutesMap, useRoutesNumberMap } from '../../../hooks/useRoutes';
+import { useRoutesNumberMap } from '../../../hooks/useRoutes';
 import { useStationsMap } from '../../../hooks/useStations';
 import { ListItemContainer, UnorderedListContainer } from '../../../styled';
 
@@ -12,7 +12,7 @@ const ScheduleItemTime = styled('span')`
 
 export const ScheduleTime: FC<{
   title: string;
-  items?: BartStationScheduleItem[];
+  items: BartStationScheduleItem[];
 }> = ({ items, title }) => {
   const routes = useRoutesNumberMap();
   const stations = useStationsMap();
@@ -37,7 +37,7 @@ export const ScheduleTime: FC<{
   });
 
   return (
-    <Stack flex={1}>
+    <Stack>
       <Box component="h4" sx={{ margin: '0.5rem 0.5rem' }}>
         {title}
       </Box>

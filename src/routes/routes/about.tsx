@@ -2,14 +2,13 @@ import React, { FC } from 'react';
 
 export const RoutesAboutRoute: FC = () => {
   return (
-    <div>
-      <h2>BART Routes</h2>
+    <main>
+      <h2>Bay Area Rapid Transit Routes</h2>
       <p>This page displays all available BART train routes, including:</p>
       <ul>
         <li>Route Name</li>
         <li>Line Color</li>
         <li>Stations along the route</li>
-        <li>Service schedule (weekday/weekend)</li>
       </ul>
       <h3>How to Use</h3>
       <ol>
@@ -19,9 +18,8 @@ export const RoutesAboutRoute: FC = () => {
         <ul>
           <li>Full list of stations (in travel order)</li>
           <li>Line color and direction</li>
-          <li>Service availability</li>
         </ul>
       </ol>
-    </div>
+    </main>
   );
 };

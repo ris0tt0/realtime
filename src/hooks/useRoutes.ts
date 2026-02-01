@@ -4,15 +4,18 @@ import {
   routesNumberSelector,
   routesSelector,
 } from '../selectors';
+import { useMemo } from 'react';
 
 export const useRouteLines = (id?: string[]) => {
   const map = useSelector(routesNumberSelector);
 
-  if (!id) return null;
-
-  const routes = id.map((id) => {
-    return map[id];
-  });
+  const routes = useMemo(() => {
+    return (
+      id?.map((id) => {
+        return map[id];
+      }) ?? null
+    );
+  }, [id, map]);
 
   return routes;
 };

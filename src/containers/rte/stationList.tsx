@@ -11,7 +11,6 @@ import { LinkStyled } from '../../routes/styled';
 export const NoDepartureStyled = styled('div')(
   ({ theme }) => `
   display: flex;
-  background: ${theme.palette.background.paper}
   width: 100%;
   height: 300px;
   justify-content: center;
@@ -54,5 +53,15 @@ export const RTEStationNameList: FC<{
     return <NoDepartureStyled>No departures scheduled</NoDepartureStyled>;
   }
 
-  return <Stack sx={{ width: '100%' }}>{etd}</Stack>;
+  return (
+    <Stack
+      sx={{
+        width: '100%',
+        padding: '0.5rem',
+        backgroundColor: `background.paper`,
+      }}
+    >
+      {etd}
+    </Stack>
+  );
 };

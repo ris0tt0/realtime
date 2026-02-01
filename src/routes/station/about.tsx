@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 export const StationsAboutRoute: FC = () => {
   return (
-    <div>
+    <>
       <h2>BART Stations</h2>
       <p>This page displays all active BART stations, along with:</p>
       <ul>
@@ -22,6 +22,6 @@ export const StationsAboutRoute: FC = () => {
           <li>Routes that pass through the station</li>
         </ul>
       </ol>
-    </div>
+    </>
   );
 };

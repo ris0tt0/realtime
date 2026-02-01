@@ -6,6 +6,7 @@ export interface RealTimeApi {
   getStationDetail(stationId: string): Promise<any>;
   getStationSchedule(stationId: string, date: string): Promise<any>;
   getTrainCount(): Promise<number>;
+  getElevatorStatus(): Promise<any>;
   getAdvisories(): Promise<any>;
   getRealTimeEstimates(
     station: string,

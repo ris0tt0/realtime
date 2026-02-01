@@ -1,6 +1,7 @@
 const deps = require('./package.json').dependencies;
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const { FederatedTypesPlugin } = require('@module-federation/typescript');
@@ -9,94 +10,20 @@ const federationConfig = {
   name: 'jaybrt',
   filename: 'remoteEntry.js',
   shared: {
-    '@emotion/react': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['@emotion/react'],
-      version: deps['@emotion/react'],
-    },
-    // '@emotion/styled': {
-    //   singleton: true,
-    //   strictVersion: true,
-    //   requiredVersion: deps['@emotion/styled'],
-    //   version: deps['@emotion/styled'],
-    // },
-    '@mui/icons-material': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['@mui/icons-material'],
-      version: deps['@mui/icons-material'],
-    },
-    '@mui/material': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['@mui/material'],
-      version: deps['@mui/material'],
-    },
-    '@mui/system': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['@mui/system'],
-      version: deps['@mui/system'],
-    },
-    '@reduxjs/toolkit': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['@reduxjs/toolkit'],
-      version: deps['@reduxjs/toolkit'],
-    },
-    axios: {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps.axios,
-      version: deps.axios,
-    },
-    'date-fns': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['date-fns'],
-      version: deps['date-fns'],
-    },
-    'js-logger': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['js-logger'],
-      version: deps['js-logger'],
-    },
-    react: {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps.react,
-      version: deps.react,
-    },
-    'react-dom': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['react-dom'],
-      version: deps['react-dom'],
-    },
-    'react-redux': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['react-redux'],
-      version: deps['react-redux'],
-    },
-    'react-router-dom': {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps['react-router-dom'],
-      version: deps['react-router-dom'],
-    },
-    reselect: {
-      singleton: true,
-      strictVersion: true,
-      requiredVersion: deps.reselect,
-      version: deps.reselect,
-    },
+    '@emotion/react': { singleton: true },
+    '@reduxjs/toolkit': { singleton: true },
+    axios: { singleton: true },
+    'date-fns': { singleton: true },
+    'js-logger': { singleton: true },
+    react: { singleton: true },
+    'react-dom': { singleton: true },
+    'react-redux': { singleton: true },
+    'react-router-dom': { singleton: true },
+    reselect: { singleton: true },
   },
-  exposes: {
-    './CommandsProvider': path.resolve(__dirname, 'src/providers/commands.tsx'),
-  },
+  // exposes: {
+  //   './CommandsProvider': path.resolve(__dirname, 'src/providers/commands.tsx'),
+  // },
 };
 
 const config = {
@@ -118,6 +45,17 @@ const config = {
     new HtmlWebpackPlugin({
       title: 'real time',
       template: path.resolve(__dirname, 'public/index.html'),
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'public/**/*'),
+          context: './public',
+          globOptions: {
+            ignore: ['**/index.html'],
+          },
+        },
+      ],
     }),
     new Dotenv({
       defaults: true,

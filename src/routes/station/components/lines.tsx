@@ -11,6 +11,7 @@ export const Lines: FC<{ title: string; line: BartRoute[] | null }> = ({
   if (!line || line.length < 1) {
     return null;
   }
+
   return (
     <>
       <Box component="h4" sx={{ margin: '0' }}>

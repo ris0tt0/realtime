@@ -44,7 +44,7 @@ export const RTEStationUpdated: FC = () => {
     <UpdatedContainer>
       <span>
         <span>Updated {time}</span>
-        <IconButton onClick={handleClick}>
+        <IconButton onClick={handleClick} aria-label="Refresh">
           <Refresh />
         </IconButton>
       </span>

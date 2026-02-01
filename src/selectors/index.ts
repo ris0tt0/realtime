@@ -1,6 +1,9 @@
 import { createSelector } from 'reselect';
 import { RteState } from '../store/rte';
 
+export const serviceAdvisories = (state: RteState) => state.advisories;
+export const elevatorStatus = (state: RteState) => state.elevatorStatus;
+
 export const trainsInServiceSelector = (state: RteState) =>
   state.totalTrainsInService;
 
@@ -20,7 +23,6 @@ export const routesListSelector = createSelector([routesSelector], (routes) => {
 });
 
 export const stationsSelector = (state: RteState) => state.stations;
-
 export const stationsListSelector = createSelector(
   [stationsSelector],
   (stations) => {

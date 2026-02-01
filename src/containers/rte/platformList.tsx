@@ -18,9 +18,10 @@ const StationsEtdContainer = styled('div')`
   margin-left: 1rem;
 `;
 
-export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
-  station,
-}) => {
+export const RTEPlatformList: FC<{
+  station: BartStationsETDFull;
+  compact?: boolean;
+}> = ({ station, compact }) => {
   const platforms =
     station.etd?.reduce(
       (retVal, etd) => {
@@ -60,7 +61,7 @@ export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
             bartColor={est.hexcolor}
           >
             <span>{minutes}</span>
-            <span>({est.length} car)</span>
+            {compact ? null : <span>({est.length} car)</span>}
           </ESTStyled>
         );
       });
@@ -87,5 +88,9 @@ export const RTEPlatformList: FC<{ station: BartStationsETDFull }> = ({
     return <NoDepartureStyled>No departures scheduled</NoDepartureStyled>;
   }
 
-  return <Stack>{items}</Stack>;
+  return (
+    <Stack sx={{ backgroundColor: `background.paper`, padding: '0.5rem' }}>
+      {items}
+    </Stack>
+  );
 };

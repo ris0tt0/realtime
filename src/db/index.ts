@@ -81,6 +81,7 @@ export type BartRouteDetail = {
   num_stns: string;
   number: string;
   origin: string;
+  destination: string;
   routeId: string;
 };
 

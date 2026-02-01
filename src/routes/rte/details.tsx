@@ -1,4 +1,3 @@
-import Logger from 'js-logger';
 import React, { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { StationsParams } from '..';

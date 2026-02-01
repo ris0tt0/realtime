@@ -12,6 +12,8 @@ export type RteState = {
   totalTrainsInService: number;
   // any bart issues
   advisories: string[];
+  // elevator status
+  elevatorStatus: string[];
   //routes by route abbr
   routes: Record<string, BartRoute>;
   //routes by route number
@@ -28,6 +30,8 @@ const initialState: RteState = {
   totalTrainsInService: 0,
   // any bart issues
   advisories: [],
+  //
+  elevatorStatus: [],
   //routes by route id
   routes: {},
   //routes by route number
@@ -48,6 +52,9 @@ const rteSlice = createSlice({
     },
     setAdvisories(state, action: PayloadAction<string[]>) {
       state.advisories = action.payload;
+    },
+    setElevatorStatus(state, action: PayloadAction<string[]>) {
+      state.elevatorStatus = action.payload;
     },
     setStations(state, action: PayloadAction<Record<string, BartStation>>) {
       state.stations = action.payload;
@@ -79,6 +86,7 @@ const { actions, reducer } = rteSlice;
 export const {
   setTotalTrainsInService,
   setAdvisories,
+  setElevatorStatus,
   setStations,
   setRoutes,
   setRoutesByNumber,

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { rteSelector } from '../selectors';
 
@@ -7,10 +8,12 @@ export const useRteMap = () => {
 };
 
 export const useRte = (id?: string) => {
-  if (!id) return null;
-
   const map = useRteMap();
-  const result = map[id] ?? null;
+
+  const result = useMemo(() => {
+    if (!id) return null;
+    return map[id];
+  }, [id, map]);
 
   return result;
 };
