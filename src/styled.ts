@@ -1,8 +1,10 @@
 import { styled } from '@mui/material';
 
-export const UnorderedListContainer = styled('ul')`
+export const UnorderedListContainer = styled('ul')(
+  ({ theme }) => `
   padding-left: 20px;
-`;
+`,
+);
 
 export const ListItemContainer = styled('li')(
   ({ color }) => `

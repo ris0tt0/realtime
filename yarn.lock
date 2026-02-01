@@ -2907,6 +2907,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"copy-webpack-plugin@npm:^13.0.1":
+  version: 13.0.1
+  resolution: "copy-webpack-plugin@npm:13.0.1"
+  dependencies:
+    glob-parent: "npm:^6.0.1"
+    normalize-path: "npm:^3.0.0"
+    schema-utils: "npm:^4.2.0"
+    serialize-javascript: "npm:^6.0.2"
+    tinyglobby: "npm:^0.2.12"
+  peerDependencies:
+    webpack: ^5.1.0
+  checksum: 10c0/14299770d2b37833306b2b115312a100b456fb48d0c8f3d2ad3af893cf4da8cd34855481e20e7914c0471a5e74a93b4e5517b122341c49a1d7d7ea4863d48222
+  languageName: node
+  linkType: hard
+
 "core-js-compat@npm:^3.40.0":
   version: 3.45.1
   resolution: "core-js-compat@npm:3.45.1"
@@ -3794,6 +3809,7 @@ __metadata:
     "@types/react-dom": "npm:19.0.4"
     axios: "npm:1.12.0"
     babel-loader: "npm:10.0.0"
+    copy-webpack-plugin: "npm:^13.0.1"
     date-fns: "npm:4.1.0"
     dotenv-webpack: "npm:8.1.0"
     eslint: "npm:9.21.0"
@@ -3848,7 +3864,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob-parent@npm:^6.0.2":
+"glob-parent@npm:^6.0.1, glob-parent@npm:^6.0.2":
   version: 6.0.2
   resolution: "glob-parent@npm:6.0.2"
   dependencies:

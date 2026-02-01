@@ -15,3 +15,5 @@ export const App: FC = () => {
     </MUIProvider>
   );
 };
+
+export default App;

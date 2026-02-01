@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 export const RteAbout: FC = () => {
   return (
-    <div>
+    <>
       <h2>About Real-Time Departures</h2>
       <p>
         The Real-Time Departures feature provides up-to-the-minute train
@@ -31,6 +31,6 @@ export const RteAbout: FC = () => {
         The data is refreshed live — optionally on a timer — to give you the
         most accurate departure info.
       </p>
-    </div>
+    </>
   );
 };

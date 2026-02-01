@@ -14,8 +14,7 @@ export const LoadingStyled = styled('div')`
 `;
 
 export const LinkStyled = styled(Link)(
-  ({ theme }) =>
-    `
+  ({ theme }) => `
     color: inherit;
     :hover {
       text-decoration: none;
@@ -48,7 +47,7 @@ export const RoutesContainerListStyled = styled('div')`
   height: 100%;
 `;
 
-export const RoutesContainerStyled = styled('div')`
+export const RoutesContainerStyled = styled('main')`
   display: flex;
   flex-direction: column;
   height: 100%;

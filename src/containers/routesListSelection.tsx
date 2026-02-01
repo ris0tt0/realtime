@@ -5,12 +5,11 @@ import {
   MenuItem,
   Select,
 } from '@mui/material';
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRoutes } from '../hooks/useRoutes';
 import { RoutesParams } from '../routes';
 import { ListSelectionContainer } from './styled';
-import Logger from 'js-logger';
 
 export const RoutesListSelection: FC<{
   onSelectRoute: (abbr: string) => void;
@@ -19,21 +18,21 @@ export const RoutesListSelection: FC<{
   const [currentRouteNumber, setCurrentRouteNumber] = useState(routeNumber);
   const routes = useRoutes();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     onSelectStationAbbr(currentRouteNumber);
-  };
+  }, [onSelectStationAbbr, currentRouteNumber]);
 
-  Logger.info('THESE ARE THE ROUTES', routes);
-
-  const items = routes.map((route) => (
-    <MenuItem
-      key={route.abbr}
-      value={route.number}
-      onClick={() => setCurrentRouteNumber(route.number)}
-    >
-      {route.name}
-    </MenuItem>
-  ));
+  const items = useMemo(() => {
+    return routes.map((route) => (
+      <MenuItem
+        key={route.abbr}
+        value={route.number}
+        onClick={() => setCurrentRouteNumber(route.number)}
+      >
+        {route.name}
+      </MenuItem>
+    ));
+  }, [routes]);
 
   return (
     <ListSelectionContainer>

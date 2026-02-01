@@ -15,6 +15,8 @@ import {
 import { RteDispatch } from '../store';
 import {
   RteState,
+  setAdvisories,
+  setElevatorStatus,
   setRoutes,
   setRoutesByNumber,
   setRte,
@@ -136,6 +138,7 @@ class CommandsImpl implements Commands {
     }
     await this.updateTrainsInServiceCount();
     await this.updateAdvisories();
+    await this.updateElevatorStatus();
   };
   getStationDetails = async (stationId: string) => {
     const station = await this.db.getStationDetail(stationId);
@@ -296,8 +299,25 @@ class CommandsImpl implements Commands {
     return null;
   };
 
+  updateElevatorStatus = async () => {
+    const elevatorStatus = await this.api.getElevatorStatus();
+
+    if (elevatorStatus.root?.bsa && elevatorStatus.root.bsa.length > 0) {
+      const result = elevatorStatus.root.bsa.map((advisory: any) => {
+        const retVal = advisory.description['#cdata-section'] ?? '';
+
+        return retVal;
+      });
+      this.dispatch(setElevatorStatus(result));
+
+      return result;
+    }
+
+    return [];
+  };
+
   updateTrainsInServiceCount = async () => {
-    const trainsInService = (await this.api.getTrainCount()) ?? 0;
+    const trainsInService = (await this.api.getTrainCount()) ?? NaN;
     this.dispatch(setTotalTrainsInService(trainsInService));
 
     return trainsInService;
@@ -305,7 +325,7 @@ class CommandsImpl implements Commands {
 
   updateAdvisories = async () => {
     const advisories = await this.api.getAdvisories();
-    // this.setTotalTrainsInService(advisories);
+
     if (advisories.root?.bsa && advisories.root.bsa.length > 0) {
       const result = advisories.root.bsa.map((advisory: any) => {
         const retVal = advisory.description['#cdata-section'] ?? '';
@@ -313,7 +333,9 @@ class CommandsImpl implements Commands {
         return retVal;
       });
 
-      return advisories.root.bsa;
+      this.dispatch(setAdvisories(result));
+
+      return result;
     }
 
     return [];

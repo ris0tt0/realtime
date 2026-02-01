@@ -5,7 +5,7 @@ import {
   MenuItem,
   Select,
 } from '@mui/material';
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useStations } from '../hooks/useStations';
 import { StationsParams } from '../routes';
@@ -18,19 +18,21 @@ export const StationsListSelection: FC<{
   const [currentStationId, setCurrentStationId] = useState(stationId);
   const stations = useStations();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     onSelectStationAbbr(currentStationId);
-  };
+  }, [onSelectStationAbbr, currentStationId]);
 
-  const items = stations.map((station) => (
-    <MenuItem
-      key={station.abbr}
-      value={station.abbr}
-      onClick={() => setCurrentStationId(station.abbr)}
-    >
-      {station.name}
-    </MenuItem>
-  ));
+  const items = useMemo(() => {
+    return stations.map((station) => (
+      <MenuItem
+        key={station.abbr}
+        value={station.abbr}
+        onClick={() => setCurrentStationId(station.abbr)}
+      >
+        {station.name}
+      </MenuItem>
+    ));
+  }, [stations]);
 
   return (
     <ListSelectionContainer>

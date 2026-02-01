@@ -42,7 +42,12 @@ export class RealTimeApiImpl implements RealTimeApi {
     return request.data;
   };
 
-  // type getSTationScheduleDate =  'today' | 'sa' | 'su';
+  getElevatorStatus = async () => {
+    const request = await this.axios.get(`/bsa.aspx`, {
+      params: { cmd: 'elev' },
+    });
+    return request.data;
+  };
 
   getStationSchedule = async (stationId: string, date: string = 'today') => {
     const request = await this.axios.get(`/sched.aspx`, {
@@ -50,6 +55,7 @@ export class RealTimeApiImpl implements RealTimeApi {
     });
     return request.data;
   };
+
   getTrainCount = async () => {
     const request = await this.axios.get(`/bsa.aspx`, {
       params: { cmd: 'count' },

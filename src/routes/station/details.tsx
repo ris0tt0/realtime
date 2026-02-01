@@ -15,11 +15,22 @@ const StationDetailInfoContainer = styled('section')`
   flex: 1;
 `;
 
-const HalfContainer = styled('section')`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-`;
+const StationInfoContainer = styled('section')(({ theme }) => {
+  return {
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+  };
+});
+
+const StationInfoItemContainer = styled('section')(({ theme }) => {
+  return {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+  };
+});
 
 export const StationDetail: FC = () => {
   const commands = useCommands();
@@ -50,27 +61,27 @@ export const StationDetail: FC = () => {
   }
 
   return (
-    <div>
+    <>
       <h2>{stationData.name}</h2>
       <p>
         {stationData.address}, {stationData.city}, {stationData.state}{' '}
         {stationData.zipcode}
       </p>
       <p>{removeArtifacts(stationData.intro)}</p>
-      <Box sx={{ display: 'flex' }}>
-        <HalfContainer>
+      <StationInfoContainer>
+        <StationInfoItemContainer>
           <RouteLines
             north={stationData.north_routes.route}
             south={stationData.south_routes.route}
           />
-        </HalfContainer>
-        <HalfContainer>
+        </StationInfoItemContainer>
+        <StationInfoItemContainer>
           <RteList compact={true} id={stationId} />
-        </HalfContainer>
-      </Box>
+        </StationInfoItemContainer>
+      </StationInfoContainer>
       <StationDetailInfoContainer>
         <StationScheduleList id={stationId} />
       </StationDetailInfoContainer>
-    </div>
+    </>
   );
 };

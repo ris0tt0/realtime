@@ -1,18 +1,19 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { TrainsInService } from '../../containers/rte/trainsInService';
 import { StationsListSelection } from '../../containers/stationsListSelection';
 import { RoutesContainerStyled } from '../styled';
 
 export const RealTimeEstimates: FC = () => {
   const navigate = useNavigate();
 
+  const handleStationSelection = useCallback(
+    (stationId: string) => navigate(stationId),
+    [navigate],
+  );
+
   return (
     <RoutesContainerStyled>
-      <TrainsInService />
-      <StationsListSelection
-        onSelectStationAbbr={(stationId: string) => navigate(stationId)}
-      />
+      <StationsListSelection onSelectStationAbbr={handleStationSelection} />
       <Outlet />
     </RoutesContainerStyled>
   );
