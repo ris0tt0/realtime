@@ -68,7 +68,10 @@ export const PlatformSchedules: FC<{
   return <>{items}</>;
 };
 
-const Schedules: FC<{ data: PlatformSchedule[] }> = ({ data }) => {
+const Schedules: FC<{ loading: boolean; data: PlatformSchedule[] }> = ({
+  data,
+  loading,
+}) => {
   const theme = useTheme();
   const middle = useMediaQuery(theme.breakpoints.down('md'));
   const [radioGroupValue, setRadioGroupValue] = useState('');
@@ -125,7 +128,7 @@ const Schedules: FC<{ data: PlatformSchedule[] }> = ({ data }) => {
   return (
     <Fragment>
       {middle ? (
-        <FormControl disabled={data.length < 2}>
+        <FormControl disabled={data.length < 2 || loading}>
           <FormLabel id="platforms-radio-buttons-group-label">
             Platform
           </FormLabel>
@@ -230,7 +233,7 @@ export const StationScheduleList: FC<{ id?: string }> = ({ id }) => {
             <div>for the date of {scheduleDetail.date}</div>
           )}
         </ScheduleControlsContainer>
-        <Schedules data={scheduleData} />
+        <Schedules loading={loading} data={scheduleData} />
       </Stack>
     </ScheduleContainer>
   );
