@@ -4,8 +4,8 @@ import { format } from 'date-fns';
 import React, { FC, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCommands } from '../../hooks/useCommands';
-import { StationsParams } from '../../routes';
 import { useRteUpdatedTime } from '../../hooks/useRTEUpdatedTime';
+import { StationsParams } from '../../routes';
 
 // 15 seconds
 const TOTAL_MS = 15 * 1000;

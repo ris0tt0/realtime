@@ -19,8 +19,6 @@ const ROUTE_DETAILS_STORE_NAME = 'routeDetails';
 export class IndexedDB implements DB {
   private db: IDBDatabase | null = null;
   init = () => {
-    Logger.info('Initializing IndexedDB');
-
     const retVal = new Promise<null>((resolve, reject) => {
       const request = indexedDB.open(DB_NAME, DB_VERSION);
       request.onupgradeneeded = () => {

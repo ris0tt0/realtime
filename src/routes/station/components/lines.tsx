@@ -1,8 +1,8 @@
+import { Box } from '@mui/material';
 import React, { FC } from 'react';
 import { BartRoute } from '../../../db';
 import { ListItemContainer, UnorderedListContainer } from '../../../styled';
 import { LinkStyled } from '../../styled';
-import { Box } from '@mui/material';
 
 export const Lines: FC<{ title: string; line: BartRoute[] | null }> = ({
   title,

@@ -5,7 +5,6 @@ import { RTEPlatformList } from '../../containers/rte/platformList';
 import { RTEStationNameList } from '../../containers/rte/stationList';
 import { RTEStationUpdated } from '../../containers/rte/updateStation';
 import { RealTimeEstimates } from '../../db';
-import { flexDirection } from '@mui/system';
 
 export const ETAStyledContainer = styled('div')`
   display: flex;
