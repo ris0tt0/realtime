@@ -1,6 +1,6 @@
+import { LinearProgress } from '@mui/material';
 import React, { FC } from 'react';
 import { LoadingStyled } from '.';
-import { LinearProgress } from '@mui/material';
 
 export const Loading: FC = () => {
   return (

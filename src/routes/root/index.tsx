@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { TrainsInService } from '../../containers/rte/trainsInService';
 import { elevatorStatus, serviceAdvisories } from '../../selectors';
-import { fontWeight } from '@mui/system';
 
 export const MenuStyled = styled('nav')`
   display: flex;

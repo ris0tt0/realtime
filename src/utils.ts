@@ -40,13 +40,24 @@ export const removeArtifacts = (intro: string) => {
   const transitStops = stationMap.replace('Transit Stops', '');
   const transitRoutes = transitStops.replace('Transit Routes', '');
   const schedulesAndFares = transitRoutes.replace('Schedules and Fares', '');
-  const mapsOfTheStations = schedulesAndFares.replace(
+  const mapsOfThisStations = schedulesAndFares.replace(
     'Maps of this station:',
     '',
   );
+  const mapsOfThisStations2 = mapsOfThisStations.replace(
+    'Maps of this station',
+    '',
+  );
+  const mapsOfTheStations = mapsOfThisStations2.replace(
+    'Maps of the station:',
+    '',
+  );
+  const mapsOfTheStations2 = mapsOfTheStations.replace(
+    'Maps of the station',
+    '',
+  );
 
-  const result = mapsOfTheStations.replace('Maps of this station', '');
-  const mapsOfTheStation = result.replace('Maps of the station:', '');
+  const result = mapsOfTheStations2.replace('Parking Map', '');
 
-  return mapsOfTheStation;
+  return result;
 };

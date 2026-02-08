@@ -1,10 +1,10 @@
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import {
   routesListSelector,
   routesNumberSelector,
   routesSelector,
 } from '../selectors';
-import { useMemo } from 'react';
 
 export const useRouteLines = (id?: string[]) => {
   const map = useSelector(routesNumberSelector);
