@@ -152,10 +152,7 @@ const Schedules: FC<{ data: PlatformSchedule[] }> = ({ data }) => {
 
 export const StationScheduleList: FC<{ id?: string }> = ({ id }) => {
   const commands = useCommands();
-  // const theme = useTheme();
-  // const middle = useMediaQuery(theme.breakpoints.down('md'));
   const [loading, setLoading] = useState(true);
-  // const [radioGroupValue, setRadioGroupValue] = useState('Platform 1');
   const [day, setDay] = useState<ScheduleType>('today');
   const [scheduleDetail, setScheduleDetail] =
     useState<BartStationScheduleDetail | null>(null);

@@ -4,7 +4,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { RTEStationNameList } from '../../../containers/rte/stationList';
 import { useCommands } from '../../../hooks/useCommands';
 import { useRte } from '../../../hooks/useRte';
-import { useRteUpdatedTime } from '../../../hooks/useRteUpdatedTime';
+import { useRteUpdatedTime } from '../../../hooks/useRTEUpdatedTime';
 
 const Container = styled('section')(
   ({ theme }) => `
